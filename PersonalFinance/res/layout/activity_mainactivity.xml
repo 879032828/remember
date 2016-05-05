@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/background_login"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:id="@+id/layout_left"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginRight="50dip"
+        android:background="@drawable/background_login"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dip"
+            android:layout_marginLeft="5dip"
+            android:layout_marginTop="10dip"
+            android:padding="10dip" >
+
+            <!-- 账号 -->
+
+            <TextView
+                android:id="@+id/main_user_input"
+                style="@style/normalText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="5dp"
+                android:text="@string/login_label_username" />
+
+            <EditText
+                android:id="@+id/et_main_username"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/main_user_input"
+                android:hint="@string/login_username_hint"
+                android:inputType="text"
+                android:singleLine="true" />
+
+            <!-- 密码 text -->
+
+            <TextView
+                android:id="@+id/main_password_input"
+                style="@style/normalText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/et_main_username"
+                android:layout_marginTop="3dp"
+                android:text="@string/register_pwd" />
+
+            <EditText
+                android:id="@+id/et_main_new_pwd"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/main_password_input"
+                android:hint="@string/login_pwd_hint"
+                android:inputType="textPassword"
+                android:singleLine="true" />
+
+            <!-- 重复密码 text -->
+
+            <TextView
+                android:id="@+id/main_confirm_password_input"
+                style="@style/normalText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/et_main_new_pwd"
+                android:layout_marginTop="3dp"
+                android:text="@string/register_confirm_pwd" />
+
+            <EditText
+                android:id="@+id/et_main_confirm_pwd"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/main_confirm_password_input"
+                android:hint="@string/login_pwd_hint"
+                android:inputType="textPassword"
+                android:singleLine="true" />
+
+            <!-- 退出button -->
+
+            <Button
+                android:id="@+id/bt_main_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/et_main_confirm_pwd"
+                android:layout_below="@id/et_main_confirm_pwd"
+                android:background="@drawable/background_login_button"
+                android:text="@string/main_lable_cancel" />
+            <!-- 确定button -->
+
+            <Button
+                android:id="@+id/bt_main_ok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@id/et_main_confirm_pwd"
+                android:layout_below="@id/et_main_confirm_pwd"
+                android:background="@drawable/background_login_button"
+                android:text="@string/main_label_ok" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_right"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/background_login"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/lly_main"
+            android:layout_width="fill_parent"
+            android:layout_height="160dip"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_marginTop="10dip"
+            android:background="@drawable/background_login_div_bg"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/tv_main_time"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:text="@string/main_timeWorry"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginBottom="5dip"
+                android:layout_marginLeft="5dip"
+                android:layout_marginRight="5dip"
+                android:layout_marginTop="5dip"
+                android:orientation="horizontal" >
+
+                <com.seventh.view.CornerListView
+                    android:id="@+id/lv_main_calculation"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="2"
+                    android:background="@drawable/app_list_corner_border"
+                    android:cacheColorHint="#AAFF7B" >
+                </com.seventh.view.CornerListView>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/bt_main_addnotes"
+            android:layout_width="fill_parent"
+            android:layout_height="30dip"
+            android:layout_below="@+id/lly_main"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_marginTop="10dip"
+            android:background="@drawable/background_main_button"
+            android:text="@string/main_addnodes"
+            android:textStyle="bold" />
+        
+        <TextView
+            android:id="@+id/bt_main_update"
+            android:layout_width="fill_parent"
+            android:layout_height="30dip"
+            android:layout_below="@+id/lly_main"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_marginTop="10dip"
+            android:text="@string/main_update"
+            android:gravity="center"
+            android:textSize="20dip"
+            android:background="@drawable/background_main_button"
+            android:textStyle="bold" />
+
+        <com.seventh.view.CornerListView
+            android:id="@+id/lv_main_datareport"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bt_main_addnotes"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dip"
+            android:background="@drawable/login_pet_3"
+            android:cacheColorHint="#AAFF7B" >
+        </com.seventh.view.CornerListView>
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button" />
+
+    </LinearLayout>
+
+</RelativeLayout>

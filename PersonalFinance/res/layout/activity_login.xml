@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/Layout_gray"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:orientation="vertical" >
+
+        <EditText
+            android:id="@+id/et_login_name"
+            android:layout_width="fill_parent"
+            android:layout_height="45dp"
+            android:background="@color/white"
+            android:ems="10"
+            android:hint="@string/login_username_hint"
+            android:inputType="text"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textColorHint="@color/gray"
+            android:paddingLeft="@dimen/login_edittext_padding_left"/>
+        
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dip"
+            android:background="@color/Layout_gray" />
+        
+        <EditText
+            android:id="@+id/et_login_password"
+            android:layout_width="fill_parent"
+            android:layout_height="45dp"
+            android:background="@color/white"
+            android:hint="@string/login_pwd_hint"
+            android:inputType="textPassword"
+            android:singleLine="true" 
+            android:textColor="@color/black"
+            android:textColorHint="@color/gray"
+            android:paddingLeft="@dimen/login_edittext_padding_left">
+
+        </EditText>
+    </LinearLayout>
+
+    <!-- 注册按钮 -->
+
+    <!-- 取消按钮 -->
+
+    <!-- 登录按钮 -->
+
+    <Button
+        android:id="@+id/tv_login_register_link"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/linearLayout1"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="27dp"
+        android:text="@string/registe_lable_ok"
+        android:textColor="@color/white" 
+        android:background="@drawable/button_outline"/>
+
+    <Button
+        android:id="@+id/bt_login_ok"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tv_login_register_link"
+        android:layout_alignBottom="@+id/tv_login_register_link"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="22dp"
+        android:text="@string/login_label_ok"
+        android:textColor="@color/white" 
+        android:background="@drawable/button_outline"/>
+
+    <Button
+        android:id="@+id/bt_login_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/bt_login_ok"
+        android:layout_marginBottom="21dp"
+        android:background="@color/Layout_gray"
+        android:text="@string/login_lable_cancel" 
+        android:textColor="@color/blue"/>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="115dp"
+        android:layout_height="115dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/logo" />
+
+</RelativeLayout>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">记着</string>
+    <string name="action_settings">Settings</string>
+    <string name="login_label_username">帐号：</string>
+    <string name="login_label_password">密码</string>
+    <string name="login_label_ok">登 录</string>
+    <string name="login_username_hint">Email或手机号</string>
+    <string name="login_pwd_hint">请输入密码</string>
+    <string name="login_register_link">没有帐号？ <a href="#" mce_href="#">注册</a></string>
+    <string name="login_lable_cancel">取消</string>
+    <string name="register_activity">注册</string>
+    <string name="register_username">用户名：</string>
+    <string name="register_pwd">密码：</string>
+    <string name="register_confirm_pwd">确认密码：</string>
+    <string name="registe_lable_cancel">取消</string>
+    <string name="registe_lable_ok">注册</string>
+    <string name="main_lable_cancel">用户退出</string>
+    <string name="main_label_ok">确定</string>
+    <string name="main_timeWorry">时间错误了！</string>
+    <string name="main_addnodes">记一记今天账目明细吧~~GO!</string>
+    <string name="main_update">修改用户信息</string>
+    <string name="update_msg">修改账单信息</string>
+    <string name="main_totalrevenue">总收入金额：</string>
+    <string name="main_totalexpenditure">总支出金额：</string>
+    <string name="main_budgetbalance">金额预算：</string>
+    <string name="addnodes_time">时间:</string>
+    <string name="addnodes_money">金额:</string>
+    <string name="addnodes_type">类型 :</string>
+    <string name="addnodes_earnings">收益:</string>
+    <string name="addnodes_remark">备注:</string>
+    <string name="addnodes_cancel">取消</string>
+    <string name="addnodes_add">添加</string>
+    <string name="moreaction_update">确认修改</string>
+    <string name="moreaction_delete">确认删除</string>
+    <string name="specific_data_data">账单</string>
+    <string name="specific_data_totalintodata">收入账单</string>
+    <string name="specific_data_totaloutdata">支出账单</string>
+    <string name="specific_data_alldata">详细账单</string>
+    <string name="specific_data_todaydata">今日账单明细</string>
+    <string name="specific_data_monthdata">本月账单明细</string>
+    <string name="specific_data_yeardata">本年账单明细</string>
+    <string name="title_activity_my">MyActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_base">BaseActivity</string>
+
+</resources>
