@@ -38,7 +38,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class MainActivity extends Activity implements OnClickListener, OnTouchListener, OnGestureListener {
+public class MainActivity extends Activity implements OnClickListener,
+		OnTouchListener, OnGestureListener {
 	private Intent intent = null;// 定义一个意图
 	private String name;// 账号
 	private String pwd1;
@@ -66,7 +67,7 @@ public class MainActivity extends Activity implements OnClickListener, OnTouchLi
 	private LayoutInflater inflater;
 
 	private Button buutton1;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -90,29 +91,20 @@ public class MainActivity extends Activity implements OnClickListener, OnTouchLi
 			// 设置listview1 值
 			map_list1 = MainActivityService.getDataSource1(totalInto, totalOut);
 			// listview1适配器
-			SimpleAdapter adapter1 = new SimpleAdapter(getApplicationContext(), map_list1,
-					R.layout.main_listview_calculation, new String[] { "txtCalculationName", "txtMoney" },
-					new int[] { R.id.ls_tv_txtCalculationName, R.id.ls_tv_txtMoney });
+			SimpleAdapter adapter1 = new SimpleAdapter(getApplicationContext(),
+					map_list1, R.layout.main_listview_calculation,
+					new String[] { "txtCalculationName", "txtMoney" },
+					new int[] { R.id.ls_tv_txtCalculationName,
+							R.id.ls_tv_txtMoney });
 			// 填充listview1的数据
 			cornerListView1.setAdapter(adapter1);
-
-			// 设置listview2 值
-			inflater = LayoutInflater.from(this);
-			cornerListView2 = (CornerListView) findViewById(R.id.lv_main_datareport);
-			try {
-				dataRanges = MainActivityService.getDataSource2(name, getApplicationContext());
-			} catch (Exception e) {
-				Toast.makeText(this, "获取数据失败", 0).show();
-				e.printStackTrace();
-			}
-			// 填充listview2的数据
-			cornerListView2.setAdapter(new MyAdapter());
 
 			// listview1选项的点击事件 收入总额 支出总额 预算余额
 			cornerListView1.setOnItemClickListener(new OnItemClickListener() {
 
 				@Override
-				public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+				public void onItemClick(AdapterView<?> arg0, View arg1,
+						int arg2, long arg3) {
 					switch (arg2) {
 					case 0:
 						TotalIntoData();
@@ -128,36 +120,42 @@ public class MainActivity extends Activity implements OnClickListener, OnTouchLi
 				}
 			});
 
-			// listview2选项的点击事件 一览表
-			cornerListView2.setOnItemClickListener(new OnItemClickListener() {
+//			// 设置listview2 值
+//			inflater = LayoutInflater.from(this);
+//			cornerListView2 = (CornerListView) findViewById(R.id.lv_main_datareport);
+//			try {
+//				dataRanges = MainActivityService.getDataSource2(name,
+//						getApplicationContext());
+//			} catch (Exception e) {
+//				Toast.makeText(this, "获取数据失败", 0).show();
+//				e.printStackTrace();
+//			}
+//			// 填充listview2的数据
+//			cornerListView2.setAdapter(new MyAdapter());
+//
+//			// listview2选项的点击事件 一览表
+//			cornerListView2.setOnItemClickListener(new OnItemClickListener() {
+//
+//				@Override
+//				public void onItemClick(AdapterView<?> arg0, View arg1,
+//						int arg2, long arg3) {
+//					switch (arg2) {
+//					case 0:
+//						TodayData();
+//						break;
+//					case 1:
+//						MonthData();
+//						break;
+//					case 2:
+//						YearData();
+//						break;
+//					}
+//				}
+//			});
 
-				@Override
-				public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-					switch (arg2) {
-					case 0:
-						TodayData();
-						break;
-					case 1:
-						MonthData();
-						break;
-					case 2:
-						YearData();
-						break;
-					}
-				}
-			});
-
-			mEditTextName = (EditText) this.findViewById(R.id.et_main_username);
-			mEditTextName.setText(name);
-			mEditTextPwd1 = (EditText) this.findViewById(R.id.et_main_new_pwd);
-			mEditTextPwd2 = (EditText) this.findViewById(R.id.et_main_confirm_pwd);
-			mButtonOK = (Button) this.findViewById(R.id.bt_main_ok);
-			mButtonCancel = (Button) this.findViewById(R.id.bt_main_cancel);
-			mButtonAddNodes = (Button) this.findViewById(R.id.bt_main_addnotes);
-			mButtonOK.setOnClickListener(this);
-			mButtonCancel.setOnClickListener(this);
-			mButtonAddNodes.setOnClickListener(this);
+			
 			buutton1.setOnClickListener(this);
+			
 		}
 	}
 
@@ -175,36 +173,6 @@ public class MainActivity extends Activity implements OnClickListener, OnTouchLi
 			intent.putExtra("name", name);
 			// 传值 帐户名
 			startActivity(intent);
-			break;
-		case R.id.bt_main_ok:
-			name = mEditTextName.getText().toString();
-			pwd1 = mEditTextPwd1.getText().toString().trim();
-			pwd2 = mEditTextPwd2.getText().toString().trim();
-
-			if (name.equals("")) {
-				Toast.makeText(getApplicationContext(), "账户名不能为空！", Toast.LENGTH_SHORT).show();
-				break;
-			}
-			if (pwd1.equals("")) {
-				Toast.makeText(getApplicationContext(), "密码不能为空！", Toast.LENGTH_SHORT).show();
-				break;
-			}
-			if (!pwd1.equals(pwd2)) {
-				Toast.makeText(getApplicationContext(), "确认密码不同！", Toast.LENGTH_SHORT).show();
-				break;
-			}
-			persondbdao = new PersonDBdao(getApplicationContext());
-			persondbdao.update(name, name, pwd2);
-			Toast.makeText(getApplicationContext(), "修改成功！", Toast.LENGTH_SHORT).show();
-
-			finish();
-			break;
-		case R.id.bt_main_cancel:
-			persondbdao = new PersonDBdao(getApplicationContext());
-			persondbdao.updateLoginCancel(name);
-			intent = new Intent(this, Login.class);
-			startActivity(intent);
-			finish();
 			break;
 		case R.id.button1:
 			intent = new Intent(this, MyActivity.class);
@@ -295,12 +263,16 @@ public class MainActivity extends Activity implements OnClickListener, OnTouchLi
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			View view = inflater.inflate(R.layout.main_listview_datareport, null);
+			View view = inflater.inflate(R.layout.main_listview_datareport,
+					null);
 			DataRange aboutBillData = dataRanges.get(position);
 
-			TextView tv2_text1 = (TextView) view.findViewById(R.id.ls_tv2_txtDataRange);
-			TextView tv2_text2 = (TextView) view.findViewById(R.id.ls_tv2_txtInto);
-			TextView tv2_text3 = (TextView) view.findViewById(R.id.ls_tv2_txtOut);
+			TextView tv2_text1 = (TextView) view
+					.findViewById(R.id.ls_tv2_txtDataRange);
+			TextView tv2_text2 = (TextView) view
+					.findViewById(R.id.ls_tv2_txtInto);
+			TextView tv2_text3 = (TextView) view
+					.findViewById(R.id.ls_tv2_txtOut);
 			tv2_text1.setText(aboutBillData.getText1());
 			tv2_text2.setText(aboutBillData.getText2());
 			tv2_text3.setText(aboutBillData.getText3());
@@ -321,20 +293,22 @@ public class MainActivity extends Activity implements OnClickListener, OnTouchLi
 
 		map_list1 = MainActivityService.getDataSource1(totalInto, totalOut);
 		// listview1适配器
-		SimpleAdapter adapter1 = new SimpleAdapter(getApplicationContext(), map_list1,
-				R.layout.main_listview_calculation, new String[] { "txtCalculationName", "txtMoney" },
-				new int[] { R.id.ls_tv_txtCalculationName, R.id.ls_tv_txtMoney });
+		SimpleAdapter adapter1 = new SimpleAdapter(getApplicationContext(),
+				map_list1, R.layout.main_listview_calculation, new String[] {
+						"txtCalculationName", "txtMoney" }, new int[] {
+						R.id.ls_tv_txtCalculationName, R.id.ls_tv_txtMoney });
 		// 填充listview1的数据
 		cornerListView1.setAdapter(adapter1);
 
 		try {
-			dataRanges = MainActivityService.getDataSource2(name, getApplicationContext());
+			dataRanges = MainActivityService.getDataSource2(name,
+					getApplicationContext());
 		} catch (Exception e) {
 			Toast.makeText(this, "获取数据失败", 0).show();
 			e.printStackTrace();
 		}
-		// 填充listview2的数据
-		cornerListView2.setAdapter(new MyAdapter());
+//		// 填充listview2的数据
+//		cornerListView2.setAdapter(new MyAdapter());
 	}
 
 	@Override
@@ -356,13 +330,15 @@ public class MainActivity extends Activity implements OnClickListener, OnTouchLi
 	}
 
 	@Override
-	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
+			float velocityY) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
+			float distanceY) {
 		// TODO Auto-generated method stub
 		return false;
 	}

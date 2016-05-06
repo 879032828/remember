@@ -62,6 +62,15 @@ public class BaseActivity extends Activity {
 	}
 	
 	/**
+	 * 设置TextView是否隐藏
+	 */
+	public void setHideTitle(){
+		if(title != null){
+			title.setVisibility(View.INVISIBLE);
+		}
+	}
+	
+	/**
 	 * @param onClickListener
 	 * 设置按钮监听事件
 	 */

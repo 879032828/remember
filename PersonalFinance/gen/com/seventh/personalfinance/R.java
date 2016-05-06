@@ -58,78 +58,71 @@ public final class R {
         public static final int bg_edittext_focused=0x7f02000c;
         public static final int bg_edittext_normal=0x7f02000d;
         public static final int button_outline=0x7f02000e;
-        public static final int flight_title_back_normal=0x7f02000f;
-        public static final int ic_launcher=0x7f020010;
-        public static final int leftarrow=0x7f020011;
-        public static final int login_otherpet=0x7f020012;
-        public static final int login_pet=0x7f020013;
-        public static final int login_pet_3=0x7f020014;
-        public static final int loginpet_3=0x7f020015;
-        public static final int logo=0x7f020016;
+        public static final int circular_dialog_shape=0x7f02000f;
+        public static final int flight_title_back_normal=0x7f020010;
+        public static final int ic_launcher=0x7f020011;
+        public static final int leftarrow=0x7f020012;
+        public static final int login_otherpet=0x7f020013;
+        public static final int login_pet=0x7f020014;
+        public static final int login_pet_3=0x7f020015;
+        public static final int loginpet_3=0x7f020016;
+        public static final int logo=0x7f020017;
     }
     public static final class id {
-        public static final int action_settings=0x7f09003d;
+        public static final int action_settings=0x7f090035;
         public static final int bt_addnodes_add=0x7f090006;
         public static final int bt_addnodes_cancel=0x7f090005;
         public static final int bt_login_cancel=0x7f09000f;
         public static final int bt_login_ok=0x7f09000e;
-        public static final int bt_main_addnotes=0x7f09001e;
-        public static final int bt_main_cancel=0x7f090018;
-        public static final int bt_main_ok=0x7f090019;
-        public static final int bt_main_update=0x7f09001f;
-        public static final int bt_moreaction_cancel=0x7f090027;
-        public static final int bt_moreaction_delete=0x7f090029;
-        public static final int bt_moreaction_update=0x7f090028;
-        public static final int bt_register_cancel=0x7f090031;
-        public static final int bt_register_ok=0x7f090030;
-        public static final int button1=0x7f090021;
+        public static final int bt_main_addnotes=0x7f090016;
+        public static final int bt_main_update=0x7f090017;
+        public static final int bt_moreaction_cancel=0x7f09001f;
+        public static final int bt_moreaction_delete=0x7f090021;
+        public static final int bt_moreaction_update=0x7f090020;
+        public static final int bt_register_cancel=0x7f090029;
+        public static final int bt_register_ok=0x7f090028;
+        public static final int button1=0x7f090019;
         public static final int content=0x7f090009;
         public static final int et_addnodes_money=0x7f090001;
         public static final int et_addnodes_remark=0x7f090004;
         public static final int et_addnodes_time=0x7f090000;
         public static final int et_login_name=0x7f09000b;
         public static final int et_login_password=0x7f09000c;
-        public static final int et_main_confirm_pwd=0x7f090017;
-        public static final int et_main_new_pwd=0x7f090015;
-        public static final int et_main_username=0x7f090013;
-        public static final int et_moreaction_money=0x7f090023;
-        public static final int et_moreaction_remark=0x7f090026;
-        public static final int et_moreaction_time=0x7f090022;
-        public static final int et_register_confirm_pwd=0x7f09002f;
-        public static final int et_register_new_pwd=0x7f09002d;
-        public static final int et_register_username=0x7f09002b;
+        public static final int et_moreaction_money=0x7f09001b;
+        public static final int et_moreaction_remark=0x7f09001e;
+        public static final int et_moreaction_time=0x7f09001a;
+        public static final int et_register_confirm_pwd=0x7f090027;
+        public static final int et_register_new_pwd=0x7f090025;
+        public static final int et_register_username=0x7f090023;
         public static final int imageView=0x7f090010;
         public static final int layout_left=0x7f090011;
-        public static final int layout_right=0x7f09001a;
+        public static final int layout_right=0x7f090012;
         public static final int leftButton=0x7f090008;
         public static final int linearLayout1=0x7f09000a;
-        public static final int lly_main=0x7f09001b;
-        public static final int ls_sp_tv_money=0x7f09003c;
-        public static final int ls_sp_tv_time=0x7f09003a;
-        public static final int ls_sp_tv_type=0x7f09003b;
-        public static final int ls_tv2_txtDataRange =0x7f090037;
-        public static final int ls_tv2_txtInto=0x7f090039;
-        public static final int ls_tv2_txtOut=0x7f090038;
-        public static final int ls_tv_txtCalculationName=0x7f090035;
-        public static final int ls_tv_txtMoney=0x7f090036;
-        public static final int lv_main_calculation=0x7f09001d;
-        public static final int lv_main_datareport=0x7f090020;
-        public static final int lv_specific_data_list=0x7f090033;
-        public static final int main_confirm_password_input=0x7f090016;
-        public static final int main_password_input=0x7f090014;
-        public static final int main_user_input=0x7f090012;
-        public static final int register_confirm_password_input=0x7f09002e;
-        public static final int register_password_input=0x7f09002c;
-        public static final int register_user_input=0x7f09002a;
+        public static final int lly_main=0x7f090013;
+        public static final int ls_sp_tv_money=0x7f090034;
+        public static final int ls_sp_tv_time=0x7f090032;
+        public static final int ls_sp_tv_type=0x7f090033;
+        public static final int ls_tv2_txtDataRange =0x7f09002f;
+        public static final int ls_tv2_txtInto=0x7f090031;
+        public static final int ls_tv2_txtOut=0x7f090030;
+        public static final int ls_tv_txtCalculationName=0x7f09002d;
+        public static final int ls_tv_txtMoney=0x7f09002e;
+        public static final int lv_main_calculation=0x7f090015;
+        public static final int lv_main_datareport=0x7f090018;
+        public static final int lv_specific_data_list=0x7f09002b;
+        public static final int register_confirm_password_input=0x7f090026;
+        public static final int register_password_input=0x7f090024;
+        public static final int register_user_input=0x7f090022;
         public static final int sp_addnodes_earnings=0x7f090003;
         public static final int sp_addnodes_type=0x7f090002;
-        public static final int sp_moreaction_earnings=0x7f090025;
-        public static final int sp_moreaction_type=0x7f090024;
-        public static final int text1=0x7f090034;
+        public static final int sp_moreaction_earnings=0x7f09001d;
+        public static final int sp_moreaction_type=0x7f09001c;
+        public static final int text1=0x7f09002c;
         public static final int title=0x7f090007;
         public static final int tv_login_register_link=0x7f09000d;
-        public static final int tv_main_time=0x7f09001c;
-        public static final int tv_specific_data_txtDataRange=0x7f090032;
+        public static final int tv_main_time=0x7f090014;
+        public static final int tv_specific_data_txtDataRange=0x7f09002a;
     }
     public static final class layout {
         public static final int activity_addnodes=0x7f030000;
@@ -201,11 +194,17 @@ public final class R {
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
 
 
+
+
+
     
 
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
             backward-compatibility can go here.
+
+
+
 
 
         
