@@ -40,7 +40,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="14dp"
                 android:background="@color/blue"
-                android:drawableLeft="@drawable/leftarrow"
+                android:drawableLeft="@drawable/bg_return_button_selector"
                 android:textColor="@color/white" />
 
         </RelativeLayout>

@@ -43,30 +43,31 @@ public final class R {
         public static final int week_top_margin=0x7f050000;
     }
     public static final class drawable {
-        public static final int app_list_corner_border=0x7f020000;
-        public static final int app_list_corner_round=0x7f020001;
-        public static final int app_list_corner_round_bottom=0x7f020002;
-        public static final int app_list_corner_round_top=0x7f020003;
-        public static final int app_list_corner_shape=0x7f020004;
-        public static final int background_button=0x7f020005;
-        public static final int background_login=0x7f020006;
-        public static final int background_login_button=0x7f020007;
-        public static final int background_login_div_bg=0x7f020008;
-        public static final int background_main_button=0x7f020009;
-        public static final int bg_3=0x7f02000a;
-        public static final int bg_edittext=0x7f02000b;
-        public static final int bg_edittext_focused=0x7f02000c;
-        public static final int bg_edittext_normal=0x7f02000d;
-        public static final int button_outline=0x7f02000e;
-        public static final int circular_dialog_shape=0x7f02000f;
-        public static final int flight_title_back_normal=0x7f020010;
-        public static final int ic_launcher=0x7f020011;
-        public static final int leftarrow=0x7f020012;
-        public static final int login_otherpet=0x7f020013;
-        public static final int login_pet=0x7f020014;
-        public static final int login_pet_3=0x7f020015;
-        public static final int loginpet_3=0x7f020016;
-        public static final int logo=0x7f020017;
+        public static final int app_list_corner_round=0x7f020000;
+        public static final int app_list_corner_round_bottom=0x7f020001;
+        public static final int app_list_corner_round_top=0x7f020002;
+        public static final int app_list_corner_shape=0x7f020003;
+        public static final int background_button=0x7f020004;
+        public static final int background_login=0x7f020005;
+        public static final int background_login_div_bg=0x7f020006;
+        public static final int background_main_button=0x7f020007;
+        public static final int bg_edittext=0x7f020008;
+        public static final int bg_edittext_focused=0x7f020009;
+        public static final int bg_edittext_normal=0x7f02000a;
+        public static final int bg_return_button_selector=0x7f02000b;
+        public static final int button_left_corner=0x7f02000c;
+        public static final int button_left_corner_unpress=0x7f02000d;
+        public static final int button_left_register_selector=0x7f02000e;
+        public static final int button_outline=0x7f02000f;
+        public static final int button_right_corner=0x7f020010;
+        public static final int button_right_corner_unpress=0x7f020011;
+        public static final int button_right_register_selector=0x7f020012;
+        public static final int circular_dialog_shape=0x7f020013;
+        public static final int flight_title_back_normal=0x7f020014;
+        public static final int ic_launcher=0x7f020015;
+        public static final int leftarrow=0x7f020016;
+        public static final int leftarrowgray=0x7f020017;
+        public static final int logo=0x7f020018;
     }
     public static final class id {
         public static final int action_settings=0x7f090035;
@@ -227,6 +228,7 @@ public final class R {
  All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f070001;
+        public static final int loading=0x7f070003;
         public static final int normalText=0x7f070002;
     }
 }

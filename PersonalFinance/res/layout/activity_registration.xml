@@ -5,15 +5,6 @@
     android:background="@drawable/circular_dialog_shape"
     android:orientation="vertical" >
 
-    <TextView
-        style="@style/normalText"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/register_activity"
-        android:textColor="@color/blue"
-        android:textSize="24dip" />
-
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -33,16 +24,16 @@
 
         <EditText
             android:id="@+id/et_register_username"
-            android:layout_marginTop="5dp"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/register_user_input"
+            android:layout_marginTop="3dp"
             android:background="@drawable/bg_edittext"
             android:hint="@string/login_username_hint"
             android:inputType="text"
-            android:singleLine="true" 
-            android:textColorHint="@color/gray"
-            android:paddingLeft="@dimen/regist_edittext_padding_left">
+            android:paddingLeft="@dimen/regist_edittext_padding_left"
+            android:singleLine="true"
+            android:textColorHint="@color/gray" >
 
             <requestFocus />
         </EditText>
@@ -52,8 +43,8 @@
             style="@style/normalText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:layout_below="@id/et_register_username"
+            android:layout_marginTop="5dp"
             android:text="@string/register_pwd"
             android:textColor="@color/blue"
             android:textSize="18dip" />
@@ -62,22 +53,22 @@
             android:id="@+id/et_register_new_pwd"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:layout_below="@id/register_password_input"
+            android:layout_marginTop="3dp"
             android:background="@drawable/bg_edittext"
             android:hint="@string/login_pwd_hint"
             android:inputType="textPassword"
-            android:singleLine="true" 
-            android:textColorHint="@color/gray"
-            android:paddingLeft="@dimen/regist_edittext_padding_left"/>
+            android:paddingLeft="@dimen/regist_edittext_padding_left"
+            android:singleLine="true"
+            android:textColorHint="@color/gray" />
 
         <TextView
             android:id="@+id/register_confirm_password_input"
             style="@style/normalText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:layout_below="@id/et_register_new_pwd"
+            android:layout_marginTop="5dp"
             android:text="@string/register_confirm_pwd"
             android:textColor="@color/blue"
             android:textSize="18dip" />
@@ -86,38 +77,61 @@
             android:id="@+id/et_register_confirm_pwd"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:layout_below="@id/register_confirm_password_input"
+            android:layout_marginTop="3dp"
             android:background="@drawable/bg_edittext"
             android:hint="@string/login_pwd_hint"
             android:inputType="textPassword"
-            android:singleLine="true" 
-            android:textColorHint="@color/gray"
-            android:paddingLeft="@dimen/regist_edittext_padding_left"/>
-
-        <Button
-            android:id="@+id/bt_register_ok"
-            android:layout_width="60dp"
-            android:layout_height="30dp"
-            android:layout_alignRight="@+id/et_register_confirm_pwd"
-            android:layout_below="@+id/et_register_confirm_pwd"
-            android:layout_marginRight="25dp"
-            android:layout_marginTop="34dp"
-            android:background="@drawable/button_outline"
-            android:text="@string/registe_lable_ok"
-            android:textColor="@color/white" />
-
-        <Button
-            android:id="@+id/bt_register_cancel"
-            android:layout_width="60dp"
-            android:layout_height="30dp"
-            android:layout_alignBaseline="@+id/bt_register_ok"
-            android:layout_alignBottom="@+id/bt_register_ok"
-            android:layout_alignRight="@+id/register_confirm_password_input"
-            android:background="@drawable/button_outline"
-            android:text="@string/registe_lable_cancel"
-            android:textColor="@color/white" />
-
+            android:paddingLeft="@dimen/regist_edittext_padding_left"
+            android:singleLine="true"
+            android:textColorHint="@color/gray" />
     </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.03"
+        android:orientation="vertical" >
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:background="@color/gray" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/bt_register_ok"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="1dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_left_register_selector"
+                android:text="@string/registe_lable_ok"
+                android:textColor="@color/blue"
+                android:textSize="20dp" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/gray" />
+
+            <Button
+                android:id="@+id/bt_register_cancel"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="1dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_right_register_selector"
+                android:text="@string/registe_lable_cancel"
+                android:textColor="@color/blue"
+                android:textSize="20dp" />
+        </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>

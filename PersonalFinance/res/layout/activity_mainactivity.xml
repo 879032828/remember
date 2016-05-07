@@ -54,7 +54,6 @@
                     android:layout_height="fill_parent"
                     android:layout_gravity="center"
                     android:layout_weight="2"
-                    android:background="@drawable/app_list_corner_border"
                     android:cacheColorHint="#AAFF7B" >
                 </com.seventh.view.CornerListView>
             </LinearLayout>
@@ -93,7 +92,6 @@
             android:layout_below="@+id/bt_main_addnotes"
             android:layout_gravity="center"
             android:layout_marginTop="15dip"
-            android:background="@drawable/login_pet_3"
             android:cacheColorHint="#AAFF7B" >
         </com.seventh.view.CornerListView>
 
@@ -102,6 +100,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Button" />
+
     </LinearLayout>
 
 </RelativeLayout>
