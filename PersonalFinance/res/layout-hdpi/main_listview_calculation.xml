@@ -6,26 +6,27 @@
     <TextView
         android:id="@+id/ls_tv_txtCalculationName"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:paddingLeft="5dip"
         android:paddingTop="10dip"
         android:text="金额:"
         android:textColor="#000000"
-        android:textSize="18dip" />
+        android:textSize="15dip" />
 
     <TextView
         android:id="@+id/ls_tv_txtMoney"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
+        android:layout_alignBaseline="@+id/ls_tv_txtCalculationName"
+        android:layout_alignBottom="@+id/ls_tv_txtCalculationName"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
         android:paddingTop="10dip"
-        android:layout_toRightOf="@id/ls_tv_txtCalculationName"
+        android:singleLine="true"
         android:text="00000000"
-        android:textStyle="bold"
         android:textColor="#000000"
-        android:textSize="18dip" 
-        android:singleLine="true" />
+        android:textSize="15dip"/>
 
 </RelativeLayout>

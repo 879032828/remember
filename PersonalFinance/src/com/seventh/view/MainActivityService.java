@@ -21,18 +21,18 @@ public class MainActivityService {
 
 		Map<String, String> map = new HashMap<String, String>();
 
-		String textRevenue = "￥" + totalInto;
+		String textRevenue = "" + totalInto;
 		map.put("txtCalculationName", "收入总额:");
 		map.put("txtMoney", textRevenue);
 		map_list1.add(map);
 
-		String textExpenditure = "￥" + totalOut;
+		String textExpenditure = "" + totalOut;
 		map = new HashMap<String, String>();
 		map.put("txtCalculationName", "支出总额:");
 		map.put("txtMoney", textExpenditure);
 		map_list1.add(map);
 
-		String textBalance = "￥" + (totalInto - totalOut);
+		String textBalance = "" + (totalInto - totalOut);
 		map = new HashMap<String, String>();
 		map.put("txtCalculationName", "预算余额:");
 		map.put("txtMoney", textBalance);

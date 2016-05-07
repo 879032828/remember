@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
 
+import com.seventh.base.BaseActivity;
 import com.seventh.db.Account;
 import com.seventh.db.AccountDBdao;
 import com.seventh.view.CornerListView;
@@ -20,9 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
-
-
-public class SpecificData extends Activity {
+public class SpecificData extends BaseActivity {
 	private Intent intent = null;// 定义一个意图
 	private String name;// 账号
 	private String title;// 标题
@@ -33,7 +32,7 @@ public class SpecificData extends Activity {
 	private String time1;
 	private String time2;
 	private String time3;
-	
+
 	private CornerListView cornerListView = null;// 数据报表
 	private List<Account> accounts;// 账单数据
 	private LayoutInflater inflater;
@@ -42,15 +41,17 @@ public class SpecificData extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_specific_data);
+		baseSetContentView(R.layout.activity_specific_data);
 
 		intent = this.getIntent();
 		name = intent.getStringExtra("name");// 接收主界面的数据
 		title = intent.getStringExtra("title");// 接收主界面的数据
 
+		setHideleftButton("收入总额");//设置返回箭头
+		setHideaddButton_right();
+		
 		// 设置标题
-		mTextViewTime = (TextView) this
-				.findViewById(R.id.tv_specific_data_txtDataRange);
+		mTextViewTime = (TextView) this.findViewById(R.id.tv_specific_data_txtDataRange);
 		mTextViewTime.setText(title);
 
 		accountDBdao = new AccountDBdao(getApplicationContext());
@@ -75,8 +76,7 @@ public class SpecificData extends Activity {
 		cornerListView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				Account account = accounts.get(arg2);
 				GoMoreAction(account.getId(), name);
 
@@ -141,12 +141,9 @@ public class SpecificData extends Activity {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			View view = inflater.inflate(R.layout.specific_data_data, null);
 			Account account = accounts.get(position);
-			TextView tv_text1 = (TextView) view
-					.findViewById(R.id.ls_sp_tv_time);
-			TextView tv_text2 = (TextView) view
-					.findViewById(R.id.ls_sp_tv_type);
-			TextView tv_text3 = (TextView) view
-					.findViewById(R.id.ls_sp_tv_money);
+			TextView tv_text1 = (TextView) view.findViewById(R.id.ls_sp_tv_time);
+			TextView tv_text2 = (TextView) view.findViewById(R.id.ls_sp_tv_type);
+			TextView tv_text3 = (TextView) view.findViewById(R.id.ls_sp_tv_money);
 			tv_text1.setText("时间 :" + account.getTime());
 			tv_text2.setText("类型: " + account.getType());
 			tv_text3.setText("金额:" + account.getMoney() + "");
@@ -159,7 +156,7 @@ public class SpecificData extends Activity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		
+
 		GetData();
 
 		// 填充listview的数据

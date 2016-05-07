@@ -19,7 +19,7 @@
     <string name="main_lable_cancel">用户退出</string>
     <string name="main_label_ok">确定</string>
     <string name="main_timeWorry">时间错误了！</string>
-    <string name="main_addnodes">记一记今天账目明细吧~~GO!</string>
+    <string name="main_addnodes">先记着</string>
     <string name="main_update">修改用户信息</string>
     <string name="update_msg">修改账单信息</string>
     <string name="main_totalrevenue">总收入金额：</string>

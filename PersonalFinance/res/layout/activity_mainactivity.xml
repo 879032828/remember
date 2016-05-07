@@ -1,106 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/background_login"
-    android:orientation="horizontal" >
+    android:orientation="vertical" >
 
     <LinearLayout
-        android:id="@+id/layout_left"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginRight="50dip"
-        android:background="@drawable/background_login"
-        android:orientation="vertical" >
+        android:orientation="vertical" 
+        android:layout_weight="1">
+
+        <ListView 
+            android:id="@+id/lv_main_calculation"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:layout_marginBottom="1dp"
+            android:listSelector="@drawable/list_item_selector">
+            
+        </ListView>
+        
+        <!--  
+        <com.seventh.view.CornerListView
+            android:id="@+id/lv_main_calculation"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="2"
+            android:cacheColorHint="#AAFF7B" 
+            android:layout_marginBottom="1dp">
+        </com.seventh.view.CornerListView> -->
     </LinearLayout>
-
+    
     <LinearLayout
-        android:id="@+id/layout_right"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:background="@drawable/background_login"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
         android:orientation="vertical" >
-
-        <LinearLayout
-            android:id="@+id/lly_main"
-            android:layout_width="fill_parent"
-            android:layout_height="160dip"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
-            android:layout_marginTop="10dip"
-            android:background="@drawable/background_login_div_bg"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/tv_main_time"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dip"
-                android:text="@string/main_timeWorry"
-                android:textStyle="bold" />
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_marginBottom="5dip"
-                android:layout_marginLeft="5dip"
-                android:layout_marginRight="5dip"
-                android:layout_marginTop="5dip"
-                android:orientation="horizontal" >
-
-                <com.seventh.view.CornerListView
-                    android:id="@+id/lv_main_calculation"
-                    android:layout_width="0dp"
-                    android:layout_height="fill_parent"
-                    android:layout_gravity="center"
-                    android:layout_weight="2"
-                    android:cacheColorHint="#AAFF7B" >
-                </com.seventh.view.CornerListView>
-            </LinearLayout>
-        </LinearLayout>
 
         <Button
             android:id="@+id/bt_main_addnotes"
             android:layout_width="fill_parent"
-            android:layout_height="30dip"
-            android:layout_below="@+id/lly_main"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dip"
             android:layout_marginRight="10dip"
             android:layout_marginTop="10dip"
-            android:background="@drawable/background_main_button"
             android:text="@string/main_addnodes"
             android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/bt_main_update"
-            android:layout_width="fill_parent"
-            android:layout_height="30dip"
-            android:layout_below="@+id/lly_main"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
-            android:layout_marginTop="10dip"
-            android:background="@drawable/background_main_button"
-            android:gravity="center"
-            android:text="@string/main_update"
-            android:textSize="20dip"
-            android:textStyle="bold" />
-
-        <com.seventh.view.CornerListView
-            android:id="@+id/lv_main_datareport"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/bt_main_addnotes"
-            android:layout_gravity="center"
-            android:layout_marginTop="15dip"
-            android:cacheColorHint="#AAFF7B" >
-        </com.seventh.view.CornerListView>
-
-        <Button
-            android:id="@+id/button1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Button" />
-
     </LinearLayout>
 
-</RelativeLayout>
+    
+
+</LinearLayout>
