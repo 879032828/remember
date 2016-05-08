@@ -8,7 +8,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-
 public class AccountDBdao {
 	private Context context;
 	MyDBOpenHelper dbOpenHelper;
@@ -21,11 +20,11 @@ public class AccountDBdao {
 	/**
 	 * 添加一条记录
 	 */
-	public void add(String time, float money, String type, boolean earnings,
-			String remark, String name) {
+	public void add(String time, float money, String type, boolean earnings, String remark, String name) {
 		SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
 		if (db.isOpen()) {
-			// db.execSQL("insert into account (time,money,type,earnings,remark,name) values (?,?,?,?,?,?)",new
+			// db.execSQL("insert into account
+			// (time,money,type,earnings,remark,name) values (?,?,?,?,?,?)",new
 			// Object[]{time,money,type,earnings,remark,name});
 			ContentValues values = new ContentValues();
 			values.put("time", time);// 交易时间
@@ -54,8 +53,7 @@ public class AccountDBdao {
 	/**
 	 * 数据库的更改操作
 	 */
-	public void update(String accountid, String time, float money, String type,
-			boolean earnings, String remark) {
+	public void update(String accountid, String time, float money, String type, boolean earnings, String remark) {
 		SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
 		if (db.isOpen()) {
 			ContentValues values = new ContentValues();
@@ -64,8 +62,7 @@ public class AccountDBdao {
 			values.put("type", type);// 类型
 			values.put("earnings", earnings);// 是否收益
 			values.put("remark", remark);// 备注
-			db.update("account", values, "accountid=?",
-					new String[] { accountid });
+			db.update("account", values, "accountid=?", new String[] { accountid });
 			db.close();
 		}
 	}
@@ -78,8 +75,7 @@ public class AccountDBdao {
 		SQLiteDatabase db = dbOpenHelper.getReadableDatabase();
 		if (db.isOpen()) {
 			// select * from person
-			Cursor cursor = db.query("account", null, "name=?",
-					new String[] { name }, null, null, null);
+			Cursor cursor = db.query("account", null, "name=?", new String[] { name }, null, null, null);
 			if (cursor.moveToFirst()) {
 				result = true;
 			}
@@ -97,8 +93,7 @@ public class AccountDBdao {
 		List<Account> accounts = null;
 		SQLiteDatabase db = dbOpenHelper.getReadableDatabase();
 		if (db.isOpen()) {
-			Cursor cursor = db.query("account", null, null, null, null, null,
-					null);
+			Cursor cursor = db.query("account", null, null, null, null, null, null);
 			accounts = new ArrayList<Account>();
 			while (cursor.moveToNext()) {
 				Account account = new Account();
@@ -106,22 +101,19 @@ public class AccountDBdao {
 				account.setId(id);
 				String name = cursor.getString(cursor.getColumnIndex("name"));
 				account.setName(name);
-				float money = Float.parseFloat(cursor.getString(cursor
-						.getColumnIndex("money")));
+				float money = Float.parseFloat(cursor.getString(cursor.getColumnIndex("money")));
 				account.setMoney(money);
 				String time = cursor.getString(cursor.getColumnIndex("time"));
 				account.setTime(time);
 				String type = cursor.getString(cursor.getColumnIndex("type"));
 				account.setType(type);
-				long earnings = cursor.getLong(cursor
-						.getColumnIndex("earnings"));
+				long earnings = cursor.getLong(cursor.getColumnIndex("earnings"));
 				if (earnings == 0) {
 					account.setEarnings(false);
 				} else {
 					account.setEarnings(true);
 				}
-				String remark = cursor.getString(cursor
-						.getColumnIndex("remark"));
+				String remark = cursor.getString(cursor.getColumnIndex("remark"));
 				account.setRemark(remark);
 				accounts.add(account);
 			}
@@ -138,8 +130,7 @@ public class AccountDBdao {
 		List<Account> accounts = null;
 		SQLiteDatabase db = dbOpenHelper.getReadableDatabase();
 		if (db.isOpen()) {
-			Cursor cursor = db.rawQuery("select * from account where name=?",
-					new String[] { userName });
+			Cursor cursor = db.rawQuery("select * from account where name=?", new String[] { userName });
 			accounts = new ArrayList<Account>();
 			while (cursor.moveToNext()) {
 				Account account = new Account();
@@ -147,22 +138,19 @@ public class AccountDBdao {
 				account.setId(id);
 				String name = cursor.getString(cursor.getColumnIndex("name"));
 				account.setName(name);
-				float money = Float.parseFloat(cursor.getString(cursor
-						.getColumnIndex("money")));
+				float money = Float.parseFloat(cursor.getString(cursor.getColumnIndex("money")));
 				account.setMoney(money);
 				String time = cursor.getString(cursor.getColumnIndex("time"));
 				account.setTime(time);
 				String type = cursor.getString(cursor.getColumnIndex("type"));
 				account.setType(type);
-				long earnings = cursor.getLong(cursor
-						.getColumnIndex("earnings"));
+				long earnings = cursor.getLong(cursor.getColumnIndex("earnings"));
 				if (earnings == 0) {
 					account.setEarnings(false);
 				} else {
 					account.setEarnings(true);
 				}
-				String remark = cursor.getString(cursor
-						.getColumnIndex("remark"));
+				String remark = cursor.getString(cursor.getColumnIndex("remark"));
 				account.setRemark(remark);
 				accounts.add(account);
 			}
@@ -221,9 +209,7 @@ public class AccountDBdao {
 		List<Account> accounts = null;
 		SQLiteDatabase db = dbOpenHelper.getReadableDatabase();
 		if (db.isOpen()) {
-			Cursor cursor = db.rawQuery(
-					"select * from account where earnings=0 and name=?",
-					new String[] { userName });
+			Cursor cursor = db.rawQuery("select * from account where earnings=0 and name=?", new String[] { userName });
 			accounts = new ArrayList<Account>();
 			while (cursor.moveToNext()) {
 				Account account = new Account();
@@ -231,22 +217,19 @@ public class AccountDBdao {
 				account.setId(id);
 				String name = cursor.getString(cursor.getColumnIndex("name"));
 				account.setName(name);
-				float money = Float.parseFloat(cursor.getString(cursor
-						.getColumnIndex("money")));
+				float money = Float.parseFloat(cursor.getString(cursor.getColumnIndex("money")));
 				account.setMoney(money);
 				String time = cursor.getString(cursor.getColumnIndex("time"));
 				account.setTime(time);
 				String type = cursor.getString(cursor.getColumnIndex("type"));
 				account.setType(type);
-				long earnings = cursor.getLong(cursor
-						.getColumnIndex("earnings"));
+				long earnings = cursor.getLong(cursor.getColumnIndex("earnings"));
 				if (earnings == 0) {
 					account.setEarnings(false);
 				} else {
 					account.setEarnings(true);
 				}
-				String remark = cursor.getString(cursor
-						.getColumnIndex("remark"));
+				String remark = cursor.getString(cursor.getColumnIndex("remark"));
 				account.setRemark(remark);
 				accounts.add(account);
 			}
@@ -263,8 +246,7 @@ public class AccountDBdao {
 		List<Account> accounts = null;
 		SQLiteDatabase db = dbOpenHelper.getReadableDatabase();
 		if (db.isOpen()) {
-			Cursor cursor = db.rawQuery(
-					"select * from account where name=? and time like ?",
+			Cursor cursor = db.rawQuery("select * from account where name=? and time like ?",
 					new String[] { userName, sometime });
 			accounts = new ArrayList<Account>();
 			while (cursor.moveToNext()) {
@@ -273,22 +255,19 @@ public class AccountDBdao {
 				account.setId(id);
 				String name = cursor.getString(cursor.getColumnIndex("name"));
 				account.setName(name);
-				float money = Float.parseFloat(cursor.getString(cursor
-						.getColumnIndex("money")));
+				float money = Float.parseFloat(cursor.getString(cursor.getColumnIndex("money")));
 				account.setMoney(money);
 				String time = cursor.getString(cursor.getColumnIndex("time"));
 				account.setTime(time);
 				String type = cursor.getString(cursor.getColumnIndex("type"));
 				account.setType(type);
-				long earnings = cursor.getLong(cursor
-						.getColumnIndex("earnings"));
+				long earnings = cursor.getLong(cursor.getColumnIndex("earnings"));
 				if (earnings == 0) {
 					account.setEarnings(false);
 				} else {
 					account.setEarnings(true);
 				}
-				String remark = cursor.getString(cursor
-						.getColumnIndex("remark"));
+				String remark = cursor.getString(cursor.getColumnIndex("remark"));
 				account.setRemark(remark);
 				accounts.add(account);
 			}
@@ -308,10 +287,8 @@ public class AccountDBdao {
 			 * Cursor cursor = db.query("person", null, null, null, null, null,
 			 * null);
 			 */
-			Cursor cursor = db
-					.rawQuery(
-							"select accountid  as _id ,name ,time ,money ,type ,earnings ,remark  from account",
-							null);
+			Cursor cursor = db.rawQuery(
+					"select accountid  as _id ,name ,time ,money ,type ,earnings ,remark  from account", null);
 
 			return cursor;
 			// 注意了 一定不要把数据库 关闭了
@@ -325,10 +302,8 @@ public class AccountDBdao {
 	public float fillTotalInto(String name) {
 		SQLiteDatabase db = dbOpenHelper.getReadableDatabase();
 		if (db.isOpen()) {
-			Cursor cursor = db
-					.rawQuery(
-							"select sum(money) as sumvalue from account where earnings=1 and name=?",
-							new String[] { name });
+			Cursor cursor = db.rawQuery("select sum(money) as sumvalue from account where earnings=1 and name=?",
+					new String[] { name });
 			while (cursor.moveToNext()) {
 				return cursor.getFloat(cursor.getColumnIndex("sumvalue"));
 			}
@@ -344,10 +319,8 @@ public class AccountDBdao {
 	public float fillTotalOut(String name) {
 		SQLiteDatabase db = dbOpenHelper.getReadableDatabase();
 		if (db.isOpen()) {
-			Cursor cursor = db
-					.rawQuery(
-							"select sum(money) as sumvalue from account where earnings=0 and name=?",
-							new String[] { name });
+			Cursor cursor = db.rawQuery("select sum(money) as sumvalue from account where earnings=0 and name=?",
+					new String[] { name });
 			while (cursor.moveToNext()) {
 				return cursor.getFloat(cursor.getColumnIndex("sumvalue"));
 			}
@@ -363,10 +336,9 @@ public class AccountDBdao {
 	public float fillTodayOut(String name, String time) {
 		SQLiteDatabase db = dbOpenHelper.getReadableDatabase();
 		if (db.isOpen()) {
-			Cursor cursor = db
-					.rawQuery(
-							"select sum(money) as sumvalue from account where earnings=0 and name=? and time=?",
-							new String[] { name, time });
+			Cursor cursor = db.rawQuery(
+					"select sum(money) as sumvalue from account where earnings=0 and name=? and time=?",
+					new String[] { name, time });
 			while (cursor.moveToNext()) {
 				return cursor.getFloat(cursor.getColumnIndex("sumvalue"));
 			}
@@ -382,10 +354,9 @@ public class AccountDBdao {
 	public float fillTodayInto(String name, String time) {
 		SQLiteDatabase db = dbOpenHelper.getReadableDatabase();
 		if (db.isOpen()) {
-			Cursor cursor = db
-					.rawQuery(
-							"select sum(money) as sumvalue from account where earnings=1 and name=? and time=?",
-							new String[] { name, time });
+			Cursor cursor = db.rawQuery(
+					"select sum(money) as sumvalue from account where earnings=1 and name=? and time=?",
+					new String[] { name, time });
 			while (cursor.moveToNext()) {
 				return cursor.getFloat(cursor.getColumnIndex("sumvalue"));
 			}
@@ -401,10 +372,9 @@ public class AccountDBdao {
 	public float fillMonthOut(String name, String time) {
 		SQLiteDatabase db = dbOpenHelper.getReadableDatabase();
 		if (db.isOpen()) {
-			Cursor cursor = db
-					.rawQuery(
-							"select sum(money) as sumvalue from account where earnings=0 and name=? and time like ?",
-							new String[] { name, time });
+			Cursor cursor = db.rawQuery(
+					"select sum(money) as sumvalue from account where earnings=0 and name=? and time like ?",
+					new String[] { name, time });
 			while (cursor.moveToNext()) {
 				return cursor.getFloat(cursor.getColumnIndex("sumvalue"));
 			}
@@ -420,10 +390,9 @@ public class AccountDBdao {
 	public float fillMonthInto(String name, String time) {
 		SQLiteDatabase db = dbOpenHelper.getReadableDatabase();
 		if (db.isOpen()) {
-			Cursor cursor = db
-					.rawQuery(
-							"select sum(money) as sumvalue from account where earnings=1 and name=? and time like ?",
-							new String[] { name, time });
+			Cursor cursor = db.rawQuery(
+					"select sum(money) as sumvalue from account where earnings=1 and name=? and time like ?",
+					new String[] { name, time });
 			while (cursor.moveToNext()) {
 				return cursor.getFloat(cursor.getColumnIndex("sumvalue"));
 			}
@@ -439,10 +408,9 @@ public class AccountDBdao {
 	public float fillYearOut(String name, String time) {
 		SQLiteDatabase db = dbOpenHelper.getReadableDatabase();
 		if (db.isOpen()) {
-			Cursor cursor = db
-					.rawQuery(
-							"select sum(money) as sumvalue from account where earnings=0 and name=? and time like ?",
-							new String[] { name, time });
+			Cursor cursor = db.rawQuery(
+					"select sum(money) as sumvalue from account where earnings=0 and name=? and time like ?",
+					new String[] { name, time });
 			while (cursor.moveToNext()) {
 				return cursor.getFloat(cursor.getColumnIndex("sumvalue"));
 			}
@@ -458,10 +426,9 @@ public class AccountDBdao {
 	public float fillYearInto(String name, String time) {
 		SQLiteDatabase db = dbOpenHelper.getReadableDatabase();
 		if (db.isOpen()) {
-			Cursor cursor = db
-					.rawQuery(
-							"select sum(money) as sumvalue from account where earnings=1 and name=? and time like ?",
-							new String[] { name, time });
+			Cursor cursor = db.rawQuery(
+					"select sum(money) as sumvalue from account where earnings=1 and name=? and time like ?",
+					new String[] { name, time });
 			while (cursor.moveToNext()) {
 				return cursor.getFloat(cursor.getColumnIndex("sumvalue"));
 			}
@@ -470,7 +437,7 @@ public class AccountDBdao {
 		}
 		return 0;
 	}
-	
+
 	/**
 	 * 根据id查询记录信息
 	 */
@@ -478,30 +445,26 @@ public class AccountDBdao {
 		Account account = null;
 		SQLiteDatabase db = dbOpenHelper.getReadableDatabase();
 		if (db.isOpen()) {
-			Cursor cursor = db.rawQuery("select * from account where accountid=?",
-					new String[] { accountid });
+			Cursor cursor = db.rawQuery("select * from account where accountid=?", new String[] { accountid });
 			while (cursor.moveToNext()) {
 				account = new Account();
 				int id = cursor.getInt(cursor.getColumnIndex("accountid"));
 				account.setId(id);
 				String name = cursor.getString(cursor.getColumnIndex("name"));
 				account.setName(name);
-				float money = Float.parseFloat(cursor.getString(cursor
-						.getColumnIndex("money")));
+				float money = Float.parseFloat(cursor.getString(cursor.getColumnIndex("money")));
 				account.setMoney(money);
 				String time = cursor.getString(cursor.getColumnIndex("time"));
 				account.setTime(time);
 				String type = cursor.getString(cursor.getColumnIndex("type"));
 				account.setType(type);
-				long earnings = cursor.getLong(cursor
-						.getColumnIndex("earnings"));
+				long earnings = cursor.getLong(cursor.getColumnIndex("earnings"));
 				if (earnings == 0) {
 					account.setEarnings(false);
 				} else {
 					account.setEarnings(true);
 				}
-				String remark = cursor.getString(cursor
-						.getColumnIndex("remark"));
+				String remark = cursor.getString(cursor.getColumnIndex("remark"));
 				account.setRemark(remark);
 			}
 			cursor.close();

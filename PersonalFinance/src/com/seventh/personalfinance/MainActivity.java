@@ -40,6 +40,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
+import com.seventh.util.*;
+
 public class MainActivity extends BaseActivity implements OnClickListener, OnTouchListener {
 	private Intent intent = null;// 定义一个意图
 	private String name;// 账号
@@ -173,7 +175,7 @@ public class MainActivity extends BaseActivity implements OnClickListener, OnTou
 	public void TotalIntoData() {
 		intent = new Intent(this, SpecificData.class);
 		intent.putExtra("name", name);
-		intent.putExtra("title", "收入账单");
+		intent.putExtra("title", "收入总额");
 		startActivity(intent);
 	}
 
@@ -181,7 +183,7 @@ public class MainActivity extends BaseActivity implements OnClickListener, OnTou
 	public void TotalOutData() {
 		intent = new Intent(this, SpecificData.class);
 		intent.putExtra("name", name);
-		intent.putExtra("title", "支出账单");
+		intent.putExtra("title", "支出总额");
 		startActivity(intent);
 	}
 
@@ -218,14 +220,14 @@ public class MainActivity extends BaseActivity implements OnClickListener, OnTou
 	}
 
 	// 设置时间
-	public String GetTime() {
-		Calendar c = Calendar.getInstance(TimeZone.getTimeZone("GMT+08:00")); // 获取东八区时间
-		int year = c.get(Calendar.YEAR); // 获取年
-		int month = c.get(Calendar.MONTH) + 1; // 获取月份，0表示1月份
-		int day = c.get(Calendar.DAY_OF_MONTH); // 获取当前天数
-		String time = year + "/" + month + "/" + day;
-		return time;
-	}
+//	public String GetTime() {
+//		Calendar c = Calendar.getInstance(TimeZone.getTimeZone("GMT+08:00")); // 获取东八区时间
+//		int year = c.get(Calendar.YEAR); // 获取年
+//		int month = c.get(Calendar.MONTH) + 1; // 获取月份，0表示1月份
+//		int day = c.get(Calendar.DAY_OF_MONTH); // 获取当前天数
+//		String time = year + "/" + month + "/" + day;
+//		return time;
+//	}
 
 	// listview2适配器
 	private class MyAdapter extends BaseAdapter {

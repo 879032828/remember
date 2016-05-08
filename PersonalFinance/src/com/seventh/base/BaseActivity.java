@@ -86,9 +86,6 @@ public class BaseActivity extends Activity {
 		
 	}
 	
-
-
-	
 	/**
 	 * 设置Button可见
 	 */
@@ -118,7 +115,7 @@ public class BaseActivity extends Activity {
 			addButton_left.setOnClickListener(onClickListener);
 			break;
 		case "右加按钮":
-			addButton_left.setOnClickListener(onClickListener);
+			addButton_right.setOnClickListener(onClickListener);
 		case "设置按钮":
 			setting.setOnClickListener(onClickListener);
 		default:

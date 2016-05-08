@@ -8,12 +8,14 @@ import com.seventh.base.BaseActivity;
 import com.seventh.db.Account;
 import com.seventh.db.AccountDBdao;
 import com.seventh.view.CornerListView;
+import com.seventh.util.*;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
@@ -26,8 +28,6 @@ public class SpecificData extends BaseActivity {
 	private String name;// 账号
 	private String title;// 标题
 	AccountDBdao accountDBdao;// 数据库
-
-	private TextView mTextViewTime;// 标题
 
 	private String time1;
 	private String time2;
@@ -47,15 +47,29 @@ public class SpecificData extends BaseActivity {
 		name = intent.getStringExtra("name");// 接收主界面的数据
 		title = intent.getStringExtra("title");// 接收主界面的数据
 
-		setHideleftButton("收入总额");//设置返回箭头
-		setHideaddButton_right();
+		setHideleftButton(title);//设置返回箭头
+		setHideaddButton_right();//设置右加按钮
+		setButtonOnClickListener("右加按钮", new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				switch (title) {
+				case "收入总额":
+					Intent intent = new Intent(SpecificData.this, AddRecordActivity.class);
+					intent.putExtra("name", name);
+					intent.putExtra("title", "添加收入记录");
+					startActivity(intent);
+					break;
+				default:
+					break;
+				}
+			}
+		});
 		
-		// 设置标题
-		mTextViewTime = (TextView) this.findViewById(R.id.tv_specific_data_txtDataRange);
-		mTextViewTime.setText(title);
-
 		accountDBdao = new AccountDBdao(getApplicationContext());
 
+		
 		// 时间
 		Calendar c = Calendar.getInstance(TimeZone.getTimeZone("GMT+08:00")); // 获取东八区时间
 		int year = c.get(Calendar.YEAR); // 获取年
@@ -96,7 +110,7 @@ public class SpecificData extends BaseActivity {
 	// 获取数据
 	private void GetData() {
 		try {
-			if (title.equals("收入账单")) {
+			if (title.equals("收入总额")) {
 				accounts = accountDBdao.findTotalIntoByName(name);
 			} else if (title.equals("支出账单")) {
 				accounts = accountDBdao.findTotalOutByName(name);
