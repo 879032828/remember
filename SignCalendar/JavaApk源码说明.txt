@@ -1,0 +1,19 @@
+本项目是一个基于安卓的日历签到例子源码，ui界面美观大方，标记清晰。二次开发价值大。可用于移植到oa或者其他需要签到计时的项目中。www.javaapk.com之前也介绍过很多关于安卓的自定义日历控件，可以在例子大全里一次性下载。http://www.javaapk.com/demo/mulu
+                ╔═══════════════╗
+                ║       安卓源码服务专家       ║
+  ╔══════╣───────────────╠══════╗
+  ║            ║    http://www.javaapk.com    ║            ║
+  ║            ╚═══════════════╝            ║
+　║                                                          ║
+　║JavaApk声明：                                             ║
+  ║   1) 程序如果跑不起来需要自调，javaapk做船但不帮您扬帆。 ║
+  ║   2) 免费例子大全http://www.javaapk.com/demo不定期更新。 ║
+  ║   3) 如有版权争议欢迎随时联系javaapk。                   ║
+  ║   4) 源码仅限学习交流，切勿移作他用。                    ║
+  ║   5) 转载请保留本源码说明，赠人玫瑰，手留余香。          ║
+　║                                                          ║
+  ║           JavaApk —— 安卓源码服务专家                  ║
+  ║           联系方式 :QQ18805870  javaapk@qq.com           ║
+  ║    ╔═══════════════════════╗    ║
+  ╚══╣    安卓源码专业站 http://www.JavaApk.com     ╠══╝
+        ╚═══════════════════════╝

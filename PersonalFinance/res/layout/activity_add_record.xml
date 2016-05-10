@@ -35,7 +35,7 @@
             </TextView>
 
             <EditText
-                android:id="@+id/bankingYourNameEditText"
+                android:id="@+id/MoneySetting"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_gravity="center_vertical"
@@ -64,7 +64,7 @@
                 android:textSize="16dp" />
 
             <EditText
-                android:id="@+id/bankingContactTelEditText"
+                android:id="@+id/TimeSetting"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -95,7 +95,7 @@
             </TextView>
 
             <EditText
-                android:id="@+id/ted"
+                android:id="@+id/RemarkSetting"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
