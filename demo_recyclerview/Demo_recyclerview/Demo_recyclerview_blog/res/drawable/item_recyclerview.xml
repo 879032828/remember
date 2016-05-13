@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 没有焦点时的背景 -->
+    <item android:drawable="@drawable/item_bg_textview" android:state_window_focused="false"></item>
+    <!-- 获得焦点时的背景 -->
+    <item android:drawable="@drawable/item_bg_textview_focused" android:state_focused="true"></item>
+    <!-- 选中时的背景 -->
+    <item android:drawable="@drawable/item_bg_textview_focused" android:state_selected="true"></item>
+    <!-- 未选中时的背景 -->
+    <item android:drawable="@drawable/item_bg_textview" android:state_selected="true"></item>
+
+</selector>

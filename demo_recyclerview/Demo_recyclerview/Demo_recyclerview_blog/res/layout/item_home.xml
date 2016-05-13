@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <Button
+        android:id="@+id/id_num"
+        android:layout_width="70dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/item_bg_textview"
+        android:textColor="@color/gray_text"
+        android:gravity="center"
+        android:textSize="13dp" />
+
+    <ImageButton
+        android:id="@+id/id_image"
+        android:layout_width="70dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/item_bg_textview"
+        android:gravity="center"
+        android:src="@drawable/plus_24_24"
+        android:visibility="gone" />
+
+</FrameLayout>
