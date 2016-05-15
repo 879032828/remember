@@ -8,5 +8,11 @@
     <color name="transparent">#9000</color>
     <color name="gray">#dcdcdc</color>
     <color name="black">#000000</color>
+    
+
+    <!-- RecyclerView -->
+    <color name="gray_frame">#c3c1c1</color>
+    <color name="gray_text">#8c8a8a</color>
+    <color name="gray_backgroud">#c6c6c6</color>
 
 </resources>

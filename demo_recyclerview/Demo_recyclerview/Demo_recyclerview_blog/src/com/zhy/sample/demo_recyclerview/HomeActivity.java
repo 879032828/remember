@@ -38,6 +38,7 @@ public class HomeActivity extends Activity {
 
 		// mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(4,
 		// StaggeredGridLayoutManager.VERTICAL));
+		//设置为gridview布局
 		mRecyclerView.setLayoutManager(new GridLayoutManager(this, 4));
 		mRecyclerView.setAdapter(mAdapter);
 

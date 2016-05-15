@@ -2,7 +2,6 @@ package com.seventh.base;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.v7.widget.Toolbar;
 
 import com.seventh.personalfinance.R;
 import com.seventh.personalfinance.R.id;

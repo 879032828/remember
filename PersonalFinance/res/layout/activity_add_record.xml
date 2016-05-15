@@ -41,9 +41,16 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:background="@null"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:hint="记录金额"
+                android:inputType="numberDecimal"
+                android:maxLength="6"
                 android:singleLine="true"
                 android:textColorHint="@color/gray" >
+
+                <!-- 第一个<requestFocus />会获得焦点 -->
+                <requestFocus />
             </EditText>
         </TableRow>
         <!-- 表格布局：第二行 -->
@@ -70,9 +77,9 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:background="@null"
+                android:inputType="none"
                 android:singleLine="true" >
 
-                <requestFocus />
             </EditText>
         </TableRow>
 
@@ -107,5 +114,18 @@
             </EditText>
         </TableRow>
     </TableLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/id_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dip"
+            android:overScrollMode="never" />
+    </LinearLayout>
 
 </LinearLayout>
