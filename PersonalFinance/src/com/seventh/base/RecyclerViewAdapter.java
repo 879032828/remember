@@ -22,6 +22,14 @@ import com.seventh.personalfinance.R;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
 
 	private List<String> mDatas;
+	public List<String> getmDatas() {
+		return mDatas;
+	}
+
+	public void setmDatas(List<String> mDatas) {
+		this.mDatas = mDatas;
+	}
+
 	private LayoutInflater mInflater;
 	private Context context;
 

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.seventh.db.Type;
 
+import android.R.integer;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -13,35 +14,110 @@ public class TypeDBdao {
 
 	private Context context;
 	MyDBOpenHelper dbOpenHelper;
-	
-	public TypeDBdao(Context context){
+
+	public TypeDBdao(Context context) {
 		this.context = context;
 		dbOpenHelper = new MyDBOpenHelper(context);
 	}
-	
-	public void addNewType(List<Type> types, String name){
-		
-	}
-	
-	
-	/**
+
+	/*
+	 * 1
+	 * 
 	 * @param name
-	 * @param type
-	 * 根据姓名和收支类型查找对应的所有类型
+	 * 
+	 * @param type 0代表收入，1代表支出 根据姓名和收支类型查找对应的所有类型
 	 */
-	public void findAllType(String name, Boolean type){
+	public List<Type> findAllType(String name, String type) {
 		List<Type> TypeCount = null;
 		SQLiteDatabase db = dbOpenHelper.getReadableDatabase();
-		if(db.isOpen()){
-			Cursor cursor = db.rawQuery("select * from type where name=? and type = true", new String[] { name});
+		if (db.isOpen()) {
+			Cursor cursor = db.rawQuery("select * from type where name=? and type = ?", new String[] { name, type});
 			TypeCount = new ArrayList<Type>();
-			while(cursor.moveToNext()){
+			while (cursor.moveToNext()) {
 				Type type2 = new Type();
+				// 获取typeid
 				int id = cursor.getInt(cursor.getColumnIndex("typeid"));
 				type2.setTypeid(id);
-				Boolean types = cursor.get
+				// 获取收支标识
+				int types = cursor.getInt(cursor.getColumnIndex("type"));
+				type2.setType(types);
+				// 获取收支类型名称
+				String typename = cursor.getString(cursor.getColumnIndex("typename"));
+				type2.setTypename(typename);
+				String nameString = cursor.getString(cursor.getColumnIndex("name"));
+				type2.setName(nameString);
+				TypeCount.add(type2);
 			}
 		}
+		return TypeCount;
 	}
-	
+
+	/*
+	 * 2
+	 * 
+	 * @param types 设置默认值，主要用于初始化类型选择列表时，将默认值存储到数据库中
+	 */
+	public void setDefault(List<String> types, String name) {
+		SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
+		if (db.isOpen()) {
+			for (String type : types) {
+				db.execSQL("insert into type(type,typename,name) values (?,?,?)", new Object[] { 0, type, name });
+			}
+			db.close();
+		}
+	}
+
+	/**
+	 * 
+	 * 3
+	 * 
+	 * @param type
+	 * @param name
+	 * @param typename
+	 * @return 判断类型是否存在
+	 */
+	public Boolean isExist(String type, String name, String typename) {
+		SQLiteDatabase db = dbOpenHelper.getReadableDatabase();
+		if (db.isOpen()) {
+			Cursor cursor = db.rawQuery("select * from type where type = ? and name = ? and typename = ?",
+					new String[] { type, name, typename });
+			if (cursor.getCount() != 0) {
+				db.close();
+				return true;
+			} else {
+				return false;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * @param type
+	 * @param typename
+	 * @param name
+	 *            添加一条记录
+	 */
+	public void addRecord(String type, String typename, String name) {
+		SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
+		if (db.isOpen()) {
+			db.execSQL("insert into type(type,typename,name) values (?,?,?)", new Object[] { type, typename, name });
+			db.close();
+		}
+	}
+
+	/**
+	 * 
+	 * 
+	 * 
+	 * @param TypeCount
+	 * @return 获取收入类型的字符串集合
+	 */
+	public List<String> toListString(List<Type> TypeCount) {
+		List<String> typename = new ArrayList<String>();
+		for (Type type : TypeCount) {
+			typename.add(type.getTypename());
+		}
+		return typename;
+	}
+
 }

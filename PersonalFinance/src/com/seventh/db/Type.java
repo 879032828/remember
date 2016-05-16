@@ -3,7 +3,7 @@ package com.seventh.db;
 public class Type {
 
 	private int typeid;
-	private Boolean type;
+	private int type;
 	private String typename;
 	private String name;
 
@@ -15,11 +15,11 @@ public class Type {
 		this.typeid = typeid;
 	}
 
-	public Boolean getType() {
+	public int getType() {
 		return type;
 	}
 
-	public void setType(Boolean type) {
+	public void setType(int type) {
 		this.type = type;
 	}
 

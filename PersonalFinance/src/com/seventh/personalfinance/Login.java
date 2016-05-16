@@ -2,6 +2,7 @@ package com.seventh.personalfinance;
 
 import com.seventh.db.Person;
 import com.seventh.db.PersonDBdao;
+import com.seventh.db.TypeDBdao;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -22,21 +23,20 @@ public class Login extends Activity implements OnClickListener {
 	private Person person;
 	private EditText mEditTextName;// 账号
 	private EditText mEditTextPwd;// 密码
-	private Button mButtonOK;//登录按钮
-	private Button mButtonCancel;//取消按钮
-	private Button mButtonRegister;//注册按钮
+	private Button mButtonOK;// 登录按钮
+	private Button mButtonCancel;// 取消按钮
+	private Button mButtonRegister;// 注册按钮
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);// 去掉标题
 		setContentView(R.layout.activity_login);
-		
+
 		LoginOk();
 		initView();
 	}
 
-	
 	/**
 	 * 初始化视图控件
 	 */
@@ -46,7 +46,7 @@ public class Login extends Activity implements OnClickListener {
 		mButtonOK = (Button) this.findViewById(R.id.bt_login_ok);
 		mButtonCancel = (Button) this.findViewById(R.id.bt_login_cancel);
 		mButtonRegister = (Button) this.findViewById(R.id.tv_login_register_link);
-		
+
 		mButtonOK.setOnClickListener(this);
 		mButtonCancel.setOnClickListener(this);
 		mButtonRegister.setOnClickListener(this);

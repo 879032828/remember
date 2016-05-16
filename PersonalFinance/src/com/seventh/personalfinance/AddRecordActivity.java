@@ -6,6 +6,8 @@ import java.util.List;
 
 import com.seventh.base.BaseActivity;
 import com.seventh.base.RecyclerViewAdapter;
+import com.seventh.db.Type;
+import com.seventh.db.TypeDBdao;
 import com.seventh.util.TimeUtil;
 
 import android.app.Activity;
@@ -43,6 +45,9 @@ public class AddRecordActivity extends BaseActivity {
 	private RecyclerViewAdapter mAdapter;
 	private Button dialog_cannle, dialog_sure;
 
+	private String name;
+	TypeDBdao typeDBdao;
+
 	// 时间选择请求码
 	private static final int Time_requestCode = 0;
 
@@ -52,6 +57,9 @@ public class AddRecordActivity extends BaseActivity {
 		baseSetContentView(R.layout.activity_add_record);
 		setHideleftButton("添加收入记录");
 		setHideaddButton_right();
+		
+		Intent intent = getIntent();
+		name = intent.getStringExtra("name");
 
 		initData();
 		initView();
@@ -62,7 +70,7 @@ public class AddRecordActivity extends BaseActivity {
 		mRecyclerView.setAdapter(mAdapter);
 
 	}
-
+	
 	/**
 	 * 设置时间选择操作
 	 */
@@ -109,7 +117,20 @@ public class AddRecordActivity extends BaseActivity {
 		mDatas.add("理财");
 		mDatas.add("投资");
 		mDatas.add("其他");
-		mDatas.add("++");
+		
+		typeDBdao = new TypeDBdao(this);
+		// 查询对应账号的所有收入类型
+		List<Type> typecount = typeDBdao.findAllType(name, "0");
+		// 如果没有对应的类型存在，则设置默认值
+		if (typecount.size() == 0) {
+			typeDBdao.setDefault(mDatas, name);
+			mDatas.add("++");// 设置增加按钮的内容，保证增加按钮一直处于列表最后面
+		} else {
+			// 若数据库中存在类型，则清空mDatas，并重新获取数据库中的类型，填充mDatas
+			mDatas.clear();
+			mDatas = typeDBdao.toListString(typecount);
+			mDatas.add("++");// 设置增加按钮的内容，保证增加按钮一直处于列表最后面
+		}
 	}
 
 	private void initEvent() {
@@ -152,26 +173,6 @@ public class AddRecordActivity extends BaseActivity {
 	}
 
 	public void ShowDialog() {
-		// PopupWindow操作
-		// View inputForm = getLayoutInflater().inflate(R.layout.dialog_input,
-		// null);
-		// View view2 =
-		// getLayoutInflater().inflate(R.layout.activity_add_record, null);
-		// final PopupWindow popupWindow = new PopupWindow(inputForm);
-		// popupWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
-		// popupWindow.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
-		// popupWindow.showAsDropDown(view2);
-		// // popupWindow.showAtLocation(view2, Gravity.CENTER, 20, 20);
-		//
-		// Cannel = (TextView) inputForm.findViewById(R.id.cannle);
-		// Cannel.setOnClickListener(new OnClickListener() {
-		//
-		// @Override
-		// public void onClick(View v) {
-		// // TODO Auto-generated method stub
-		// popupWindow.dismiss();
-		// }
-		// });
 
 		// 显示对话框
 		View inputForm = getLayoutInflater().inflate(R.layout.dialog_input, null);
@@ -202,8 +203,18 @@ public class AddRecordActivity extends BaseActivity {
 				if (incomeType.isEmpty()) {
 					Toast.makeText(AddRecordActivity.this, "请输入类型名称", Toast.LENGTH_SHORT).show();
 				} else {
-					mAdapter.addData(mAdapter.getItemCount() - 1, incomeType);
-					alertDialog.dismiss();
+					// 判断输入类型是否已存在于数据库中
+					if (typeDBdao.isExist("0", name, incomeType)) {
+						Toast.makeText(AddRecordActivity.this, "该类型已存在", Toast.LENGTH_SHORT).show();
+						;
+					} else {
+						// 若输入类型不存在数据库中，则将该类型添加到表中
+						typeDBdao.addRecord("0", incomeType, name);
+						// 增加RecyclerView的Item
+						mAdapter.addData(mAdapter.getItemCount() - 1, incomeType);
+						alertDialog.dismiss();
+					}
+
 				}
 			}
 		});

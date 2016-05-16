@@ -31,7 +31,9 @@
             android:paddingLeft="@dimen/regist_edittext_padding_left"
             android:background="@drawable/bg_edittext_normal"
             android:ems="10"
-            android:maxLength="4" >
+            android:maxLength="4" 
+            android:hint="最多支持4个字"
+            android:textColorHint="@color/gray_frame">
 
             <requestFocus />
         </EditText>
