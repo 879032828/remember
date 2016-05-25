@@ -12,6 +12,8 @@ import com.seventh.util.*;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +21,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
@@ -49,7 +52,8 @@ public class SpecificData extends BaseActivity {
 
 		setHideleftButton(title);//设置返回箭头
 		setHideaddButton_right();//设置右加按钮
-		setButtonOnClickListener("右加按钮", new OnClickListener() {
+		setBackgroudButton_right(R.drawable.bg_add_button_selector);
+		setButtonOnClickListener("右按钮", new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
@@ -67,9 +71,19 @@ public class SpecificData extends BaseActivity {
 			}
 		});
 		
-		accountDBdao = new AccountDBdao(getApplicationContext());
-
+		setButtonOnClickListener("返回按钮", new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(SpecificData.this, MainActivity.class);
+				intent.putExtra("name", name);
+				startActivity(intent);
+				finish();
+			}
+		});
 		
+		accountDBdao = new AccountDBdao(getApplicationContext());
 		// 时间
 		Calendar c = Calendar.getInstance(TimeZone.getTimeZone("GMT+08:00")); // 获取东八区时间
 		int year = c.get(Calendar.YEAR); // 获取年
@@ -82,7 +96,7 @@ public class SpecificData extends BaseActivity {
 		// 设置listview 值
 		inflater = LayoutInflater.from(this);
 		cornerListView = (CornerListView) findViewById(R.id.lv_specific_data_list);
-		GetData();
+		GetDataBytitle();
 
 		// 填充listview的数据
 		cornerListView.setAdapter(new MyAdapter());
@@ -107,8 +121,11 @@ public class SpecificData extends BaseActivity {
 		startActivity(intent);
 	}
 
-	// 获取数据
-	private void GetData() {
+	
+	/**
+	 * 根据title获取对应的数据
+	 */
+	private void GetDataBytitle() {
 		try {
 			if (title.equals("收入总额")) {
 				accounts = accountDBdao.findTotalIntoByName(name);
@@ -155,12 +172,24 @@ public class SpecificData extends BaseActivity {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			View view = inflater.inflate(R.layout.specific_data_data, null);
 			Account account = accounts.get(position);
-			TextView tv_text1 = (TextView) view.findViewById(R.id.ls_sp_tv_time);
-			TextView tv_text2 = (TextView) view.findViewById(R.id.ls_sp_tv_type);
-			TextView tv_text3 = (TextView) view.findViewById(R.id.ls_sp_tv_money);
-			tv_text1.setText("时间 :" + account.getTime());
-			tv_text2.setText("类型: " + account.getType());
-			tv_text3.setText("金额:" + account.getMoney() + "");
+			TextView tv_text_time = (TextView) view.findViewById(R.id.ls_sp_tv_time);
+			TextView tv_text_type = (TextView) view.findViewById(R.id.ls_sp_tv_type);
+			TextView tv_text_money = (TextView) view.findViewById(R.id.ls_sp_tv_money);
+			ImageView iv_flag = (ImageView) view.findViewById(R.id.flag);
+			
+			tv_text_time.setText(account.getTime());
+			tv_text_money.setText(account.getMoney() + "");
+			if (account.getRemark().isEmpty()) {
+				tv_text_type.setText(account.getType());
+			}else {
+				tv_text_type.setText(account.getType() + "--" + account.getRemark());
+			}
+			//当在ListView中显示为收入时，设置金额前为绿点，否则为红点
+			if (account.isEarnings()) {
+				iv_flag.setBackgroundResource(R.drawable.point_green);
+			}else {
+				iv_flag.setBackgroundResource(R.drawable.point_red);
+			}
 			return view;
 		}
 
@@ -171,7 +200,7 @@ public class SpecificData extends BaseActivity {
 		// TODO Auto-generated method stub
 		super.onResume();
 
-		GetData();
+		GetDataBytitle();
 
 		// 填充listview的数据
 		cornerListView.setAdapter(new MyAdapter());

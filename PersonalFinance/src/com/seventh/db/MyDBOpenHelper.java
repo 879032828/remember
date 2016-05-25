@@ -7,14 +7,14 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class MyDBOpenHelper extends SQLiteOpenHelper {
 
 	public MyDBOpenHelper(Context context) {
-		super(context, "PersonalFinanceSystem.db", null, 1);
+		super(context, "remember.db", null, 1);
 	}
 
 	// 数据库第一次被创建的时候 调用 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL("CREATE TABLE IF NOT EXISTS person (personid INTEGER primary key autoincrement, name varchar(20) ,possward varchar(10) ,login BOOLEAN)");
-		db.execSQL("CREATE TABLE IF NOT EXISTS account (accountid INTEGER primary key autoincrement, time varchar(10) ,money float ,type varchar(20) , earnings BOOLEAN ,remark varchar(50),name varchar(20))");
+		db.execSQL("CREATE TABLE IF NOT EXISTS account (accountid INTEGER primary key autoincrement, time varchar(10) ,money float ,type varchar(20) , earnings INTEGER ,remark varchar(50),name varchar(20))");
 		db.execSQL("CREATE TABLE IF NOT EXISTS type (typeid INTEGER primary key autoincrement, type INTEGER, typename varchar(20), name varchar(20))");
 	}
 	

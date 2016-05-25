@@ -6,6 +6,8 @@ import java.util.List;
 
 import com.seventh.base.BaseActivity;
 import com.seventh.base.RecyclerViewAdapter;
+import com.seventh.db.Account;
+import com.seventh.db.AccountDBdao;
 import com.seventh.db.Type;
 import com.seventh.db.TypeDBdao;
 import com.seventh.util.TimeUtil;
@@ -46,6 +48,7 @@ public class AddRecordActivity extends BaseActivity {
 	private Button dialog_cannle, dialog_sure;
 
 	private String name;
+	private String type;
 	TypeDBdao typeDBdao;
 
 	// 时间选择请求码
@@ -56,7 +59,7 @@ public class AddRecordActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		baseSetContentView(R.layout.activity_add_record);
 		setHideleftButton("添加收入记录");
-		setHideaddButton_right();
+		setHideaddButton_save();
 		
 		Intent intent = getIntent();
 		name = intent.getStringExtra("name");
@@ -66,6 +69,28 @@ public class AddRecordActivity extends BaseActivity {
 		ShowCalendar();
 		initEvent();
 
+		setButtonOnClickListener("保存按钮", new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				saveData();
+			}
+		});
+		
+		setButtonOnClickListener("返回按钮", new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(AddRecordActivity.this, SpecificData.class);
+				intent.putExtra("name", name);
+				intent.putExtra("title", "收入总额");
+				startActivity(intent);
+				finish();
+			}
+		});
+		
 		mRecyclerView.setLayoutManager(new GridLayoutManager(this, 4));
 		mRecyclerView.setAdapter(mAdapter);
 
@@ -108,6 +133,9 @@ public class AddRecordActivity extends BaseActivity {
 		}
 	}
 
+	/**
+	 * 初始化mDatas
+	 */
 	protected void initData() {
 		mDatas = new ArrayList<String>() {
 		};
@@ -133,6 +161,9 @@ public class AddRecordActivity extends BaseActivity {
 		}
 	}
 
+	/**
+	 * 设置适配器回调事件
+	 */
 	private void initEvent() {
 
 		mAdapter.setRecOnItemClickLitener(new RecyclerViewAdapter.OnRecItemClickLitener() {
@@ -154,6 +185,7 @@ public class AddRecordActivity extends BaseActivity {
 							Button button = (Button) parent.findViewById(R.id.id_num);
 							button.setBackgroundResource(R.drawable.item_bg_textview_focused);
 							button.setTextColor(getResources().getColor(R.color.black));
+							type = mAdapter.getmDatas().get(position);
 						} else {
 							ViewGroup parent = (ViewGroup) mRecyclerView.getChildAt(i);
 							Button button = (Button) parent.findViewById(R.id.id_num);
@@ -162,9 +194,7 @@ public class AddRecordActivity extends BaseActivity {
 						}
 					}
 				}
-
 			}
-
 			@Override
 			public void onRecItemLongClick(View view, int position) {
 				Toast.makeText(AddRecordActivity.this, position + " long click", Toast.LENGTH_SHORT).show();
@@ -172,6 +202,9 @@ public class AddRecordActivity extends BaseActivity {
 		});
 	}
 
+	/**
+	 * 显示收入类型输入对话框
+	 */
 	public void ShowDialog() {
 
 		// 显示对话框
@@ -214,13 +247,41 @@ public class AddRecordActivity extends BaseActivity {
 						mAdapter.addData(mAdapter.getItemCount() - 1, incomeType);
 						alertDialog.dismiss();
 					}
-
 				}
 			}
 		});
 
 	}
 
+	public boolean saveData(){
+		Float money;
+		String time = TimeSetting.getText().toString().trim();
+		String remark = RemarkSetting.getText().toString().trim();
+		String name = this.name;
+		if (MoneySetting.getText().toString().isEmpty()) {
+			Toast.makeText(AddRecordActivity.this, "请输入金融", Toast.LENGTH_SHORT).show();
+			return false;
+		}else {
+			money = Float.parseFloat(MoneySetting.getText().toString());
+		}
+		if (type == null || type.isEmpty()) {
+			Toast.makeText(AddRecordActivity.this, "请选择收入类型", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+
+		AccountDBdao account = new AccountDBdao(this);
+		account.add(time, money, type, 1, remark, name);
+		Toast.makeText(AddRecordActivity.this, "添加纪录成功！", Toast.LENGTH_SHORT).show();
+		
+		Intent intent = new Intent(AddRecordActivity.this, SpecificData.class);
+		intent.putExtra("name", name);
+		intent.putExtra("title", "收入总额");
+		startActivity(intent);
+		finish();
+		
+		return true;
+	}
+	
 	public void initView() {
 		MoneySetting = (EditText) findViewById(R.id.MoneySetting);
 		TimeSetting = (EditText) findViewById(R.id.TimeSetting);

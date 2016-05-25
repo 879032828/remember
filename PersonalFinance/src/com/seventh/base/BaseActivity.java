@@ -33,25 +33,24 @@ public class BaseActivity extends Activity {
 	private Button leftButton;
 	private Button addButton_left;
 	private Button addButton_right;
-	private Button setting;
-	
+	private Button andButton_save;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_base);
 
 		initview();
-		
-		 //透明状态栏
-		 getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-		 //透明导航栏
-		 getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+
+		// 透明状态栏
+		getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+		// 透明导航栏
+		getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
 	}
 
-	
 	/**
 	 * @param layoutResId
-	 * 继承该BaseActivity的Activity需使用该方法填充布局文件
+	 *            继承该BaseActivity的Activity需使用该方法填充布局文件
 	 */
 	public void baseSetContentView(int layoutResId) {
 		LinearLayout llContent = (LinearLayout) findViewById(R.id.content);
@@ -60,66 +59,77 @@ public class BaseActivity extends Activity {
 		llContent.addView(v);
 	}
 
-	public void initview(){
+	public void initview() {
 		title = (TextView) findViewById(R.id.title);
 		leftButton = (Button) findViewById(R.id.leftButton);
 		addButton_left = (Button) findViewById(R.id.addButton_left);
-		addButton_right =(Button) findViewById(R.id.addButton_right);
-		setting = (Button) findViewById(R.id.setting);
-		
-		//一开始设置所有控件不可见，在具体界面中需要时才进行显示
+		addButton_right = (Button) findViewById(R.id.addButton_right);
+		andButton_save = (Button) findViewById(R.id.save);
+
+		// 一开始设置所有控件不可见，在具体界面中需要时才进行显示
 		title.setVisibility(View.INVISIBLE);
 		leftButton.setVisibility(View.INVISIBLE);
 		addButton_left.setVisibility(View.INVISIBLE);
 		addButton_right.setVisibility(View.INVISIBLE);
-		setting.setVisibility(View.INVISIBLE);
+		andButton_save.setVisibility(View.INVISIBLE);
 	}
-	
+
 	/**
 	 * @param titleString
-	 * 设置自定义标题
+	 *            设置自定义标题
 	 */
-	public void setTitle(String titleString){
+	public void setTitle(String titleString) {
 		title.setText(titleString);
 		title.setVisibility(View.VISIBLE);
-		
 	}
-	
+
 	/**
 	 * 设置Button可见
 	 */
-	public void setHideleftButton(String text){
-		leftButton.setVisibility(View.VISIBLE);//返回按钮
+	public void setHideleftButton(String text) {
+		leftButton.setVisibility(View.VISIBLE);// 返回按钮
 		leftButton.setText(text);
 	}
-	public void setHideaddButton_left(){
-		addButton_left.setVisibility(View.VISIBLE);//左加按钮
+
+	public void setHideaddButton_left() {
+		addButton_left.setVisibility(View.VISIBLE);// 左按钮
 	}
-	public void setHideaddButton_right(){
-		addButton_right.setVisibility(View.VISIBLE);//右加按钮
+	public void setBackgroudButton_left(int resid){
+		addButton_left.setBackgroundResource(resid);//设置左按钮的背景
 	}
-	public void setHidesetting(){
-		setting.setVisibility(View.VISIBLE);//设置按钮
+
+	public void setHideaddButton_right() {
+		addButton_right.setVisibility(View.VISIBLE);// 右按钮
 	}
+	
+	public void setBackgroudButton_right(int resid){
+		addButton_right.setBackgroundResource(resid);//设置右按钮的背景
+	}
+
+	public void setHideaddButton_save() {
+		andButton_save.setVisibility(View.VISIBLE);// 保存按钮
+	}
+
+	
 	/**
 	 * @param onClickListener
-	 * 设置按钮监听事件
+	 *            设置按钮监听事件
 	 */
-	public void setButtonOnClickListener(String buttonname, OnClickListener onClickListener){
+	public void setButtonOnClickListener(String buttonname, OnClickListener onClickListener) {
 		switch (buttonname) {
 		case "返回按钮":
 			leftButton.setOnClickListener(onClickListener);
 			break;
-		case "左加按钮":
+		case "左按钮":
 			addButton_left.setOnClickListener(onClickListener);
 			break;
-		case "右加按钮":
+		case "右按钮":
 			addButton_right.setOnClickListener(onClickListener);
-		case "设置按钮":
-			setting.setOnClickListener(onClickListener);
+		case "保存按钮":
+			andButton_save.setOnClickListener(onClickListener);
 		default:
 			break;
 		}
-		
+
 	}
 }

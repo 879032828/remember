@@ -19,17 +19,18 @@ public final class R {
     public static final class attr {
     }
     public static final class color {
-        public static final int Layout_gray=0x7f050002;
-        public static final int black=0x7f050006;
+        public static final int Layout_gray=0x7f050003;
+        public static final int black=0x7f050007;
         public static final int blue=0x7f050001;
-        public static final int edittext_gray=0x7f050003;
-        public static final int gray=0x7f050005;
-        public static final int gray_backgroud=0x7f050009;
+        public static final int deepblue=0x7f050002;
+        public static final int edittext_gray=0x7f050004;
+        public static final int gray=0x7f050006;
+        public static final int gray_backgroud=0x7f05000a;
         /**  RecyclerView 
          */
-        public static final int gray_frame=0x7f050007;
-        public static final int gray_text=0x7f050008;
-        public static final int transparent=0x7f050004;
+        public static final int gray_frame=0x7f050008;
+        public static final int gray_text=0x7f050009;
+        public static final int transparent=0x7f050005;
         public static final int white=0x7f050000;
     }
     public static final class dimen {
@@ -92,24 +93,27 @@ public final class R {
         public static final int item_bg_textview_focused=0x7f020020;
         public static final int leftarrowgray=0x7f020021;
         public static final int leftarrowwhite=0x7f020022;
-        public static final int list_item_selector=0x7f020023;
-        public static final int logo=0x7f020024;
-        public static final int plus_24_24=0x7f020025;
-        public static final int rightarrow=0x7f020026;
-        public static final int setting_gray=0x7f020027;
-        public static final int setting_white=0x7f020028;
-        public static final int shape_bottom_corner_no_top_line=0x7f020029;
-        public static final int shape_no_corner_without_bottom=0x7f02002a;
-        public static final int shape_top_corner_no_bottom_line=0x7f02002b;
-        public static final int spacer_medium=0x7f02002c;
+        public static final int light=0x7f020023;
+        public static final int list_item_selector=0x7f020024;
+        public static final int logo=0x7f020025;
+        public static final int plus_24_24=0x7f020026;
+        public static final int point_green=0x7f020027;
+        public static final int point_red=0x7f020028;
+        public static final int rightarrow=0x7f020029;
+        public static final int setting_gray=0x7f02002a;
+        public static final int setting_white=0x7f02002b;
+        public static final int shape_bottom_corner_no_top_line=0x7f02002c;
+        public static final int shape_no_corner_without_bottom=0x7f02002d;
+        public static final int shape_top_corner_no_bottom_line=0x7f02002e;
+        public static final int spacer_medium=0x7f02002f;
     }
     public static final class id {
         public static final int MoneySetting=0x7f0a0000;
         public static final int RemarkSetting=0x7f0a0002;
         public static final int TimeSetting=0x7f0a0001;
-        public static final int action_settings=0x7f0a0042;
-        public static final int addButton_left=0x7f0a000e;
-        public static final int addButton_right=0x7f0a000d;
+        public static final int action_settings=0x7f0a0043;
+        public static final int addButton_left=0x7f0a000d;
+        public static final int addButton_right=0x7f0a000e;
         public static final int bt_addnodes_add=0x7f0a000a;
         public static final int bt_addnodes_cancel=0x7f0a0009;
         public static final int bt_login_cancel=0x7f0a001b;
@@ -122,10 +126,10 @@ public final class R {
         public static final int bt_register_ok=0x7f0a002d;
         public static final int checkBox1=0x7f0a0030;
         public static final int content=0x7f0a0010;
-        public static final int dialog_cannle=0x7f0a0035;
-        public static final int dialog_input_edittext=0x7f0a0034;
-        public static final int dialog_input_text=0x7f0a0033;
-        public static final int dialog_sure=0x7f0a0036;
+        public static final int dialog_cannle=0x7f0a0038;
+        public static final int dialog_input_edittext=0x7f0a0037;
+        public static final int dialog_input_text=0x7f0a0036;
+        public static final int dialog_sure=0x7f0a0039;
         public static final int downMonth=0x7f0a0014;
         public static final int et_addnodes_money=0x7f0a0005;
         public static final int et_addnodes_remark=0x7f0a0008;
@@ -138,35 +142,36 @@ public final class R {
         public static final int et_register_confirm_pwd=0x7f0a002c;
         public static final int et_register_new_pwd=0x7f0a002a;
         public static final int et_register_username=0x7f0a0028;
-        public static final int id_image=0x7f0a0038;
-        public static final int id_num=0x7f0a0037;
+        public static final int flag=0x7f0a0042;
+        public static final int id_image=0x7f0a003b;
+        public static final int id_num=0x7f0a003a;
         public static final int id_recyclerview=0x7f0a0003;
         public static final int imageView=0x7f0a001c;
         public static final int leftButton=0x7f0a000c;
         public static final int linearLayout1=0x7f0a0016;
         public static final int ll_popup=0x7f0a0011;
-        public static final int lly_main=0x7f0a003e;
-        public static final int ls_sp_tv_money=0x7f0a0041;
-        public static final int ls_sp_tv_time=0x7f0a003f;
-        public static final int ls_sp_tv_type=0x7f0a0040;
-        public static final int ls_tv2_txtDataRange =0x7f0a003b;
-        public static final int ls_tv2_txtInto=0x7f0a003d;
-        public static final int ls_tv2_txtOut=0x7f0a003c;
-        public static final int ls_tv_txtCalculationName=0x7f0a0039;
-        public static final int ls_tv_txtMoney=0x7f0a003a;
+        public static final int lly_main=0x7f0a0041;
+        public static final int ls_sp_tv_money=0x7f0a0033;
+        public static final int ls_sp_tv_time=0x7f0a0031;
+        public static final int ls_sp_tv_type=0x7f0a0032;
+        public static final int ls_tv2_txtDataRange =0x7f0a003e;
+        public static final int ls_tv2_txtInto=0x7f0a0040;
+        public static final int ls_tv2_txtOut=0x7f0a003f;
+        public static final int ls_tv_txtCalculationName=0x7f0a003c;
+        public static final int ls_tv_txtMoney=0x7f0a003d;
         public static final int lv_main_calculation=0x7f0a001d;
-        public static final int lv_specific_data_list=0x7f0a0031;
+        public static final int lv_specific_data_list=0x7f0a0034;
         public static final int popupwindow_calendar=0x7f0a0015;
         public static final int popupwindow_calendar_month=0x7f0a0012;
         public static final int register_confirm_password_input=0x7f0a002b;
         public static final int register_password_input=0x7f0a0029;
         public static final int register_user_input=0x7f0a0027;
-        public static final int setting=0x7f0a000f;
+        public static final int save=0x7f0a000f;
         public static final int sp_addnodes_earnings=0x7f0a0007;
         public static final int sp_addnodes_type=0x7f0a0006;
         public static final int sp_moreaction_earnings=0x7f0a0022;
         public static final int sp_moreaction_type=0x7f0a0021;
-        public static final int text1=0x7f0a0032;
+        public static final int text1=0x7f0a0035;
         public static final int textView1=0x7f0a002f;
         public static final int title=0x7f0a000b;
         public static final int tv_login_register_link=0x7f0a0019;

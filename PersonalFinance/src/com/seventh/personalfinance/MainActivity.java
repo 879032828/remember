@@ -68,8 +68,11 @@ public class MainActivity extends BaseActivity implements OnClickListener, OnTou
 		baseSetContentView(R.layout.activity_mainactivity);
 		
 		setTitle("记着");
+		//设置两个按钮可见及背景
 		setHideaddButton_left();
-		setHidesetting();
+		setBackgroudButton_left(R.drawable.bg_add_button_selector);
+		setHideaddButton_right();
+		setBackgroudButton_right(R.drawable.bg_setting_button_selector);
 		
 		initView();
 		ViewOperation();

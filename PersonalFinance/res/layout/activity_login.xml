@@ -89,11 +89,11 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="115dp"
-        android:layout_height="115dp"
-        android:layout_alignParentTop="true"
+        android:layout_width="130dp"
+        android:layout_height="120dp"
+        android:layout_above="@+id/linearLayout1"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/logo" />
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/light" />
 
 </RelativeLayout>

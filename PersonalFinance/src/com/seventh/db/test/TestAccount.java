@@ -24,7 +24,7 @@ public class TestAccount extends AndroidTestCase {
 		int day = c.get(Calendar.DAY_OF_MONTH); // 获取当前天数
 		String time = year + "/" + month + "/" + day;// 获取系统当前时间
 		for (int i = 0; i < 5; i++) {
-			dao.add(time, 100, "衣", false, "", "admin1");
+			//dao.add(time, 100, "衣", false, "", "admin1");
 		}
 
 	}

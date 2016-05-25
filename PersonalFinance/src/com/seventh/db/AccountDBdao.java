@@ -20,20 +20,19 @@ public class AccountDBdao {
 	/**
 	 * 添加一条记录
 	 */
-	public void add(String time, float money, String type, boolean earnings, String remark, String name) {
+	public void add(String time, float money, String type, int earnings, String remark, String name) {
 		SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
 		if (db.isOpen()) {
-			// db.execSQL("insert into account
-			// (time,money,type,earnings,remark,name) values (?,?,?,?,?,?)",new
-			// Object[]{time,money,type,earnings,remark,name});
-			ContentValues values = new ContentValues();
-			values.put("time", time);// 交易时间
-			values.put("money", money);// 金钱
-			values.put("type", type);// 类型
-			values.put("earnings", earnings);// 是否收益
-			values.put("remark", remark);// 备注
-			values.put("name", name);// 用户名
-			db.insert("account", null, values); // 组拼sql语句完成的添加的操作
+			 db.execSQL("insert into account(time,money,type,earnings,remark,name) values (?,?,?,?,?,?)",new
+			 Object[]{time,money,type,earnings,remark,name});
+//			ContentValues values = new ContentValues();
+//			values.put("time", time);// 交易时间
+//			values.put("money", money);// 金钱
+//			values.put("type", type);// 类型
+//			values.put("earnings", earnings);// 是否收益
+//			values.put("remark", remark);// 备注
+//			values.put("name", name);// 用户名
+//			db.insert("account", null, values); // 组拼sql语句完成的添加的操作
 			db.close();
 		}
 
@@ -167,9 +166,7 @@ public class AccountDBdao {
 		List<Account> accounts = null;
 		SQLiteDatabase db = dbOpenHelper.getReadableDatabase();
 		if (db.isOpen()) {
-			Cursor cursor = db.rawQuery(
-					"select * from account where earnings=1 and name=?",
-					new String[] { userName });
+			Cursor cursor = db.rawQuery("select * from account where earnings=1 and name=?", new String[] { userName });
 			accounts = new ArrayList<Account>();
 			while (cursor.moveToNext()) {
 				Account account = new Account();
@@ -177,22 +174,19 @@ public class AccountDBdao {
 				account.setId(id);
 				String name = cursor.getString(cursor.getColumnIndex("name"));
 				account.setName(name);
-				float money = Float.parseFloat(cursor.getString(cursor
-						.getColumnIndex("money")));
+				float money = Float.parseFloat(cursor.getString(cursor.getColumnIndex("money")));
 				account.setMoney(money);
 				String time = cursor.getString(cursor.getColumnIndex("time"));
 				account.setTime(time);
 				String type = cursor.getString(cursor.getColumnIndex("type"));
 				account.setType(type);
-				long earnings = cursor.getLong(cursor
-						.getColumnIndex("earnings"));
+				long earnings = cursor.getLong(cursor.getColumnIndex("earnings"));
 				if (earnings == 0) {
 					account.setEarnings(false);
 				} else {
 					account.setEarnings(true);
 				}
-				String remark = cursor.getString(cursor
-						.getColumnIndex("remark"));
+				String remark = cursor.getString(cursor.getColumnIndex("remark"));
 				account.setRemark(remark);
 				accounts.add(account);
 			}

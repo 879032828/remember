@@ -112,7 +112,7 @@ public class AddNodes extends Activity implements OnClickListener {
 			remark = mEditTextRemark.getText().toString().trim();
 
 			accountDBdao = new AccountDBdao(getApplicationContext());
-			accountDBdao.add(time, money, type, earning, remark, name);
+			//accountDBdao.add(time, money, type, earning, remark, name);
 			Toast.makeText(getApplicationContext(), "添 加 账 单 条 目 成 功 ！", 0)
 					.show();
 			break;

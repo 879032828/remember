@@ -2,7 +2,8 @@
 <resources>
 
     <color name="white">#ffffff</color>
-    <color name="blue">#66CCFF</color>
+    <color name="blue">#1E90FF</color>
+    <color name="deepblue">#3eafe7</color>
     <color name="Layout_gray">#f8f8ff</color>
     <color name="edittext_gray">#c0c0c0</color>
     <color name="transparent">#9000</color>
