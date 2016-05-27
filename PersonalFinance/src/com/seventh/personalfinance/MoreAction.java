@@ -144,12 +144,12 @@ public class MoreAction extends Activity implements OnClickListener {
 			remark = mEditTextRemark.getText().toString().trim();
 
 			accountDBdao = new AccountDBdao(getApplicationContext());
-			accountDBdao.update(id, time, money, type, earning, remark);
+//			accountDBdao.update(id, time, money, type, earning, remark);
 			Toast.makeText(getApplicationContext(), "修 改 成  功 ！", 0).show();
 			break;
 		case R.id.bt_moreaction_delete:// 删除按钮
 			accountDBdao = new AccountDBdao(getApplicationContext());
-			accountDBdao.delete(id);
+//			accountDBdao.delete(id);
 			Toast.makeText(getApplicationContext(), "删 除  成 功 ！", 0).show();
 			finish();
 			break;

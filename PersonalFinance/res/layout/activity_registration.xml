@@ -5,29 +5,20 @@
     android:background="@drawable/circular_dialog_shape"
     android:orientation="vertical" >
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dip"
-        android:padding="10dip" >
-
-        <TextView
-            android:id="@+id/register_user_input"
-            style="@style/normalText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="2dp"
-            android:text="@string/login_label_username"
-            android:textColor="@color/blue"
-            android:textSize="18dip" />
+        android:orientation="vertical"
+        android:paddingBottom="20dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="20dp" >
 
         <EditText
             android:id="@+id/et_register_username"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/register_user_input"
-            android:layout_marginTop="3dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/bg_edittext"
             android:hint="@string/login_username_hint"
             android:inputType="text"
@@ -38,22 +29,11 @@
             <requestFocus />
         </EditText>
 
-        <TextView
-            android:id="@+id/register_password_input"
-            style="@style/normalText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/et_register_username"
-            android:layout_marginTop="5dp"
-            android:text="@string/register_pwd"
-            android:textColor="@color/blue"
-            android:textSize="18dip" />
-
         <EditText
             android:id="@+id/et_register_new_pwd"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/register_password_input"
+            android:layout_marginBottom="10dp"
             android:layout_marginTop="3dp"
             android:background="@drawable/bg_edittext"
             android:hint="@string/login_pwd_hint"
@@ -61,31 +41,19 @@
             android:paddingLeft="@dimen/regist_edittext_padding_left"
             android:singleLine="true"
             android:textColorHint="@color/gray" />
-
-        <TextView
-            android:id="@+id/register_confirm_password_input"
-            style="@style/normalText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/et_register_new_pwd"
-            android:layout_marginTop="5dp"
-            android:text="@string/register_confirm_pwd"
-            android:textColor="@color/blue"
-            android:textSize="18dip" />
 
         <EditText
             android:id="@+id/et_register_confirm_pwd"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/register_confirm_password_input"
             android:layout_marginTop="3dp"
             android:background="@drawable/bg_edittext"
-            android:hint="@string/login_pwd_hint"
+            android:hint="@string/login_pwd_hint_againi"
             android:inputType="textPassword"
             android:paddingLeft="@dimen/regist_edittext_padding_left"
             android:singleLine="true"
             android:textColorHint="@color/gray" />
-    </RelativeLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"

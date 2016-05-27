@@ -7,6 +7,7 @@
     <string name="login_label_password">密码</string>
     <string name="login_label_ok">登 录</string>
     <string name="login_username_hint">Email或手机号</string>
+    <string name="login_pwd_hint_againi">请确认密码</string>
     <string name="login_pwd_hint">请输入密码</string>
     <string name="login_register_link">没有帐号？ <a href="#" mce_href="#">注册</a></string>
     <string name="login_lable_cancel">取消</string>

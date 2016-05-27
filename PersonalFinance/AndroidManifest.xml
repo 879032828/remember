@@ -68,6 +68,13 @@
             android:windowSoftInputMode="stateAlwaysVisible">
         </activity>
         <activity
+            android:name=".ChangeRecordActivity"
+            android:label="@string/title_activity_add_record"
+            android:launchMode="singleTask"
+            android:theme="@android:style/Theme.Light.NoTitleBar" 
+            android:windowSoftInputMode="stateAlwaysVisible">
+        </activity>
+        <activity
             android:name=".CalendarActivity"
             android:label="@string/title_activity_calendar"
             android:theme="@android:style/Theme.Dialog" >

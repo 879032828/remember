@@ -3,6 +3,7 @@ package com.seventh.db;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.R.integer;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -23,16 +24,16 @@ public class AccountDBdao {
 	public void add(String time, float money, String type, int earnings, String remark, String name) {
 		SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
 		if (db.isOpen()) {
-			 db.execSQL("insert into account(time,money,type,earnings,remark,name) values (?,?,?,?,?,?)",new
-			 Object[]{time,money,type,earnings,remark,name});
-//			ContentValues values = new ContentValues();
-//			values.put("time", time);// 交易时间
-//			values.put("money", money);// 金钱
-//			values.put("type", type);// 类型
-//			values.put("earnings", earnings);// 是否收益
-//			values.put("remark", remark);// 备注
-//			values.put("name", name);// 用户名
-//			db.insert("account", null, values); // 组拼sql语句完成的添加的操作
+			db.execSQL("insert into account(time,money,type,earnings,remark,name) values (?,?,?,?,?,?)",
+					new Object[] { time, money, type, earnings, remark, name });
+			// ContentValues values = new ContentValues();
+			// values.put("time", time);// 交易时间
+			// values.put("money", money);// 金钱
+			// values.put("type", type);// 类型
+			// values.put("earnings", earnings);// 是否收益
+			// values.put("remark", remark);// 备注
+			// values.put("name", name);// 用户名
+			// db.insert("account", null, values); // 组拼sql语句完成的添加的操作
 			db.close();
 		}
 
@@ -41,10 +42,11 @@ public class AccountDBdao {
 	/**
 	 * 删除一条记录
 	 */
-	public void delete(String accountid) {
+	public void delete(int accountid, String name) {
 		SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
 		if (db.isOpen()) {
-			db.delete("account", "accountid=?", new String[] { accountid });
+			db.execSQL("delete from account where accountid = ? and name = ?", new Object[] { accountid, name });
+			// db.delete("account", "accountid=?", new String[] { accountid });
 			db.close();
 		}
 	}
@@ -52,16 +54,21 @@ public class AccountDBdao {
 	/**
 	 * 数据库的更改操作
 	 */
-	public void update(String accountid, String time, float money, String type, boolean earnings, String remark) {
+	public void update(int accountid, String time, float money, String type, int earnings, String remark, String name) {
 		SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
 		if (db.isOpen()) {
-			ContentValues values = new ContentValues();
-			values.put("time", time);// 交易时间
-			values.put("money", money);// 金钱
-			values.put("type", type);// 类型
-			values.put("earnings", earnings);// 是否收益
-			values.put("remark", remark);// 备注
-			db.update("account", values, "accountid=?", new String[] { accountid });
+
+			db.execSQL(
+					"update account set time = ? , money = ? , type = ? , earnings = ? , remark = ? where accountid = ? and name = ?",
+					new Object[] { time, money, type, earnings, remark, accountid, name });
+			// ContentValues values = new ContentValues();
+			// values.put("time", time);// 交易时间
+			// values.put("money", money);// 金钱
+			// values.put("type", type);// 类型
+			// values.put("earnings", earnings);// 是否收益
+			// values.put("remark", remark);// 备注
+			// db.update("account", values, "accountid=?", new String[] {
+			// accountid });
 			db.close();
 		}
 	}

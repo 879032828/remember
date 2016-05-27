@@ -35,6 +35,7 @@ public class CalendarActivity extends Activity {
 	boolean isinput = false;
 	private String date1 = null;// 单天日期
 	
+	//响应码
 	private static final int Calendar_resultCode = 0;
 
 	protected void onCreate(Bundle savedInstanceState) {

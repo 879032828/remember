@@ -31,13 +31,13 @@ public class TestAccount extends AndroidTestCase {
 
 	public void testDelete() throws Exception {
 		AccountDBdao dao = new AccountDBdao(getContext());
-		dao.delete("1");
+//		dao.delete("1");
 	}
 
 	public void testUpdate() throws Exception {
 		AccountDBdao dao = new AccountDBdao(getContext());
 		String time = 2014 + "/" + 5 + "/" + 18;// 获取系统当前时间
-		dao.update("1", time, 123, "衣", true, "");
+//		dao.update("1", time, 123, "衣", true, "");
 	}
 
 	public void testfindall() throws Exception {

@@ -1,5 +1,6 @@
 package com.seventh.personalfinance;
 
+import java.net.Inet4Address;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -12,26 +13,22 @@ import com.seventh.db.Type;
 import com.seventh.db.TypeDBdao;
 import com.seventh.util.TimeUtil;
 
-import android.R.string;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
-import android.content.BroadcastReceiver;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -41,7 +38,11 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class AddRecordActivity extends BaseActivity {
+/**
+ * @author Administrator
+ *	该Activity用于对记录的修改
+ */
+public class ChangeRecordActivity extends BaseActivity {
 
 	private EditText MoneySetting;
 	private EditText TimeSetting;
@@ -58,7 +59,6 @@ public class AddRecordActivity extends BaseActivity {
 	TypeDBdao typeDBdao;
 
 	private Account account;
-	
 
 	// 时间选择请求码
 	private static final int Time_requestCode = 0;
@@ -71,6 +71,9 @@ public class AddRecordActivity extends BaseActivity {
 		Intent intent = getIntent();
 		name = intent.getStringExtra("name");
 		title = intent.getStringExtra("title");
+		Bundle bundle = intent.getExtras();
+		//从显示记录的Activity获取个人的Account
+		account = (Account) bundle.getSerializable("changeAccount");
 
 		setHideleftButton(title);
 		setHideaddButton_save();
@@ -85,7 +88,7 @@ public class AddRecordActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				saveData();
+				saveData(account);
 			}
 		});
 
@@ -93,11 +96,11 @@ public class AddRecordActivity extends BaseActivity {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-gefninerated method stub
-				Intent intent = new Intent(AddRecordActivity.this, SpecificData.class);
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(ChangeRecordActivity.this, SpecificData.class);
 				intent.putExtra("name", name);
 				intent.putExtra("title", "收入总额");
-				setResult(RESULT_OK, intent);
+				ChangeRecordActivity.this.setResult(RESULT_OK, intent);
 				finish();
 			}
 		});
@@ -109,7 +112,6 @@ public class AddRecordActivity extends BaseActivity {
 	 */
 	public void ShowCalendar() {
 
-		TimeSetting.setText(TimeUtil.GetTime());
 		TimeSetting.setInputType(InputType.TYPE_NULL);
 		TimeSetting.setFocusable(false);
 		TimeSetting.setFocusableInTouchMode(false);
@@ -117,7 +119,7 @@ public class AddRecordActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent(AddRecordActivity.this, CalendarActivity.class);
+				Intent intent = new Intent(ChangeRecordActivity.this, CalendarActivity.class);
 				startActivityForResult(intent, Time_requestCode);
 			}
 		});
@@ -132,23 +134,11 @@ public class AddRecordActivity extends BaseActivity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (data != null) {
-			switch (requestCode) {
-			case 0:
-				switch (resultCode) {
-				case 0:
-					Bundle bundle = data.getBundleExtra("Calendar");
-					if (!bundle.getString("time").isEmpty()) {
-						TimeSetting.setText(bundle.getString("time"));
-					}
-					break;
-
-				default:
-					break;
+			if (requestCode == 0 && resultCode == 0) {
+				Bundle bundle = data.getBundleExtra("Calendar");
+				if (!bundle.getString("time").isEmpty()) {
+					TimeSetting.setText(bundle.getString("time"));
 				}
-				break;
-
-			default:
-				break;
 			}
 		}
 	}
@@ -186,21 +176,22 @@ public class AddRecordActivity extends BaseActivity {
 	 */
 	private void initEvent() {
 
-		// 网上关于ListView默认选中的解决方法：
+		//网上关于ListView默认选中的解决方法：
 		// setAdapter() 其实是异步的 ，调用了这个方法， ListView 的 item 并没有立马创建，而是在下一轮消息处理时才创建。
-		// 弄明白了这个，就有了前面代码中的解决办法：使用 post() 提交一个 Runnable() 对象，在 Runnable()
-		// 内部来做默认选中这种初始化动作。
+		//弄明白了这个，就有了前面代码中的解决办法：使用 post() 提交一个 Runnable() 对象，在 Runnable() 内部来做默认选中这种初始化动作。
 		mRecyclerView.post(new Runnable() {
 
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
+				//通过account获取金额类型Type在mDatas中的索引，从而锁定该类型在RecyclerView中的位置
+				//将该类型所在的Item设置选中，并获取其值
 				if (mRecyclerView.getChildCount() - 1 != 0) {
-					ViewGroup parent = (ViewGroup) mRecyclerView.getChildAt(0);
+					ViewGroup parent = (ViewGroup) mRecyclerView.getChildAt(mDatas.indexOf(account.getType()));
 					Button button = (Button) parent.findViewById(R.id.id_num);
 					button.setBackgroundResource(R.drawable.item_bg_textview_focused);
 					button.setTextColor(getResources().getColor(R.color.black));
-					type = mAdapter.getmDatas().get(0);
+					type = mAdapter.getmDatas().get(mDatas.indexOf(account.getType()));
 				}
 			}
 		});
@@ -212,9 +203,9 @@ public class AddRecordActivity extends BaseActivity {
 				if (position == mRecyclerView.getChildCount() - 1) {
 					// 项目要求：此处设置增加按钮操作
 					ShowDialog();
-					Toast.makeText(AddRecordActivity.this, "这是最后的单击事件", Toast.LENGTH_SHORT).show();
+					Toast.makeText(ChangeRecordActivity.this, "这是最后的单击事件", Toast.LENGTH_SHORT).show();
 				} else {
-					Toast.makeText(AddRecordActivity.this, position + " click", Toast.LENGTH_SHORT).show();
+					Toast.makeText(ChangeRecordActivity.this, position + " click", Toast.LENGTH_SHORT).show();
 					// 获取RecyclerView的Item个数，进行遍历
 					for (int i = 0; i < mRecyclerView.getChildCount(); i++) {
 						// 当点击的Item为RecyclerView中对应的Item时，将该Item背景设置为点击时的背景
@@ -237,7 +228,7 @@ public class AddRecordActivity extends BaseActivity {
 
 			@Override
 			public void onRecItemLongClick(View view, int position) {
-				Toast.makeText(AddRecordActivity.this, position + " long click", Toast.LENGTH_SHORT).show();
+				Toast.makeText(ChangeRecordActivity.this, position + " long click", Toast.LENGTH_SHORT).show();
 			}
 		});
 	}
@@ -250,10 +241,8 @@ public class AddRecordActivity extends BaseActivity {
 		// 显示对话框
 		View inputForm = getLayoutInflater().inflate(R.layout.dialog_input, null);
 		AlertDialog.Builder builder = new AlertDialog.Builder(this, AlertDialog.THEME_HOLO_LIGHT);
-
-		final AlertDialog alertDialog = builder.setView(inputForm).create();
-
-		alertDialog.show();
+		builder.setView(inputForm).create();
+		final AlertDialog alertDialog = builder.show();
 
 		dialog_input_edittext = (EditText) inputForm.findViewById(R.id.dialog_input_edittext);
 		dialog_input_edittext.setFocusable(true);
@@ -276,11 +265,11 @@ public class AddRecordActivity extends BaseActivity {
 				// TODO Auto-generated method stub
 				String incomeType = dialog_input_edittext.getText().toString().trim();
 				if (incomeType.isEmpty()) {
-					Toast.makeText(AddRecordActivity.this, "请输入类型名称", Toast.LENGTH_SHORT).show();
+					Toast.makeText(ChangeRecordActivity.this, "请输入类型名称", Toast.LENGTH_SHORT).show();
 				} else {
 					// 判断输入类型是否已存在于数据库中
 					if (typeDBdao.isExist("0", name, incomeType)) {
-						Toast.makeText(AddRecordActivity.this, "该类型已存在", Toast.LENGTH_SHORT).show();
+						Toast.makeText(ChangeRecordActivity.this, "该类型已存在", Toast.LENGTH_SHORT).show();
 						;
 					} else {
 						// 若输入类型不存在数据库中，则将该类型添加到表中
@@ -295,35 +284,38 @@ public class AddRecordActivity extends BaseActivity {
 
 	}
 
-	public boolean saveData() {
+	public boolean saveData(Account account) {
 		Float money;
 		String time = TimeSetting.getText().toString().trim();
 		String remark = RemarkSetting.getText().toString().trim();
 		String name = this.name;
 		if (MoneySetting.getText().toString().isEmpty()) {
-			Toast.makeText(AddRecordActivity.this, "请输入金融", Toast.LENGTH_SHORT).show();
+			Toast.makeText(ChangeRecordActivity.this, "请输入金融", Toast.LENGTH_SHORT).show();
 			return false;
 		} else {
 			money = Float.parseFloat(MoneySetting.getText().toString());
 		}
 		if (type == null || type.isEmpty()) {
-			Toast.makeText(AddRecordActivity.this, "请选择收入类型", Toast.LENGTH_SHORT).show();
+			Toast.makeText(ChangeRecordActivity.this, "请选择收入类型", Toast.LENGTH_SHORT).show();
 			return false;
 		}
 
-		AccountDBdao account = new AccountDBdao(this);
-		account.add(time, money, type, 1, remark, name);
-		Toast.makeText(AddRecordActivity.this, "添加纪录成功！", Toast.LENGTH_SHORT).show();
+		AccountDBdao accountDBdao = new AccountDBdao(this);
+		accountDBdao.update(account.getId(),time, money, type, 1, remark, name);
+		Toast.makeText(ChangeRecordActivity.this, "修改纪录成功！", Toast.LENGTH_SHORT).show();
 
-		Intent intent = new Intent(AddRecordActivity.this, SpecificData.class);
+		Intent intent = new Intent(ChangeRecordActivity.this, SpecificData.class);
 		intent.putExtra("name", name);
 		intent.putExtra("title", "收入总额");
-		AddRecordActivity.this.setResult(RESULT_OK, intent);
+		ChangeRecordActivity.this.setResult(RESULT_OK, intent);
 		finish();
 
 		return true;
 	}
 
+	/**
+	 * 初始化控件
+	 */
 	public void initView() {
 		MoneySetting = (EditText) findViewById(R.id.MoneySetting);
 		TimeSetting = (EditText) findViewById(R.id.TimeSetting);
@@ -332,5 +324,54 @@ public class AddRecordActivity extends BaseActivity {
 		mAdapter = new RecyclerViewAdapter(this, mDatas);
 		mRecyclerView.setLayoutManager(new GridLayoutManager(this, 4));
 		mRecyclerView.setAdapter(mAdapter);
+		
+		MoneySetting.setText(account.getMoney() + "");
+		TimeSetting.setText(account.getTime());
+		RemarkSetting.setText(account.getRemark());
 	}
+
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		Log.i("change", "onDestroy");  
+	}
+
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		Log.i("change", "onPause");  
+	}
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		Log.i("change", "onResume");  
+	}
+
+	@Override
+	protected void onStart() {
+		// TODO Auto-generated method stub
+		super.onStart();
+		Log.i("change", "onStart");  
+	}
+
+	@Override
+	protected void onStop() {
+		// TODO Auto-generated method stub
+		super.onStop();
+		Log.i("change", "onStop");  
+	}
+
+	@Override
+	protected void onRestart() {
+		// TODO Auto-generated method stub
+		super.onRestart();
+		Log.i("change", "onRestart");  
+	}
+	
+	
+	
 }

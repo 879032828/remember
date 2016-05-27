@@ -20,7 +20,9 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:background="@color/blue"
-            android:orientation="horizontal" >
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="25dp" >
 
             <TextView
                 android:id="@+id/title"
@@ -39,7 +41,6 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
                 android:background="@color/blue"
                 android:drawableLeft="@drawable/bg_return_button_selector"
                 android:drawablePadding="10dp"
@@ -53,30 +54,28 @@
                 android:layout_height="20dp"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="26dp"
-                android:layout_toLeftOf="@+id/addButton_right" />
+                android:layout_toLeftOf="@+id/addButton_right"
+                android:background="@drawable/bg_add_button_selector" />
 
             <Button
                 android:id="@+id/addButton_right"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:layout_alignBaseline="@+id/addButton_left"
                 android:layout_alignBottom="@+id/addButton_left"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="24dp"
+                android:background="@drawable/bg_add_button_selector"
                 android:gravity="center_vertical" />
 
             <Button
                 android:id="@+id/save"
-                android:layout_width="45dp"
+                android:layout_width="55dp"
                 android:layout_height="35dp"
-                android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="20dp"
-                android:background="@color/deepblue"
+                android:layout_centerVertical="true"
+                android:background="@drawable/button_save_selector"
                 android:text="保存"
                 android:textColor="@color/white"
-                android:textSize="13dp" />
-
+                android:textSize="15dp" />
         </RelativeLayout>
 
         <LinearLayout

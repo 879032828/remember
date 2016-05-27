@@ -12,7 +12,7 @@
     <!-- 登录界面文本编辑框文字距离左边的距离 -->
     <dimen name="login_edittext_padding_left">15dp</dimen>
     <!-- 注册界面文本编辑框文字距离左边的距离 -->
-    <dimen name="regist_edittext_padding_left">10dp</dimen>
+    <dimen name="regist_edittext_padding_left">5dp</dimen>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     
