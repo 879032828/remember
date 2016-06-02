@@ -25,13 +25,13 @@ public class TypeDBdao {
 	 * 
 	 * @param name
 	 * 
-	 * @param type 0代表收入，1代表支出 根据姓名和收支类型查找对应的所有类型
+	 * @param type 0代表支出，1代表收入 根据姓名和收支类型查找对应的所有类型
 	 */
 	public List<Type> findAllType(String name, String type) {
 		List<Type> TypeCount = null;
 		SQLiteDatabase db = dbOpenHelper.getReadableDatabase();
 		if (db.isOpen()) {
-			Cursor cursor = db.rawQuery("select * from type where name=? and type = ?", new String[] { name, type});
+			Cursor cursor = db.rawQuery("select * from type where name=? and type = ?", new String[] { name, type });
 			TypeCount = new ArrayList<Type>();
 			while (cursor.moveToNext()) {
 				Type type2 = new Type();
@@ -57,11 +57,11 @@ public class TypeDBdao {
 	 * 
 	 * @param types 设置默认值，主要用于初始化类型选择列表时，将默认值存储到数据库中
 	 */
-	public void setDefault(List<String> types, String name) {
+	public void setDefault(List<String> types, String type, String name) {
 		SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
 		if (db.isOpen()) {
-			for (String type : types) {
-				db.execSQL("insert into type(type,typename,name) values (?,?,?)", new Object[] { 0, type, name });
+			for (String typename : types) {
+				db.execSQL("insert into type(type,typename,name) values (?,?,?)", new Object[] { type, typename, name });
 			}
 			db.close();
 		}

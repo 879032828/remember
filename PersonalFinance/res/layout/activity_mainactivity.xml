@@ -6,21 +6,33 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical" 
-        android:layout_weight="1">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical" >
 
-        <ListView 
+        <ImageView 
+            android:id="@+id/ImageView_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/welcome"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+        <ListView
             android:id="@+id/lv_main_calculation"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="2"
             android:layout_marginBottom="1dp"
-            android:listSelector="@drawable/list_item_selector">
-            
+            android:layout_weight="2"
+            android:listSelector="@drawable/selector_list_item" >
         </ListView>
-        
-        <!--  
+
+        <!--
         <com.seventh.view.CornerListView
             android:id="@+id/lv_main_calculation"
             android:layout_width="match_parent"
@@ -28,26 +40,8 @@
             android:layout_weight="2"
             android:cacheColorHint="#AAFF7B" 
             android:layout_marginBottom="1dp">
-        </com.seventh.view.CornerListView> -->
+        </com.seventh.view.CornerListView>
+        -->
     </LinearLayout>
-    
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical" >
-
-        <Button
-            android:id="@+id/bt_main_addnotes"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
-            android:layout_marginTop="10dip"
-            android:text="@string/main_addnodes"
-            android:textStyle="bold" />
-    </LinearLayout>
-
-    
 
 </LinearLayout>

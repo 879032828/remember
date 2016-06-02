@@ -15,24 +15,27 @@ public final class R {
         public static final int push_left_out=0x7f040003;
         public static final int push_right_in=0x7f040004;
         public static final int push_right_out=0x7f040005;
+        public static final int slide_in_from_left=0x7f040006;
+        public static final int slide_in_from_right=0x7f040007;
+        public static final int slide_out_to_left=0x7f040008;
+        public static final int slide_out_to_right=0x7f040009;
     }
     public static final class attr {
     }
     public static final class color {
         public static final int Layout_gray=0x7f050003;
-        public static final int black=0x7f050007;
+        public static final int black=0x7f050006;
         public static final int blue=0x7f050001;
-        public static final int button_gray=0x7f050009;
-        public static final int button_line=0x7f050008;
+        public static final int button_gray=0x7f050008;
+        public static final int button_line=0x7f050007;
         public static final int deepblue=0x7f050002;
         public static final int edittext_gray=0x7f050004;
-        public static final int gray=0x7f050006;
-        public static final int gray_backgroud=0x7f05000c;
+        public static final int gray=0x7f050005;
+        public static final int gray_backgroud=0x7f05000b;
         /**  RecyclerView 
          */
-        public static final int gray_frame=0x7f05000a;
-        public static final int gray_text=0x7f05000b;
-        public static final int transparent=0x7f050005;
+        public static final int gray_frame=0x7f050009;
+        public static final int gray_text=0x7f05000a;
         public static final int white=0x7f050000;
     }
     public static final class dimen {
@@ -62,155 +65,166 @@ public final class R {
     public static final class drawable {
         public static final int add_gray=0x7f020000;
         public static final int add_white=0x7f020001;
-        public static final int app_list_corner_round=0x7f020002;
-        public static final int app_list_corner_round_bottom=0x7f020003;
-        public static final int app_list_corner_round_top=0x7f020004;
-        public static final int app_list_corner_shape=0x7f020005;
-        public static final int arrow_down=0x7f020006;
-        public static final int arrow_up=0x7f020007;
-        public static final int backgroud=0x7f020008;
-        public static final int background_button=0x7f020009;
-        public static final int background_login=0x7f02000a;
-        public static final int background_login_div_bg=0x7f02000b;
-        public static final int background_main_button=0x7f02000c;
-        public static final int bg_add_button_selector=0x7f02000d;
-        public static final int bg_edittext=0x7f02000e;
-        public static final int bg_edittext_focused=0x7f02000f;
-        public static final int bg_edittext_normal=0x7f020010;
-        public static final int bg_return_button_selector=0x7f020011;
-        public static final int bg_setting_button_selector=0x7f020012;
-        public static final int button_left_corner=0x7f020013;
-        public static final int button_left_corner_unpress=0x7f020014;
-        public static final int button_left_register_selector=0x7f020015;
-        public static final int button_outline=0x7f020016;
-        public static final int button_right_corner=0x7f020017;
-        public static final int button_right_corner_unpress=0x7f020018;
-        public static final int button_right_register_selector=0x7f020019;
-        public static final int button_save_press=0x7f02001a;
-        public static final int button_save_selector=0x7f02001b;
-        public static final int button_save_unpress=0x7f02001c;
-        public static final int calendar_bg_tag=0x7f02001d;
-        public static final int calendar_date_focused=0x7f02001e;
-        public static final int circular_dialog_shape=0x7f02001f;
-        public static final int flight_title_back_normal=0x7f020020;
-        public static final int ic_launcher=0x7f020021;
-        public static final int item_bg_textview=0x7f020022;
-        public static final int item_bg_textview_focused=0x7f020023;
-        public static final int leftarrowgray=0x7f020024;
-        public static final int leftarrowwhite=0x7f020025;
-        public static final int light=0x7f020026;
-        public static final int list_item_selector=0x7f020027;
-        public static final int logo=0x7f020028;
-        public static final int plus_24_24=0x7f020029;
-        public static final int point_green=0x7f02002a;
-        public static final int point_red=0x7f02002b;
-        public static final int rightarrow=0x7f02002c;
-        public static final int setting_gray=0x7f02002d;
-        public static final int setting_white=0x7f02002e;
-        public static final int shape_bottom_corner_no_top_line=0x7f02002f;
-        public static final int shape_no_corner_without_bottom=0x7f020030;
-        public static final int shape_top_corner_no_bottom_line=0x7f020031;
-        public static final int spacer_medium=0x7f020032;
+        public static final int arrow_down=0x7f020002;
+        public static final int arrow_up=0x7f020003;
+        public static final int backgroud=0x7f020004;
+        public static final int bg_sill_dialog=0x7f020005;
+        public static final int calendar_bg_tag=0x7f020006;
+        public static final int calendar_date_focused=0x7f020007;
+        public static final int circle=0x7f020008;
+        public static final int config=0x7f020009;
+        public static final int dialog_circle=0x7f02000a;
+        public static final int dialog_title_bg=0x7f02000b;
+        public static final int flight_title_back_normal=0x7f02000c;
+        public static final int ic_launcher=0x7f02000d;
+        public static final int leftarrowgray=0x7f02000e;
+        public static final int leftarrowwhite=0x7f02000f;
+        public static final int light=0x7f020010;
+        public static final int logo=0x7f020011;
+        public static final int plus_24_24=0x7f020012;
+        public static final int point_green=0x7f020013;
+        public static final int point_red=0x7f020014;
+        public static final int rightarrow=0x7f020015;
+        public static final int selector_bg_edittext=0x7f020016;
+        public static final int selector_bg_edittext_focused=0x7f020017;
+        public static final int selector_bg_return_button=0x7f020018;
+        public static final int selector_bg_setting_button=0x7f020019;
+        public static final int selector_button_left_register=0x7f02001a;
+        public static final int selector_button_right_register=0x7f02001b;
+        public static final int selector_button_save=0x7f02001c;
+        public static final int selector_list_item=0x7f02001d;
+        public static final int setting_gray=0x7f02001e;
+        public static final int setting_white=0x7f02001f;
+        public static final int shape_app_list_corner_round=0x7f020020;
+        public static final int shape_app_list_corner_round_bottom=0x7f020021;
+        public static final int shape_app_list_corner_round_top=0x7f020022;
+        public static final int shape_app_list_corner_shape=0x7f020023;
+        public static final int shape_background_button=0x7f020024;
+        public static final int shape_background_login=0x7f020025;
+        public static final int shape_background_login_div_bg=0x7f020026;
+        public static final int shape_background_main_button=0x7f020027;
+        public static final int shape_bg_add_button=0x7f020028;
+        public static final int shape_bg_edittext_normal=0x7f020029;
+        public static final int shape_bottom_corner_no_top_line=0x7f02002a;
+        public static final int shape_button_left_corner=0x7f02002b;
+        public static final int shape_button_left_corner_unpress=0x7f02002c;
+        public static final int shape_button_outline=0x7f02002d;
+        public static final int shape_button_right_corner=0x7f02002e;
+        public static final int shape_button_right_corner_unpress=0x7f02002f;
+        public static final int shape_button_save_press=0x7f020030;
+        public static final int shape_button_save_unpress=0x7f020031;
+        public static final int shape_circular_dialog=0x7f020032;
+        public static final int shape_item_bg_textview=0x7f020033;
+        public static final int shape_item_bg_textview_focused=0x7f020034;
+        public static final int shape_no_corner_without_bottom=0x7f020035;
+        public static final int shape_spacer_medium=0x7f020036;
+        public static final int shape_top_corner_no_bottom_line=0x7f020037;
+        public static final int welcome=0x7f020038;
     }
     public static final class id {
-        public static final int MoneySetting=0x7f0a0000;
-        public static final int RemarkSetting=0x7f0a0002;
-        public static final int TimeSetting=0x7f0a0001;
-        public static final int action_settings=0x7f0a0044;
-        public static final int addButton_left=0x7f0a000d;
-        public static final int addButton_right=0x7f0a000e;
-        public static final int bt_addnodes_add=0x7f0a000a;
-        public static final int bt_addnodes_cancel=0x7f0a0009;
-        public static final int bt_login_cancel=0x7f0a001c;
-        public static final int bt_login_ok=0x7f0a001b;
-        public static final int bt_main_addnotes=0x7f0a001e;
-        public static final int bt_moreaction_cancel=0x7f0a0024;
-        public static final int bt_moreaction_delete=0x7f0a0026;
-        public static final int bt_moreaction_update=0x7f0a0025;
-        public static final int bt_register_cancel=0x7f0a002b;
-        public static final int bt_register_ok=0x7f0a002a;
-        public static final int checkBox1=0x7f0a002d;
-        public static final int content=0x7f0a0010;
-        public static final int data_change=0x7f0a0033;
-        public static final int data_delete=0x7f0a0034;
-        public static final int dialog_cannle=0x7f0a0039;
-        public static final int dialog_delete_cannle=0x7f0a0035;
-        public static final int dialog_delete_sure=0x7f0a0036;
-        public static final int dialog_input_edittext=0x7f0a0038;
-        public static final int dialog_input_text=0x7f0a0037;
-        public static final int dialog_sure=0x7f0a003a;
-        public static final int downMonth=0x7f0a0014;
-        public static final int et_addnodes_money=0x7f0a0005;
-        public static final int et_addnodes_remark=0x7f0a0008;
-        public static final int et_addnodes_time=0x7f0a0004;
-        public static final int et_login_name=0x7f0a0018;
-        public static final int et_login_password=0x7f0a0019;
-        public static final int et_moreaction_money=0x7f0a0020;
-        public static final int et_moreaction_remark=0x7f0a0023;
-        public static final int et_moreaction_time=0x7f0a001f;
-        public static final int et_register_confirm_pwd=0x7f0a0029;
-        public static final int et_register_new_pwd=0x7f0a0028;
-        public static final int et_register_username=0x7f0a0027;
-        public static final int flag=0x7f0a0043;
-        public static final int id_image=0x7f0a003c;
-        public static final int id_num=0x7f0a003b;
-        public static final int id_recyclerview=0x7f0a0003;
-        public static final int imageView=0x7f0a0016;
-        public static final int leftButton=0x7f0a000c;
-        public static final int linearLayout1=0x7f0a0017;
-        public static final int ll_popup=0x7f0a0011;
-        public static final int lly_main=0x7f0a0042;
-        public static final int ls_sp_tv_money=0x7f0a0030;
-        public static final int ls_sp_tv_time=0x7f0a002e;
-        public static final int ls_sp_tv_type=0x7f0a002f;
-        public static final int ls_tv2_txtDataRange =0x7f0a003f;
-        public static final int ls_tv2_txtInto=0x7f0a0041;
-        public static final int ls_tv2_txtOut=0x7f0a0040;
-        public static final int ls_tv_txtCalculationName=0x7f0a003d;
-        public static final int ls_tv_txtMoney=0x7f0a003e;
-        public static final int lv_main_calculation=0x7f0a001d;
-        public static final int lv_specific_data_list=0x7f0a0031;
-        public static final int popupwindow_calendar=0x7f0a0015;
-        public static final int popupwindow_calendar_month=0x7f0a0012;
-        public static final int save=0x7f0a000f;
-        public static final int sp_addnodes_earnings=0x7f0a0007;
-        public static final int sp_addnodes_type=0x7f0a0006;
-        public static final int sp_moreaction_earnings=0x7f0a0022;
-        public static final int sp_moreaction_type=0x7f0a0021;
-        public static final int text1=0x7f0a0032;
-        public static final int textView1=0x7f0a002c;
-        public static final int title=0x7f0a000b;
-        public static final int tv_login_register_link=0x7f0a001a;
-        public static final int upMonth=0x7f0a0013;
+        public static final int ImageView_main=0x7f0a001f;
+        public static final int MoneySetting=0x7f0a0001;
+        public static final int RemarkSetting=0x7f0a0003;
+        public static final int TimeSetting=0x7f0a0002;
+        public static final int action_settings=0x7f0a0046;
+        public static final int addButton_left=0x7f0a0010;
+        public static final int addButton_right=0x7f0a000f;
+        public static final int appname=0x7f0a0000;
+        public static final int bt_addnodes_add=0x7f0a000b;
+        public static final int bt_addnodes_cancel=0x7f0a000a;
+        public static final int bt_login_cancel=0x7f0a001e;
+        public static final int bt_login_ok=0x7f0a001d;
+        public static final int bt_moreaction_cancel=0x7f0a0026;
+        public static final int bt_moreaction_delete=0x7f0a0028;
+        public static final int bt_moreaction_update=0x7f0a0027;
+        public static final int bt_register_ok=0x7f0a002c;
+        public static final int checkBox1=0x7f0a002e;
+        public static final int content=0x7f0a0012;
+        public static final int data_change=0x7f0a0034;
+        public static final int data_delete=0x7f0a0035;
+        public static final int dialog_delete_cannle=0x7f0a0036;
+        public static final int dialog_delete_sure=0x7f0a0037;
+        public static final int dialog_input_cannle=0x7f0a003c;
+        public static final int dialog_input_edittext=0x7f0a0039;
+        public static final int dialog_input_relative=0x7f0a003a;
+        public static final int dialog_input_sure=0x7f0a003b;
+        public static final int dialog_input_text=0x7f0a0038;
+        public static final int downMonth=0x7f0a0016;
+        public static final int et_addnodes_money=0x7f0a0006;
+        public static final int et_addnodes_remark=0x7f0a0009;
+        public static final int et_addnodes_time=0x7f0a0005;
+        public static final int et_login_name=0x7f0a001a;
+        public static final int et_login_password=0x7f0a001b;
+        public static final int et_moreaction_money=0x7f0a0022;
+        public static final int et_moreaction_remark=0x7f0a0025;
+        public static final int et_moreaction_time=0x7f0a0021;
+        public static final int et_register_confirm_pwd=0x7f0a002b;
+        public static final int et_register_new_pwd=0x7f0a002a;
+        public static final int et_register_username=0x7f0a0029;
+        public static final int flag=0x7f0a0045;
+        public static final int id_image=0x7f0a003e;
+        public static final int id_num=0x7f0a003d;
+        public static final int id_recyclerview=0x7f0a0004;
+        public static final int imageView=0x7f0a0019;
+        public static final int leftButton=0x7f0a000e;
+        public static final int linearLayout1=0x7f0a0018;
+        public static final int ll_popup=0x7f0a0013;
+        public static final int lly_main=0x7f0a0044;
+        public static final int ls_sp_tv_money=0x7f0a0031;
+        public static final int ls_sp_tv_time=0x7f0a002f;
+        public static final int ls_sp_tv_type=0x7f0a0030;
+        public static final int ls_tv2_txtDataRange =0x7f0a0041;
+        public static final int ls_tv2_txtInto=0x7f0a0043;
+        public static final int ls_tv2_txtOut=0x7f0a0042;
+        public static final int ls_tv_txtCalculationName=0x7f0a003f;
+        public static final int ls_tv_txtMoney=0x7f0a0040;
+        public static final int lv_main_calculation=0x7f0a0020;
+        public static final int lv_specific_data_list=0x7f0a0032;
+        public static final int main_relative=0x7f0a000c;
+        public static final int popupwindow_calendar=0x7f0a0017;
+        public static final int popupwindow_calendar_month=0x7f0a0014;
+        public static final int save=0x7f0a0011;
+        public static final int sp_addnodes_earnings=0x7f0a0008;
+        public static final int sp_addnodes_type=0x7f0a0007;
+        public static final int sp_moreaction_earnings=0x7f0a0024;
+        public static final int sp_moreaction_type=0x7f0a0023;
+        public static final int text1=0x7f0a0033;
+        public static final int textView1=0x7f0a002d;
+        public static final int title=0x7f0a000d;
+        public static final int tv_login_register_link=0x7f0a001c;
+        public static final int upMonth=0x7f0a0015;
     }
     public static final class layout {
-        public static final int activity_add_record=0x7f030000;
-        public static final int activity_addnodes=0x7f030001;
-        public static final int activity_base=0x7f030002;
-        public static final int activity_calendar=0x7f030003;
-        public static final int activity_login=0x7f030004;
-        public static final int activity_mainactivity=0x7f030005;
-        public static final int activity_more_action=0x7f030006;
-        public static final int activity_registration=0x7f030007;
-        public static final int activity_single_recyclerview=0x7f030008;
-        public static final int activity_specific_data=0x7f030009;
-        public static final int addnodes_earnings=0x7f03000a;
-        public static final int dialog_change_delete=0x7f03000b;
-        public static final int dialog_delete=0x7f03000c;
-        public static final int dialog_input=0x7f03000d;
-        public static final int item_home=0x7f03000e;
-        public static final int main_listview_calculation=0x7f03000f;
-        public static final int main_listview_datareport=0x7f030010;
-        public static final int specific_data_data=0x7f030011;
+        public static final int activity__app_start=0x7f030000;
+        public static final int activity_add_record=0x7f030001;
+        public static final int activity_addnodes=0x7f030002;
+        public static final int activity_base=0x7f030003;
+        public static final int activity_calendar=0x7f030004;
+        public static final int activity_login=0x7f030005;
+        public static final int activity_mainactivity=0x7f030006;
+        public static final int activity_more_action=0x7f030007;
+        public static final int activity_registration=0x7f030008;
+        public static final int activity_single_recyclerview=0x7f030009;
+        public static final int activity_specific_data=0x7f03000a;
+        public static final int addnodes_earnings=0x7f03000b;
+        public static final int dialog_change_delete=0x7f03000c;
+        public static final int dialog_delete=0x7f03000d;
+        public static final int dialog_input=0x7f03000e;
+        public static final int item_home=0x7f03000f;
+        public static final int main_listview_calculation=0x7f030010;
+        public static final int main_listview_datareport=0x7f030011;
+        public static final int specific_data_data=0x7f030012;
     }
     public static final class menu {
-        public static final int add_record=0x7f090000;
-        public static final int base=0x7f090001;
-        public static final int calendar=0x7f090002;
-        public static final int main=0x7f090003;
-        public static final int my=0x7f090004;
+        public static final int activity__app_start=0x7f090000;
+        public static final int add_record=0x7f090001;
+        public static final int base=0x7f090002;
+        public static final int calendar=0x7f090003;
+        public static final int main=0x7f090004;
+        public static final int my=0x7f090005;
     }
     public static final class string {
+        public static final int AppStart_Bottom_title=0x7f07002f;
         public static final int action_settings=0x7f070001;
         public static final int addnodes_add=0x7f07001f;
         public static final int addnodes_cancel=0x7f07001e;
@@ -252,6 +266,7 @@ public final class R {
         public static final int specific_data_totalintodata=0x7f070023;
         public static final int specific_data_totaloutdata=0x7f070024;
         public static final int specific_data_yeardata=0x7f070028;
+        public static final int title_activity_activity__app_start=0x7f07002e;
         public static final int title_activity_add_record=0x7f07002c;
         public static final int title_activity_base=0x7f07002b;
         public static final int title_activity_calendar=0x7f07002d;
@@ -259,6 +274,7 @@ public final class R {
         public static final int update_msg=0x7f070015;
     }
     public static final class style {
+        public static final int AlertDialogStyle=0x7f080005;
         /** 
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
@@ -284,12 +300,14 @@ public final class R {
          */
         public static final int AppBaseTheme=0x7f080000;
         /**  Application theme. 
- All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f080001;
-        /**  设置window背景透明，也就是去边框 
+        /**  animation 样式 
          */
-        public static final int dialog=0x7f080003;
-        public static final int normalText=0x7f080002;
+        public static final int activityAnimation=0x7f080002;
+        /**  设置屏幕变暗 
+         */
+        public static final int dialog=0x7f080004;
+        public static final int normalText=0x7f080003;
     }
 }

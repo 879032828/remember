@@ -154,7 +154,7 @@ public class MoreAction extends Activity implements OnClickListener {
 			finish();
 			break;
 		case R.id.bt_moreaction_cancel:// 取消按钮
-			Intent intent = new Intent(this, SpecificData.class);
+			Intent intent = new Intent(this, Activity_SpecificData.class);
 			intent.putExtra("name", name);
 			intent.putExtra("title", title);
 			// 传值 帐户名

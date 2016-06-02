@@ -1,56 +1,48 @@
 package com.seventh.personalfinance;
 
-import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
-import java.util.TimeZone;
 
 import com.seventh.base.BaseActivity;
 import com.seventh.db.AccountDBdao;
+import com.seventh.db.BudgetDBdao;
 import com.seventh.db.PersonDBdao;
 import com.seventh.view.CornerListView;
 import com.seventh.view.DataRange;
 import com.seventh.view.MainActivityService;
-import com.seventh.view.PieChart;
 
-import android.app.Activity;
+import android.R.integer;
+import android.app.Dialog;
 import android.content.Intent;
-import android.os.AsyncTask;
+import android.graphics.Rect;
 import android.os.Bundle;
-import android.view.GestureDetector;
-import android.view.GestureDetector.OnGestureListener;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
-import android.view.ViewTreeObserver.OnPreDrawListener;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
 
-import com.seventh.util.*;
-
-public class MainActivity extends BaseActivity implements OnClickListener, OnTouchListener {
+public class MainActivity extends BaseActivity {
 	private Intent intent = null;// 定义一个意图
 	private String name;// 账号
 	private String pwd1;
 	private String pwd2;
 	AccountDBdao accountDBdao;// 数据库
 	PersonDBdao persondbdao;
-
-	private Button mButtonAddNodes;// 记一笔按钮
 
 	private float totalOut;// 总支出
 	private float totalInto;// 总收入
@@ -61,37 +53,79 @@ public class MainActivity extends BaseActivity implements OnClickListener, OnTou
 	private CornerListView cornerListView2 = null;// 自定义listview2
 	private List<DataRange> dataRanges;
 	private LayoutInflater inflater;
+	private ImageView ImageView_main;
+	private EditText dialog_input_edittext;
+	private TextView dialog_input_text;
+	private Button dialog_input_sure;
+	private Button dialog_input_cannle;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		baseSetContentView(R.layout.activity_mainactivity);
-		
+
+		ImageView_main = (ImageView) findViewById(R.id.ImageView_main);
+		// 在控件完成后，执行SettingView操作更新控件的高度
+		ImageView_main.post(new Runnable() {
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				SettingView();
+			}
+		});
+
 		setTitle("记着");
-		//设置两个按钮可见及背景
+		// 设置两个按钮可见及背景
 		setHideaddButton_left();
-		setBackgroudButton_left(R.drawable.bg_add_button_selector);
+		setBackgroudButton_left(R.drawable.shape_bg_add_button);
 		setHideaddButton_right();
-		setBackgroudButton_right(R.drawable.bg_setting_button_selector);
-		
+		setBackgroudButton_right(R.drawable.selector_bg_setting_button);
+
 		initView();
 		ViewOperation();
+
 	}
 
+	/**
+	 * 获取状态栏和标题栏的高度，并设置ImageView的高度
+	 */
+	public void SettingView() {
+		Rect rect = new Rect();
+		Window window = getWindow();
+		ImageView_main.getWindowVisibleDisplayFrame(rect);
+		// 状态栏的高度
+		int statusBarHeight = rect.top;
+		// 标题栏的高度
+		RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.main_relative);
+		int contentViewTop = relativeLayout.getHeight();
+
+		// 设置控件的高度
+		WindowManager windowManager = this.getWindowManager();
+		int height = windowManager.getDefaultDisplay().getHeight();
+		LayoutParams para = ImageView_main.getLayoutParams();
+		para.height = height / 2 - statusBarHeight - contentViewTop;
+		para.width = ImageView_main.getLayoutParams().width;
+		ImageView_main.setLayoutParams(para);
+	}
+
+	/**
+	 * 
+	 */
 	public void ViewOperation() {
 		intent = this.getIntent();
-		name = intent.getStringExtra("name");// 接收登录界面的数据
+		name = intent.getStringExtra("name");// 接收其他界面的Intent中的name值
 		if (name == null) {
-			intent = new Intent(this, Login.class);
+			intent = new Intent(this, Activity_Login.class);
 			startActivity(intent);
 			finish();
 		} else {
 			accountDBdao = new AccountDBdao(getApplicationContext());
-			totalOut = accountDBdao.fillTotalOut(name);// 总支出
-			totalInto = accountDBdao.fillTotalInto(name);// 总收入
+			totalOut = accountDBdao.fillTotalOut(name);// 获取总支出
+			totalInto = accountDBdao.fillTotalInto(name);// 获取总收入
 
 			// 设置listview1 值
-			map_list1 = MainActivityService.getDataSource1(totalInto, totalOut);
+			map_list1 = MainActivityService.getDataSource1(totalInto, totalOut, name, this);
 			// listview1适配器
 			SimpleAdapter adapter1 = new SimpleAdapter(getApplicationContext(), map_list1,
 					R.layout.main_listview_calculation, new String[] { "txtCalculationName", "txtMoney" },
@@ -106,131 +140,134 @@ public class MainActivity extends BaseActivity implements OnClickListener, OnTou
 				public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 					switch (arg2) {
 					case 0:
-						TotalIntoData();
+						// 设置预算余额
+						BudgetBalance();
 						break;
 					case 1:
-						TotalOutData();
+						// 收入总额
+						TotalIntoData();
 						break;
 					case 2:
-						TotalAllData();
+						// 支出总额
+						TotalOutData();
 						break;
 					}
 
 				}
 			});
-
-			// // 设置listview2 值
-			// inflater = LayoutInflater.from(this);
-			// cornerListView2 = (CornerListView)
-			// findViewById(R.id.lv_main_datareport);
-			// try {
-			// dataRanges = MainActivityService.getDataSource2(name,
-			// getApplicationContext());
-			// } catch (Exception e) {
-			// Toast.makeText(this, "获取数据失败", 0).show();
-			// e.printStackTrace();
-			// }
-			// // 填充listview2的数据
-			// cornerListView2.setAdapter(new MyAdapter());
-			//
-			// // listview2选项的点击事件 一览表
-			// cornerListView2.setOnItemClickListener(new OnItemClickListener()
-			// {
-			//
-			// @Override
-			// public void onItemClick(AdapterView<?> arg0, View arg1,
-			// int arg2, long arg3) {
-			// switch (arg2) {
-			// case 0:
-			// TodayData();
-			// break;
-			// case 1:
-			// MonthData();
-			// break;
-			// case 2:
-			// YearData();
-			// break;
-			// }
-			// }
-			// });
-
 		}
 	}
 
+	/**
+	 * 初始化界面
+	 */
 	public void initView() {
 		listView1 = (ListView) findViewById(R.id.lv_main_calculation);// 总额显示
-		
+
 	}
 
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.bt_main_addnotes:
-			intent = new Intent(this, AddNodes.class);
-			intent.putExtra("name", name);
-			// 传值 帐户名
-			startActivity(intent);
-			break;
-		}
-	}
-
-	// 跳转到收入账单
+	// 跳转到总收入账单
 	public void TotalIntoData() {
-		intent = new Intent(this, SpecificData.class);
+		intent = new Intent(this, Activity_SpecificData.class);
 		intent.putExtra("name", name);
 		intent.putExtra("title", "收入总额");
+		intent.putExtra("typeflag", "1");
 		startActivity(intent);
+		finish();
 	}
 
-	// 跳转到支出账单
+	// 跳转到总支出账单
 	public void TotalOutData() {
-		intent = new Intent(this, SpecificData.class);
+		intent = new Intent(this, Activity_SpecificData.class);
 		intent.putExtra("name", name);
 		intent.putExtra("title", "支出总额");
+		intent.putExtra("typeflag", "0");
 		startActivity(intent);
+		finish();
+	}
+
+	// 预算余额
+	public void BudgetBalance() {
+		View view = getLayoutInflater().inflate(R.layout.dialog_input, null);
+		final Dialog dialog = new Dialog(this, R.style.AlertDialogStyle);
+		dialog.setContentView(view);
+		dialog.show();
+
+		dialog_input_edittext = (EditText) view.findViewById(R.id.dialog_input_edittext);
+		dialog_input_text = (TextView) view.findViewById(R.id.dialog_input_text);
+		dialog_input_sure = (Button) view.findViewById(R.id.dialog_input_sure);
+		dialog_input_cannle = (Button) view.findViewById(R.id.dialog_input_cannle);
+		dialog_input_text.setText("设置本月消费预算");
+
+		BudgetDBdao budgetDBdao = new BudgetDBdao(this);
+		if (budgetDBdao.isExistBudget(name)) {
+			dialog_input_edittext.setText(Float.toString(budgetDBdao.findBudget(name).getBudget()));
+		} else {
+			dialog_input_edittext.setText(0 + "");
+		}
+
+		dialog_input_sure.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				String budget = dialog_input_edittext.getText().toString();
+				if (budget.trim().isEmpty()) {
+					dialog.dismiss();
+				} else {
+					BudgetDBdao budgetDBdao = new BudgetDBdao(MainActivity.this);
+					budgetDBdao.addBudget(Integer.parseInt(dialog_input_edittext.getText().toString()), name);
+					Toast.makeText(MainActivity.this, "设置成功", Toast.LENGTH_SHORT).show();
+					onResume();
+					dialog.dismiss();
+				}
+			}
+		});
+		dialog_input_cannle.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				dialog.dismiss();
+			}
+		});
 	}
 
 	// 跳转到详细账单
 	public void TotalAllData() {
-		intent = new Intent(this, SpecificData.class);
+		intent = new Intent(this, Activity_SpecificData.class);
 		intent.putExtra("name", name);
 		intent.putExtra("title", "详细账单");
 		startActivity(intent);
+		finish();
 	}
 
 	// 跳转到今日账单
 	public void TodayData() {
-		intent = new Intent(this, SpecificData.class);
+		intent = new Intent(this, Activity_SpecificData.class);
 		intent.putExtra("name", name);
 		intent.putExtra("title", "今日账单");
 		startActivity(intent);
+		finish();
 	}
 
 	// 跳转到本月账单
 	public void MonthData() {
-		intent = new Intent(this, SpecificData.class);
+		intent = new Intent(this, Activity_SpecificData.class);
 		intent.putExtra("name", name);
 		intent.putExtra("title", "本月账单");
 		startActivity(intent);
+		finish();
 	}
 
 	// 跳转到本年账单
 	public void YearData() {
-		intent = new Intent(this, SpecificData.class);
+		intent = new Intent(this, Activity_SpecificData.class);
 		intent.putExtra("name", name);
 		intent.putExtra("title", "本年账单");
 		startActivity(intent);
+		finish();
 	}
-
-	// 设置时间
-//	public String GetTime() {
-//		Calendar c = Calendar.getInstance(TimeZone.getTimeZone("GMT+08:00")); // 获取东八区时间
-//		int year = c.get(Calendar.YEAR); // 获取年
-//		int month = c.get(Calendar.MONTH) + 1; // 获取月份，0表示1月份
-//		int day = c.get(Calendar.DAY_OF_MONTH); // 获取当前天数
-//		String time = year + "/" + month + "/" + day;
-//		return time;
-//	}
 
 	// listview2适配器
 	private class MyAdapter extends BaseAdapter {
@@ -278,7 +315,7 @@ public class MainActivity extends BaseActivity implements OnClickListener, OnTou
 		totalOut = accountDBdao.fillTotalOut(name);// 总支出
 		totalInto = accountDBdao.fillTotalInto(name);// 总收入
 
-		map_list1 = MainActivityService.getDataSource1(totalInto, totalOut);
+		map_list1 = MainActivityService.getDataSource1(totalInto, totalOut, name, this);
 		// listview1适配器
 		SimpleAdapter adapter1 = new SimpleAdapter(getApplicationContext(), map_list1,
 				R.layout.main_listview_calculation, new String[] { "txtCalculationName", "txtMoney" },
@@ -297,15 +334,12 @@ public class MainActivity extends BaseActivity implements OnClickListener, OnTou
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		// TODO Auto-generated method stub
-		return super.onCreateOptionsMenu(menu);
-	}
-
-	@Override
-	public boolean onTouch(View v, MotionEvent event) {
-		// TODO Auto-generated method stub
-		return false;
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			finish();
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 
 }

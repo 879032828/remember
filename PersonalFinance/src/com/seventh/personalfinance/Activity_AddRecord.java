@@ -1,52 +1,38 @@
 package com.seventh.personalfinance;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
+import com.seventh.adapter.RecyclerViewAdapter;
 import com.seventh.base.BaseActivity;
-import com.seventh.base.RecyclerViewAdapter;
 import com.seventh.db.Account;
 import com.seventh.db.AccountDBdao;
 import com.seventh.db.Type;
 import com.seventh.db.TypeDBdao;
 import com.seventh.util.TimeUtil;
 
-import android.R.string;
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
-import android.app.DatePickerDialog.OnDateSetListener;
-import android.content.BroadcastReceiver;
-import android.content.DialogInterface;
+import android.app.Dialog;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
-import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.PopupWindow;
-import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class AddRecordActivity extends BaseActivity {
+public class Activity_AddRecord extends BaseActivity {
 
 	private EditText MoneySetting;
 	private EditText TimeSetting;
 	private EditText RemarkSetting;
 	private EditText dialog_input_edittext;
+	private TextView dialog_input_text;
 	private RecyclerView mRecyclerView;
 	private List<String> mDatas;
 	private RecyclerViewAdapter mAdapter;
@@ -55,10 +41,16 @@ public class AddRecordActivity extends BaseActivity {
 	private String title;
 	private String name;
 	private String type;
+	private String typeflag;
 	TypeDBdao typeDBdao;
 
 	private Account account;
-	
+	Dialog alertDialog;
+
+	private static final String type_expend = "0";// 支出类型标志
+	private static final String type_income = "1";// 收入类型标志
+	private static final int earning_expend = 0;// 支出类型标志
+	private static final int earning_income = 1;// 收入类型标志
 
 	// 时间选择请求码
 	private static final int Time_requestCode = 0;
@@ -71,6 +63,7 @@ public class AddRecordActivity extends BaseActivity {
 		Intent intent = getIntent();
 		name = intent.getStringExtra("name");
 		title = intent.getStringExtra("title");
+		typeflag = intent.getStringExtra("typeflag");
 
 		setHideleftButton(title);
 		setHideaddButton_save();
@@ -94,9 +87,9 @@ public class AddRecordActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-gefninerated method stub
-				Intent intent = new Intent(AddRecordActivity.this, SpecificData.class);
+				Intent intent = new Intent(Activity_AddRecord.this, Activity_SpecificData.class);
 				intent.putExtra("name", name);
-				intent.putExtra("title", "收入总额");
+				intent.putExtra("title", title);
 				setResult(RESULT_OK, intent);
 				finish();
 			}
@@ -117,7 +110,7 @@ public class AddRecordActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent(AddRecordActivity.this, CalendarActivity.class);
+				Intent intent = new Intent(Activity_AddRecord.this, Activity_Calendar.class);
 				startActivityForResult(intent, Time_requestCode);
 			}
 		});
@@ -159,19 +152,27 @@ public class AddRecordActivity extends BaseActivity {
 	protected void initData() {
 		mDatas = new ArrayList<String>() {
 		};
-		mDatas.add("工资");
-		mDatas.add("奖金");
-		mDatas.add("兼职");
-		mDatas.add("理财");
-		mDatas.add("投资");
-		mDatas.add("其他");
+		if (typeflag.equals(type_expend)) {
+			mDatas.add("三餐");
+			mDatas.add("住房");
+			mDatas.add("服装");
+			mDatas.add("交通");
+			mDatas.add("其他");
+		} else {
+			mDatas.add("工资");
+			mDatas.add("奖金");
+			mDatas.add("兼职");
+			mDatas.add("理财");
+			mDatas.add("投资");
+			mDatas.add("其他");
+		}
 
 		typeDBdao = new TypeDBdao(this);
-		// 查询对应账号的所有收入类型
-		List<Type> typecount = typeDBdao.findAllType(name, "0");
+		// 查询对应账号的所有收支类型
+		List<Type> typecount = typeDBdao.findAllType(name, typeflag);
 		// 如果没有对应的类型存在，则设置默认值
 		if (typecount.size() == 0) {
-			typeDBdao.setDefault(mDatas, name);
+			typeDBdao.setDefault(mDatas, typeflag, name);
 			mDatas.add("++");// 设置增加按钮的内容，保证增加按钮一直处于列表最后面
 		} else {
 			// 若数据库中存在类型，则清空mDatas，并重新获取数据库中的类型，填充mDatas
@@ -198,7 +199,7 @@ public class AddRecordActivity extends BaseActivity {
 				if (mRecyclerView.getChildCount() - 1 != 0) {
 					ViewGroup parent = (ViewGroup) mRecyclerView.getChildAt(0);
 					Button button = (Button) parent.findViewById(R.id.id_num);
-					button.setBackgroundResource(R.drawable.item_bg_textview_focused);
+					button.setBackgroundResource(R.drawable.shape_item_bg_textview_focused);
 					button.setTextColor(getResources().getColor(R.color.black));
 					type = mAdapter.getmDatas().get(0);
 				}
@@ -212,9 +213,9 @@ public class AddRecordActivity extends BaseActivity {
 				if (position == mRecyclerView.getChildCount() - 1) {
 					// 项目要求：此处设置增加按钮操作
 					ShowDialog();
-					Toast.makeText(AddRecordActivity.this, "这是最后的单击事件", Toast.LENGTH_SHORT).show();
+					Toast.makeText(Activity_AddRecord.this, "这是最后的单击事件", Toast.LENGTH_SHORT).show();
 				} else {
-					Toast.makeText(AddRecordActivity.this, position + " click", Toast.LENGTH_SHORT).show();
+					Toast.makeText(Activity_AddRecord.this, position + " click", Toast.LENGTH_SHORT).show();
 					// 获取RecyclerView的Item个数，进行遍历
 					for (int i = 0; i < mRecyclerView.getChildCount(); i++) {
 						// 当点击的Item为RecyclerView中对应的Item时，将该Item背景设置为点击时的背景
@@ -222,13 +223,13 @@ public class AddRecordActivity extends BaseActivity {
 						if (position == i) {
 							ViewGroup parent = (ViewGroup) mRecyclerView.getChildAt(i);
 							Button button = (Button) parent.findViewById(R.id.id_num);
-							button.setBackgroundResource(R.drawable.item_bg_textview_focused);
+							button.setBackgroundResource(R.drawable.shape_item_bg_textview_focused);
 							button.setTextColor(getResources().getColor(R.color.black));
 							type = mAdapter.getmDatas().get(position);
 						} else {
 							ViewGroup parent = (ViewGroup) mRecyclerView.getChildAt(i);
 							Button button = (Button) parent.findViewById(R.id.id_num);
-							button.setBackgroundResource(R.drawable.item_bg_textview);
+							button.setBackgroundResource(R.drawable.shape_item_bg_textview);
 							button.setTextColor(getResources().getColor(R.color.gray_text));
 						}
 					}
@@ -237,28 +238,34 @@ public class AddRecordActivity extends BaseActivity {
 
 			@Override
 			public void onRecItemLongClick(View view, int position) {
-				Toast.makeText(AddRecordActivity.this, position + " long click", Toast.LENGTH_SHORT).show();
+				Toast.makeText(Activity_AddRecord.this, position + " long click", Toast.LENGTH_SHORT).show();
 			}
 		});
 	}
 
 	/**
-	 * 显示收入类型输入对话框
+	 * 显示收支类型输入对话框
 	 */
 	public void ShowDialog() {
 
 		// 显示对话框
 		View inputForm = getLayoutInflater().inflate(R.layout.dialog_input, null);
-		AlertDialog.Builder builder = new AlertDialog.Builder(this, AlertDialog.THEME_HOLO_LIGHT);
 
-		final AlertDialog alertDialog = builder.setView(inputForm).create();
-
+		alertDialog = new Dialog(this, R.style.AlertDialogStyle);
+		alertDialog.setContentView(inputForm);
 		alertDialog.show();
-
+		dialog_input_text = (TextView) inputForm.findViewById(R.id.dialog_input_text);
 		dialog_input_edittext = (EditText) inputForm.findViewById(R.id.dialog_input_edittext);
 		dialog_input_edittext.setFocusable(true);
-		dialog_cannle = (Button) inputForm.findViewById(R.id.dialog_cannle);
-		dialog_sure = (Button) inputForm.findViewById(R.id.dialog_sure);
+		dialog_cannle = (Button) inputForm.findViewById(R.id.dialog_input_cannle);
+		dialog_sure = (Button) inputForm.findViewById(R.id.dialog_input_sure);
+
+		if (typeflag.equals(type_expend)) {
+			dialog_input_text.setText("添加支出类型");
+		} else {
+			dialog_input_text.setText("添加收入类型");
+		}
+
 		// 对话框退出
 		dialog_cannle.setOnClickListener(new OnClickListener() {
 
@@ -276,15 +283,15 @@ public class AddRecordActivity extends BaseActivity {
 				// TODO Auto-generated method stub
 				String incomeType = dialog_input_edittext.getText().toString().trim();
 				if (incomeType.isEmpty()) {
-					Toast.makeText(AddRecordActivity.this, "请输入类型名称", Toast.LENGTH_SHORT).show();
+					Toast.makeText(Activity_AddRecord.this, "请输入类型名称", Toast.LENGTH_SHORT).show();
 				} else {
 					// 判断输入类型是否已存在于数据库中
-					if (typeDBdao.isExist("0", name, incomeType)) {
-						Toast.makeText(AddRecordActivity.this, "该类型已存在", Toast.LENGTH_SHORT).show();
+					if (typeDBdao.isExist(typeflag, name, incomeType)) {
+						Toast.makeText(Activity_AddRecord.this, "该类型已存在", Toast.LENGTH_SHORT).show();
 						;
 					} else {
 						// 若输入类型不存在数据库中，则将该类型添加到表中
-						typeDBdao.addRecord("0", incomeType, name);
+						typeDBdao.addRecord(typeflag, incomeType, name);
 						// 增加RecyclerView的Item
 						mAdapter.addData(mAdapter.getItemCount() - 1, incomeType);
 						alertDialog.dismiss();
@@ -301,24 +308,32 @@ public class AddRecordActivity extends BaseActivity {
 		String remark = RemarkSetting.getText().toString().trim();
 		String name = this.name;
 		if (MoneySetting.getText().toString().isEmpty()) {
-			Toast.makeText(AddRecordActivity.this, "请输入金融", Toast.LENGTH_SHORT).show();
+			Toast.makeText(Activity_AddRecord.this, "请输入金融", Toast.LENGTH_SHORT).show();
 			return false;
 		} else {
 			money = Float.parseFloat(MoneySetting.getText().toString());
 		}
 		if (type == null || type.isEmpty()) {
-			Toast.makeText(AddRecordActivity.this, "请选择收入类型", Toast.LENGTH_SHORT).show();
+			if (typeflag.equals(type_expend)) {
+				Toast.makeText(Activity_AddRecord.this, "请选择支出类型", Toast.LENGTH_SHORT).show();
+			} else {
+				Toast.makeText(Activity_AddRecord.this, "请选择收入类型", Toast.LENGTH_SHORT).show();
+			}
 			return false;
 		}
 
 		AccountDBdao account = new AccountDBdao(this);
-		account.add(time, money, type, 1, remark, name);
-		Toast.makeText(AddRecordActivity.this, "添加纪录成功！", Toast.LENGTH_SHORT).show();
+		if (typeflag.equals(type_expend)) {
+			account.add(time, money, type, earning_expend, remark, name);
+		} else {
+			account.add(time, money, type, earning_income, remark, name);
+		}
 
-		Intent intent = new Intent(AddRecordActivity.this, SpecificData.class);
+		Toast.makeText(Activity_AddRecord.this, "添加纪录成功！", Toast.LENGTH_SHORT).show();
+
+		Intent intent = new Intent(Activity_AddRecord.this, Activity_SpecificData.class);
 		intent.putExtra("name", name);
-		intent.putExtra("title", "收入总额");
-		AddRecordActivity.this.setResult(RESULT_OK, intent);
+		Activity_AddRecord.this.setResult(RESULT_OK, intent);
 		finish();
 
 		return true;

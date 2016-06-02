@@ -24,7 +24,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 
-public class CalendarActivity extends Activity {
+public class Activity_Calendar extends Activity {
 
 	private String date = null;// 设置默认选中的日期 格式为 “2014-04-05” 标准DATE格式
 	private TextView popupwindow_calendar_month;
@@ -96,11 +96,11 @@ public class CalendarActivity extends Activity {
 				} else {
 					calendar.setCalendarDayBgColor(dateFormat, R.drawable.calendar_date_focused);
 					date = dateFormat;// 最后返回给全局 date
-					Intent intent = new Intent(CalendarActivity.this, AddRecordActivity.class);
+					Intent intent = new Intent(Activity_Calendar.this, Activity_AddRecord.class);
 					Bundle bundle = new Bundle();
 					bundle.putString("time", date);
 					intent.putExtra("Calendar", bundle);
-					CalendarActivity.this.setResult(Calendar_resultCode, intent);
+					Activity_Calendar.this.setResult(Calendar_resultCode, intent);
 					finish();
 				}
 			}

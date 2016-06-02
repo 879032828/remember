@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" 
-    android:background="@drawable/background_login">
+    android:background="@drawable/shape_background_login">
 
     <TextView
         android:layout_width="fill_parent"
@@ -156,7 +156,7 @@
             android:layout_weight="1"
             android:text="@string/addnodes_cancel" 
             android:textSize="16dip"
-            android:background="@drawable/background_main_button"/>
+            android:background="@drawable/shape_background_main_button"/>
 
         <Button
             android:id="@+id/bt_moreaction_update"
@@ -166,7 +166,7 @@
             android:layout_weight="1"
             android:text="@string/moreaction_update" 
             android:textSize="16dip"
-            android:background="@drawable/background_button"/>
+            android:background="@drawable/shape_background_button"/>
 
         <Button
             android:id="@+id/bt_moreaction_delete"
@@ -176,7 +176,7 @@
             android:layout_weight="1"
             android:text="@string/moreaction_delete" 
             android:textSize="16dip"
-            android:background="@drawable/background_main_button"/>
+            android:background="@drawable/shape_background_main_button"/>
     </LinearLayout>
 
 </LinearLayout>

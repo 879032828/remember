@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
 
+import com.seventh.adapter.SpecificAdapter;
 import com.seventh.base.BaseActivity;
 import com.seventh.db.Account;
 import com.seventh.db.AccountDBdao;
@@ -12,12 +13,14 @@ import com.seventh.util.*;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -34,10 +37,11 @@ import android.widget.AdapterView.OnItemClickListener;
  * @author Administrator
  *
  */
-public class SpecificData extends BaseActivity {
+public class Activity_SpecificData extends BaseActivity {
 	private Intent intent = null;// 定义一个意图
 	private String name;// 账号
 	private String title;// 标题
+	private String typeflag;// 收支类型标志
 	AccountDBdao accountDBdao;// 数据库
 
 	private String time1;
@@ -48,11 +52,13 @@ public class SpecificData extends BaseActivity {
 	private List<Account> accounts;// 账单数据
 	private LayoutInflater inflater;
 
-	//添加收入记录的请求码
+	// 添加收入记录的请求码
 	private static final int requestCode_addrecord = 0;
-	//修改记录的请求码
+	// 修改记录的请求码
 	private static final int requestCode_change = 1;
-	
+
+	Dialog dialog;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -63,21 +69,30 @@ public class SpecificData extends BaseActivity {
 		intent = this.getIntent();
 		name = intent.getStringExtra("name");// 接收主界面的数据
 		title = intent.getStringExtra("title");// 接收主界面的数据
+		typeflag = intent.getStringExtra("typeflag");
 
 		setHideleftButton(title);// 设置返回箭头
 		setHideaddButton_right();// 设置右加按钮
-		setBackgroudButton_right(R.drawable.bg_add_button_selector);
+		setBackgroudButton_right(R.drawable.shape_bg_add_button);
 		setButtonOnClickListener("右按钮", new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				switch (title) {
+				case "支出总额":
+					Intent intent2 = new Intent(Activity_SpecificData.this, Activity_AddRecord.class);
+					intent2.putExtra("name", name);
+					intent2.putExtra("title", "添加支出记录");
+					intent2.putExtra("typeflag", typeflag);
+					startActivityForResult(intent2, requestCode_addrecord);
+					break;
 				case "收入总额":
-					Intent intent = new Intent(SpecificData.this, AddRecordActivity.class);
-					intent.putExtra("name", name);
-					intent.putExtra("title", "添加收入记录");
-					startActivityForResult(intent, requestCode_addrecord);
+					Intent intent1 = new Intent(Activity_SpecificData.this, Activity_AddRecord.class);
+					intent1.putExtra("name", name);
+					intent1.putExtra("title", "添加收入记录");
+					intent1.putExtra("typeflag", typeflag);
+					startActivityForResult(intent1, requestCode_addrecord);
 					break;
 				default:
 					break;
@@ -90,7 +105,7 @@ public class SpecificData extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent(SpecificData.this, MainActivity.class);
+				Intent intent = new Intent(Activity_SpecificData.this, MainActivity.class);
 				intent.putExtra("name", name);
 				startActivity(intent);
 				finish();
@@ -113,7 +128,7 @@ public class SpecificData extends BaseActivity {
 		GetDataBytitle();
 
 		// 填充listview的数据
-		cornerListView.setAdapter(new MyAdapter());
+		cornerListView.setAdapter(new SpecificAdapter(accounts, this));
 		// listview选项的点击事件
 		cornerListView.setOnItemClickListener(new OnItemClickListener() {
 
@@ -127,15 +142,6 @@ public class SpecificData extends BaseActivity {
 		});
 	}
 
-	private void GoMoreAction(int id, String name) {
-		// TODO Auto-generated method stub
-		intent = new Intent(this, MoreAction.class);
-		intent.putExtra("name", name);
-		intent.putExtra("id", id + "");
-		intent.putExtra("title", title);
-		startActivity(intent);
-	}
-
 	/**
 	 * 根据title获取对应的数据
 	 */
@@ -143,7 +149,7 @@ public class SpecificData extends BaseActivity {
 		try {
 			if (title.equals("收入总额")) {
 				accounts = accountDBdao.findTotalIntoByName(name);
-			} else if (title.equals("支出账单")) {
+			} else if (title.equals("支出总额")) {
 				accounts = accountDBdao.findTotalOutByName(name);
 			} else if (title.equals("详细账单")) {
 				accounts = accountDBdao.findAllByName(name);
@@ -160,63 +166,14 @@ public class SpecificData extends BaseActivity {
 		}
 	}
 
-	// listview适配器
-	private class MyAdapter extends BaseAdapter {
-
-		@Override
-		public int getCount() {
-			// TODO Auto-generated method stub
-			return accounts.size();
-		}
-
-		@Override
-		public Object getItem(int position) {
-			// TODO Auto-generated method stub
-
-			return accounts.get(position);
-		}
-
-		@Override
-		public long getItemId(int position) {
-			// TODO Auto-generated method stub
-			return position;
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			View view = inflater.inflate(R.layout.specific_data_data, null);
-			Account account = accounts.get(position);
-			TextView tv_text_time = (TextView) view.findViewById(R.id.ls_sp_tv_time);
-			TextView tv_text_type = (TextView) view.findViewById(R.id.ls_sp_tv_type);
-			TextView tv_text_money = (TextView) view.findViewById(R.id.ls_sp_tv_money);
-			ImageView iv_flag = (ImageView) view.findViewById(R.id.flag);
-
-			tv_text_time.setText(account.getTime());
-			tv_text_money.setText(account.getMoney() + "");
-			if (account.getRemark().isEmpty()) {
-				tv_text_type.setText(account.getType());
-			} else {
-				tv_text_type.setText(account.getType() + "--" + account.getRemark());
-			}
-			// 当在ListView中显示为收入时，设置金额前为绿点，否则为红点
-			if (account.isEarnings()) {
-				iv_flag.setBackgroundResource(R.drawable.point_green);
-			} else {
-				iv_flag.setBackgroundResource(R.drawable.point_red);
-			}
-			return view;
-		}
-
-	}
-
 	/**
 	 * @param account
 	 */
 	public void showMyDialog(final Account account) {
 		View view = getLayoutInflater().inflate(R.layout.dialog_change_delete, null);
-		AlertDialog.Builder builder = new AlertDialog.Builder(this, AlertDialog.THEME_HOLO_LIGHT);// 设置对话框背景为白色
-		builder.setView(view).create();
-		final AlertDialog alertDialog = builder.show();
+		dialog = new Dialog(this, R.style.AlertDialogStyle);
+		dialog.setContentView(view);
+		dialog.show();
 
 		Button changeButton = (Button) view.findViewById(R.id.data_change);
 		Button deleteButton = (Button) view.findViewById(R.id.data_delete);
@@ -227,14 +184,14 @@ public class SpecificData extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent(SpecificData.this, ChangeRecordActivity.class);
+				Intent intent = new Intent(Activity_SpecificData.this, Activity_ChangeRecord.class);
 				Bundle bundle = new Bundle();
 				bundle.putSerializable("changeAccount", account);
 				intent.putExtras(bundle);
 				intent.putExtra("name", name);
 				intent.putExtra("title", "修改收入记录");
-				alertDialog.dismiss();
-				SpecificData.this.setResult(requestCode_change, intent);
+				dialog.dismiss();
+				startActivityForResult(intent, requestCode_change);
 			}
 		});
 		// 删除记录
@@ -244,7 +201,7 @@ public class SpecificData extends BaseActivity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				showDeleteDialog(account);
-				alertDialog.dismiss();
+				dialog.dismiss();
 			}
 		});
 	}
@@ -254,7 +211,7 @@ public class SpecificData extends BaseActivity {
 	 */
 	public void showDeleteDialog(final Account account) {
 		View view = getLayoutInflater().inflate(R.layout.dialog_delete, null);
-		AlertDialog.Builder builder = new AlertDialog.Builder(SpecificData.this, AlertDialog.THEME_HOLO_LIGHT);
+		AlertDialog.Builder builder = new AlertDialog.Builder(Activity_SpecificData.this, AlertDialog.THEME_HOLO_LIGHT);
 		builder.setView(view);
 		final AlertDialog alertDialog = builder.show();
 
@@ -267,7 +224,7 @@ public class SpecificData extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				AccountDBdao accountDBdao = new AccountDBdao(SpecificData.this);
+				AccountDBdao accountDBdao = new AccountDBdao(Activity_SpecificData.this);
 				accountDBdao.delete(account.getId(), name);
 				onResume();
 				alertDialog.dismiss();
@@ -292,7 +249,7 @@ public class SpecificData extends BaseActivity {
 		GetDataBytitle();
 
 		// 填充listview的数据
-		cornerListView.setAdapter(new MyAdapter());
+		cornerListView.setAdapter(new SpecificAdapter(accounts,this));
 	}
 
 	@Override
@@ -329,7 +286,19 @@ public class SpecificData extends BaseActivity {
 		super.onStop();
 		Log.i("specificData", "onStop");
 	}
-	
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		// TODO Auto-generated method stub
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			Intent intent = new Intent(Activity_SpecificData.this, MainActivity.class);
+			intent.putExtra("name", name);
+			startActivity(intent);
+			finish();
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub

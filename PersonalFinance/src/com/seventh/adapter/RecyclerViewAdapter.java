@@ -1,4 +1,4 @@
-package com.seventh.base;
+package com.seventh.adapter;
 
 import java.net.ContentHandler;
 import java.util.List;

@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import com.seventh.adapter.RecyclerViewAdapter;
 import com.seventh.base.BaseActivity;
-import com.seventh.base.RecyclerViewAdapter;
 import com.seventh.db.Account;
 import com.seventh.db.AccountDBdao;
 import com.seventh.db.Type;
@@ -42,7 +42,7 @@ import android.widget.Toast;
  * @author Administrator
  *	该Activity用于对记录的修改
  */
-public class ChangeRecordActivity extends BaseActivity {
+public class Activity_ChangeRecord extends BaseActivity {
 
 	private EditText MoneySetting;
 	private EditText TimeSetting;
@@ -97,10 +97,10 @@ public class ChangeRecordActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent(ChangeRecordActivity.this, SpecificData.class);
+				Intent intent = new Intent(Activity_ChangeRecord.this, Activity_SpecificData.class);
 				intent.putExtra("name", name);
 				intent.putExtra("title", "收入总额");
-				ChangeRecordActivity.this.setResult(RESULT_OK, intent);
+				Activity_ChangeRecord.this.setResult(RESULT_OK, intent);
 				finish();
 			}
 		});
@@ -119,7 +119,7 @@ public class ChangeRecordActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent(ChangeRecordActivity.this, CalendarActivity.class);
+				Intent intent = new Intent(Activity_ChangeRecord.this, Activity_Calendar.class);
 				startActivityForResult(intent, Time_requestCode);
 			}
 		});
@@ -161,7 +161,7 @@ public class ChangeRecordActivity extends BaseActivity {
 		List<Type> typecount = typeDBdao.findAllType(name, "0");
 		// 如果没有对应的类型存在，则设置默认值
 		if (typecount.size() == 0) {
-			typeDBdao.setDefault(mDatas, name);
+//			typeDBdao.setDefault(mDatas, name);
 			mDatas.add("++");// 设置增加按钮的内容，保证增加按钮一直处于列表最后面
 		} else {
 			// 若数据库中存在类型，则清空mDatas，并重新获取数据库中的类型，填充mDatas
@@ -189,7 +189,7 @@ public class ChangeRecordActivity extends BaseActivity {
 				if (mRecyclerView.getChildCount() - 1 != 0) {
 					ViewGroup parent = (ViewGroup) mRecyclerView.getChildAt(mDatas.indexOf(account.getType()));
 					Button button = (Button) parent.findViewById(R.id.id_num);
-					button.setBackgroundResource(R.drawable.item_bg_textview_focused);
+					button.setBackgroundResource(R.drawable.shape_item_bg_textview_focused);
 					button.setTextColor(getResources().getColor(R.color.black));
 					type = mAdapter.getmDatas().get(mDatas.indexOf(account.getType()));
 				}
@@ -203,9 +203,9 @@ public class ChangeRecordActivity extends BaseActivity {
 				if (position == mRecyclerView.getChildCount() - 1) {
 					// 项目要求：此处设置增加按钮操作
 					ShowDialog();
-					Toast.makeText(ChangeRecordActivity.this, "这是最后的单击事件", Toast.LENGTH_SHORT).show();
+					Toast.makeText(Activity_ChangeRecord.this, "这是最后的单击事件", Toast.LENGTH_SHORT).show();
 				} else {
-					Toast.makeText(ChangeRecordActivity.this, position + " click", Toast.LENGTH_SHORT).show();
+					Toast.makeText(Activity_ChangeRecord.this, position + " click", Toast.LENGTH_SHORT).show();
 					// 获取RecyclerView的Item个数，进行遍历
 					for (int i = 0; i < mRecyclerView.getChildCount(); i++) {
 						// 当点击的Item为RecyclerView中对应的Item时，将该Item背景设置为点击时的背景
@@ -213,13 +213,13 @@ public class ChangeRecordActivity extends BaseActivity {
 						if (position == i) {
 							ViewGroup parent = (ViewGroup) mRecyclerView.getChildAt(i);
 							Button button = (Button) parent.findViewById(R.id.id_num);
-							button.setBackgroundResource(R.drawable.item_bg_textview_focused);
+							button.setBackgroundResource(R.drawable.shape_item_bg_textview_focused);
 							button.setTextColor(getResources().getColor(R.color.black));
 							type = mAdapter.getmDatas().get(position);
 						} else {
 							ViewGroup parent = (ViewGroup) mRecyclerView.getChildAt(i);
 							Button button = (Button) parent.findViewById(R.id.id_num);
-							button.setBackgroundResource(R.drawable.item_bg_textview);
+							button.setBackgroundResource(R.drawable.shape_item_bg_textview);
 							button.setTextColor(getResources().getColor(R.color.gray_text));
 						}
 					}
@@ -228,7 +228,7 @@ public class ChangeRecordActivity extends BaseActivity {
 
 			@Override
 			public void onRecItemLongClick(View view, int position) {
-				Toast.makeText(ChangeRecordActivity.this, position + " long click", Toast.LENGTH_SHORT).show();
+				Toast.makeText(Activity_ChangeRecord.this, position + " long click", Toast.LENGTH_SHORT).show();
 			}
 		});
 	}
@@ -246,8 +246,8 @@ public class ChangeRecordActivity extends BaseActivity {
 
 		dialog_input_edittext = (EditText) inputForm.findViewById(R.id.dialog_input_edittext);
 		dialog_input_edittext.setFocusable(true);
-		dialog_cannle = (Button) inputForm.findViewById(R.id.dialog_cannle);
-		dialog_sure = (Button) inputForm.findViewById(R.id.dialog_sure);
+		dialog_cannle = (Button) inputForm.findViewById(R.id.dialog_input_cannle);
+		dialog_sure = (Button) inputForm.findViewById(R.id.dialog_delete_sure);
 		// 对话框退出
 		dialog_cannle.setOnClickListener(new OnClickListener() {
 
@@ -265,11 +265,11 @@ public class ChangeRecordActivity extends BaseActivity {
 				// TODO Auto-generated method stub
 				String incomeType = dialog_input_edittext.getText().toString().trim();
 				if (incomeType.isEmpty()) {
-					Toast.makeText(ChangeRecordActivity.this, "请输入类型名称", Toast.LENGTH_SHORT).show();
+					Toast.makeText(Activity_ChangeRecord.this, "请输入类型名称", Toast.LENGTH_SHORT).show();
 				} else {
 					// 判断输入类型是否已存在于数据库中
 					if (typeDBdao.isExist("0", name, incomeType)) {
-						Toast.makeText(ChangeRecordActivity.this, "该类型已存在", Toast.LENGTH_SHORT).show();
+						Toast.makeText(Activity_ChangeRecord.this, "该类型已存在", Toast.LENGTH_SHORT).show();
 						;
 					} else {
 						// 若输入类型不存在数据库中，则将该类型添加到表中
@@ -290,24 +290,24 @@ public class ChangeRecordActivity extends BaseActivity {
 		String remark = RemarkSetting.getText().toString().trim();
 		String name = this.name;
 		if (MoneySetting.getText().toString().isEmpty()) {
-			Toast.makeText(ChangeRecordActivity.this, "请输入金融", Toast.LENGTH_SHORT).show();
+			Toast.makeText(Activity_ChangeRecord.this, "请输入金融", Toast.LENGTH_SHORT).show();
 			return false;
 		} else {
 			money = Float.parseFloat(MoneySetting.getText().toString());
 		}
 		if (type == null || type.isEmpty()) {
-			Toast.makeText(ChangeRecordActivity.this, "请选择收入类型", Toast.LENGTH_SHORT).show();
+			Toast.makeText(Activity_ChangeRecord.this, "请选择收入类型", Toast.LENGTH_SHORT).show();
 			return false;
 		}
 
 		AccountDBdao accountDBdao = new AccountDBdao(this);
 		accountDBdao.update(account.getId(),time, money, type, 1, remark, name);
-		Toast.makeText(ChangeRecordActivity.this, "修改纪录成功！", Toast.LENGTH_SHORT).show();
+		Toast.makeText(Activity_ChangeRecord.this, "修改纪录成功！", Toast.LENGTH_SHORT).show();
 
-		Intent intent = new Intent(ChangeRecordActivity.this, SpecificData.class);
+		Intent intent = new Intent(Activity_ChangeRecord.this, Activity_SpecificData.class);
 		intent.putExtra("name", name);
 		intent.putExtra("title", "收入总额");
-		ChangeRecordActivity.this.setResult(RESULT_OK, intent);
+		Activity_ChangeRecord.this.setResult(RESULT_OK, intent);
 		finish();
 
 		return true;

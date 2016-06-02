@@ -20,6 +20,8 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -31,8 +33,8 @@ public class BaseActivity extends Activity {
 
 	private TextView title;
 	private Button leftButton;
-	private Button addButton_left;
-	private Button addButton_right;
+	private ImageButton addButton_left;
+	private ImageButton addButton_right;
 	private Button andButton_save;
 
 	@Override
@@ -62,8 +64,8 @@ public class BaseActivity extends Activity {
 	public void initview() {
 		title = (TextView) findViewById(R.id.title);
 		leftButton = (Button) findViewById(R.id.leftButton);
-		addButton_left = (Button) findViewById(R.id.addButton_left);
-		addButton_right = (Button) findViewById(R.id.addButton_right);
+		addButton_left = (ImageButton) findViewById(R.id.addButton_left);
+		addButton_right = (ImageButton) findViewById(R.id.addButton_right);
 		andButton_save = (Button) findViewById(R.id.save);
 
 		// 一开始设置所有控件不可见，在具体界面中需要时才进行显示
@@ -76,7 +78,7 @@ public class BaseActivity extends Activity {
 
 	/**
 	 * @param titleString
-	 *            设置自定义标题
+	 *            设置标题可见及自定义标题文本
 	 */
 	public void setTitle(String titleString) {
 		title.setText(titleString);
@@ -84,7 +86,7 @@ public class BaseActivity extends Activity {
 	}
 
 	/**
-	 * 设置Button可见
+	 * 设置Button可见及按钮文本
 	 */
 	public void setHideleftButton(String text) {
 		leftButton.setVisibility(View.VISIBLE);// 返回按钮
@@ -95,7 +97,7 @@ public class BaseActivity extends Activity {
 		addButton_left.setVisibility(View.VISIBLE);// 左按钮
 	}
 	public void setBackgroudButton_left(int resid){
-		addButton_left.setBackgroundResource(resid);//设置左按钮的背景
+		addButton_left.setImageResource(resid);
 	}
 
 	public void setHideaddButton_right() {
@@ -103,7 +105,8 @@ public class BaseActivity extends Activity {
 	}
 	
 	public void setBackgroudButton_right(int resid){
-		addButton_right.setBackgroundResource(resid);//设置右按钮的背景
+		addButton_right.setImageResource(resid);
+		addButton_right.setScaleType(ScaleType.CENTER_INSIDE);
 	}
 
 	public void setHideaddButton_save() {

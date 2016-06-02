@@ -60,6 +60,8 @@
         android:id="@+id/lv_specific_data_list"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:divider="@color/gray"
+        android:dividerHeight="1dp"
         android:cacheColorHint="#00000000">
     </com.seventh.view.CornerListView>
 

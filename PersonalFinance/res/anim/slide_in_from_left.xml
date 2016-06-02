@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+	<translate
+		android:duration="300"
+		android:fromXDelta="-100.0%p"
+		android:toXDelta="0.0" />
+</set>
+
+<!-- 
+android:fromXDelta="-100.0%p"   左侧位于屏幕左一屏的方向
+android:toXDelta="0.0"       左侧位于屏幕的左侧方向
+
+效果:从屏幕的左侧滑入
+ -->

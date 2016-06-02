@@ -2,23 +2,20 @@ package com.seventh.personalfinance;
 
 import com.seventh.db.Person;
 import com.seventh.db.PersonDBdao;
-import com.seventh.db.TypeDBdao;
 
-import android.os.Bundle;
 import android.app.Activity;
-
+import android.content.Context;
 import android.content.Intent;
-
-import android.view.Menu;
+import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-public class Login extends Activity implements OnClickListener {
+public class Activity_Login extends Activity implements OnClickListener {
 	PersonDBdao persondbdao;
 	private Person person;
 	private EditText mEditTextName;// 账号
@@ -32,7 +29,6 @@ public class Login extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);// 去掉标题
 		setContentView(R.layout.activity_login);
-
 		LoginOk();
 		initView();
 	}
@@ -50,12 +46,8 @@ public class Login extends Activity implements OnClickListener {
 		mButtonOK.setOnClickListener(this);
 		mButtonCancel.setOnClickListener(this);
 		mButtonRegister.setOnClickListener(this);
-	}
-
-	@Override
-	protected void onStart() {
-		// TODO Auto-generated method stub
-		super.onStart();
+		
+		
 	}
 
 	private void LoginOk() {
@@ -68,7 +60,9 @@ public class Login extends Activity implements OnClickListener {
 			intent.putExtra("name", person.getName());
 			// 传值帐户名
 			startActivity(intent);
+			finish();
 		}
+		
 	}
 
 	// 按钮对应的点击事件
@@ -77,47 +71,53 @@ public class Login extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.bt_login_ok:// 登录按钮
-			// 相应按钮的点击事件)
-			if (mEditTextName.getText().toString().trim().equals("")) {
-				Toast.makeText(getApplicationContext(), "账户名不能为空！", Toast.LENGTH_SHORT).show();
-				break;
-			}
-			if (mEditTextPwd.getText().toString().equals("")) {
-				Toast.makeText(getApplicationContext(), "密码不能为空！", Toast.LENGTH_SHORT).show();
-				break;
-			}
-
-			persondbdao = new PersonDBdao(getApplicationContext());
-			boolean result = persondbdao.find(mEditTextName.getText().toString());
-
-			if (result) {
-				result = persondbdao.findLogin(mEditTextName.getText().toString(), mEditTextPwd.getText().toString());
-				if (result) {
-					persondbdao.updateLoginOK(mEditTextName.getText().toString());
-					Intent intent = new Intent(this, MainActivity.class);
-					// Intent intent = new Intent();
-					// intent.setClassName ("com.seventh.personalfinance",
-					// "com.seventh.personalfinance.MainActivity");
-
-					intent.putExtra("name", mEditTextName.getText().toString().trim());
-					// 传值 帐户名
-					startActivity(intent);
-				} else {
-					Toast.makeText(getApplicationContext(), "密码有误", 0).show();
-				}
-			} else {
-				Toast.makeText(getApplicationContext(), "不存在该账号", 0).show();
-			}
-
+			// 相应按钮的点击事件
+			Action_Login();
 			break;
 		case R.id.bt_login_cancel:// 登录取消
-			System.exit(0);
+			finish();
 			break;
 		case R.id.tv_login_register_link:
-			Intent intent = new Intent(this, Registration.class);
+			Intent intent = new Intent(this, Activity_Registration.class);
 			startActivity(intent);
+			finish();
 			break;
 		}
 
+	}
+
+	/**
+	 * @return 登录按钮操作
+	 */
+	public Boolean Action_Login() {
+		if (mEditTextName.getText().toString().trim().equals("")) {
+			Toast.makeText(getApplicationContext(), "账户名不能为空！", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+		if (mEditTextPwd.getText().toString().equals("")) {
+			Toast.makeText(getApplicationContext(), "密码不能为空！", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+
+		persondbdao = new PersonDBdao(getApplicationContext());
+		boolean result = persondbdao.find(mEditTextName.getText().toString());
+
+		if (result) {
+			result = persondbdao.findLogin(mEditTextName.getText().toString(), mEditTextPwd.getText().toString());
+			if (result) {
+				persondbdao.updateLoginOK(mEditTextName.getText().toString());
+				Intent intent = new Intent(this, MainActivity.class);
+
+				intent.putExtra("name", mEditTextName.getText().toString().trim());
+				// 传值 帐户名
+				startActivity(intent);
+				finish();
+			} else {
+				Toast.makeText(getApplicationContext(), "密码有误", 0).show();
+			}
+		} else {
+			Toast.makeText(getApplicationContext(), "不存在该账号", 0).show();
+		}
+		return false;
 	}
 }

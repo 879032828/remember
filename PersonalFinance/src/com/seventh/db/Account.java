@@ -8,7 +8,7 @@ public class Account implements Serializable {
 	private String time;
 	private float money;
 	private String type;
-	private boolean earnings;
+	private boolean earnings;// 0 -- 支出    1 -- 收入
 	private String remark;
 	public int getId() {
 		return id;

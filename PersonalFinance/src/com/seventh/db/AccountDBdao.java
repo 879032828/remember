@@ -26,14 +26,6 @@ public class AccountDBdao {
 		if (db.isOpen()) {
 			db.execSQL("insert into account(time,money,type,earnings,remark,name) values (?,?,?,?,?,?)",
 					new Object[] { time, money, type, earnings, remark, name });
-			// ContentValues values = new ContentValues();
-			// values.put("time", time);// 交易时间
-			// values.put("money", money);// 金钱
-			// values.put("type", type);// 类型
-			// values.put("earnings", earnings);// 是否收益
-			// values.put("remark", remark);// 备注
-			// values.put("name", name);// 用户名
-			// db.insert("account", null, values); // 组拼sql语句完成的添加的操作
 			db.close();
 		}
 

@@ -20,9 +20,9 @@
         <uses-library android:name="android.test.runner" />
 
         <activity
-            android:name=".Login"
+            android:name=".Activity_AppStart"
             android:label="@string/app_name"
-            android:launchMode="singleTask" >
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,15 +30,20 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".Activity_Login"
+            android:label="@string/app_name"
+            android:launchMode="singleTask" >
+        </activity>
+        <activity
             android:name=".AddNodes"
             android:label="@string/app_name"
             android:launchMode="singleTask" >
         </activity>
         <activity
-            android:name=".SpecificData"
+            android:name=".Activity_SpecificData"
             android:label="@string/app_name"
             android:launchMode="singleTask"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:theme="@android:style/Theme.Black.NoTitleBar" >
         </activity>
         <activity
             android:name=".MoreAction"
@@ -46,9 +51,9 @@
             android:launchMode="singleTask" >
         </activity>
         <activity
-            android:name=".Registration"
+            android:name=".Activity_Registration"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Dialog" >
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
         <activity
             android:name=".MainActivity"
@@ -61,21 +66,21 @@
             android:theme="@android:style/Theme.Holo.Light.NoActionBar.TranslucentDecor" >
         </activity>
         <activity
-            android:name=".AddRecordActivity"
+            android:name=".Activity_AddRecord"
             android:label="@string/title_activity_add_record"
             android:launchMode="singleTask"
-            android:theme="@android:style/Theme.Light.NoTitleBar" 
-            android:windowSoftInputMode="stateAlwaysVisible">
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateAlwaysVisible" >
         </activity>
         <activity
-            android:name=".ChangeRecordActivity"
+            android:name=".Activity_ChangeRecord"
             android:label="@string/title_activity_add_record"
             android:launchMode="singleTask"
-            android:theme="@android:style/Theme.Light.NoTitleBar" 
-            android:windowSoftInputMode="stateAlwaysVisible">
+            android:theme="@android:style/Theme.Light.NoTitleBar"
+            android:windowSoftInputMode="stateAlwaysVisible" >
         </activity>
         <activity
-            android:name=".CalendarActivity"
+            android:name=".Activity_Calendar"
             android:label="@string/title_activity_calendar"
             android:theme="@android:style/Theme.Dialog" >
         </activity>

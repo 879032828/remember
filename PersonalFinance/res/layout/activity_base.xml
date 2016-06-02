@@ -17,12 +17,13 @@
         android:orientation="vertical" >
 
         <RelativeLayout
+            android:id="@+id/main_relative"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:background="@color/blue"
             android:orientation="horizontal"
-            android:paddingLeft="10dp"
-            android:paddingRight="25dp" >
+            android:paddingLeft="10dp" 
+            android:paddingRight="10dp">
 
             <TextView
                 android:id="@+id/title"
@@ -32,7 +33,7 @@
                 android:layout_centerVertical="true"
                 android:text="标题"
                 android:textColor="@color/white"
-                android:textSize="20dp" />
+                android:textSize="20sp" />
 
             <Button
                 android:id="@+id/leftButton"
@@ -42,40 +43,40 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:background="@color/blue"
-                android:drawableLeft="@drawable/bg_return_button_selector"
+                android:drawableLeft="@drawable/selector_bg_return_button"
                 android:drawablePadding="10dp"
                 android:text="箭头所指"
                 android:textColor="@color/white"
                 android:textSize="17dp" />
 
-            <Button
-                android:id="@+id/addButton_left"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="26dp"
-                android:layout_toLeftOf="@+id/addButton_right"
-                android:background="@drawable/bg_add_button_selector" />
-
-            <Button
+            <ImageButton
                 android:id="@+id/addButton_right"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_alignBottom="@+id/addButton_left"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
-                android:background="@drawable/bg_add_button_selector"
-                android:gravity="center_vertical" />
+                android:layout_alignParentTop="true"
+                android:background="@android:color/transparent" />
+
+            <ImageButton
+                android:id="@+id/addButton_left"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/addButton_right"
+                android:background="@android:color/transparent" />
 
             <Button
                 android:id="@+id/save"
                 android:layout_width="55dp"
                 android:layout_height="35dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:background="@drawable/button_save_selector"
+                android:layout_alignBaseline="@+id/leftButton"
+                android:layout_alignBottom="@+id/leftButton"
+                android:layout_alignLeft="@+id/addButton_right"
+                android:background="@drawable/selector_button_save"
                 android:text="保存"
                 android:textColor="@color/white"
                 android:textSize="15dp" />
+
         </RelativeLayout>
 
         <LinearLayout
