@@ -48,7 +48,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:orientation="horizontal" 
-            android:padding="15dp">
+            android:padding="10dp">
 
             <Button
                 android:id="@+id/dialog_input_sure"
@@ -67,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBaseline="@+id/dialog_input_sure"
                 android:layout_alignBottom="@+id/dialog_input_sure"
-                android:layout_marginRight="25dp"
+                android:layout_marginRight="14dp"
                 android:layout_toLeftOf="@+id/dialog_input_sure"
                 android:background="@color/white"
                 android:text="取消"

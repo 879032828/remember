@@ -66,6 +66,29 @@ public class AccountDBdao {
 	}
 
 	/**
+	 * 数据库的查询操作 根据参数name和type判断是否存在数据
+	 * 
+	 * @param name
+	 * @param type
+	 * @return
+	 */
+	public boolean findDataByType(String earnings, String name, String typename) {
+		boolean result = false;
+		SQLiteDatabase db = dbOpenHelper.getReadableDatabase();
+		if (db.isOpen()) {
+			// select * from person
+			Cursor cursor = db.rawQuery("select * from account where earnings = ? and name = ? and type = ?",
+					new String[] { earnings, name, typename });
+			if (cursor.moveToFirst()) {
+				result = true;
+			}
+			cursor.close();
+			db.close();
+		}
+		return result;
+	}
+
+	/**
 	 * 数据库的查询操作 判断有无该数据
 	 */
 	public boolean find(String name) {
@@ -233,14 +256,17 @@ public class AccountDBdao {
 	}
 
 	/**
-	 * 根据用户名查询没时间段的账单信息
+	 * 根据用户名查询指定时间段的收支
 	 */
-	public List<Account> findSomeTimeByName(String userName, String sometime) {
+	public List<Account> findSomeTimeByName(String earnings, String userName, String sometime) {
 		List<Account> accounts = null;
 		SQLiteDatabase db = dbOpenHelper.getReadableDatabase();
 		if (db.isOpen()) {
-			Cursor cursor = db.rawQuery("select * from account where name=? and time like ?",
-					new String[] { userName, sometime });
+			// Cursor cursor = db.rawQuery("select * from account where name=?
+			// and time like ?",
+			// new String[] { userName, sometime });
+			Cursor cursor = db.rawQuery("select * from account where earnings = ? and name=? and time like ?",
+					new String[] { earnings, userName, sometime });
 			accounts = new ArrayList<Account>();
 			while (cursor.moveToNext()) {
 				Account account = new Account();
@@ -254,8 +280,8 @@ public class AccountDBdao {
 				account.setTime(time);
 				String type = cursor.getString(cursor.getColumnIndex("type"));
 				account.setType(type);
-				long earnings = cursor.getLong(cursor.getColumnIndex("earnings"));
-				if (earnings == 0) {
+				long earning = cursor.getLong(cursor.getColumnIndex("earnings"));
+				if (earning == 0) {
 					account.setEarnings(false);
 				} else {
 					account.setEarnings(true);

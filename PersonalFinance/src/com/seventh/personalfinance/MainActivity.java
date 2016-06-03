@@ -59,6 +59,12 @@ public class MainActivity extends BaseActivity {
 	private Button dialog_input_sure;
 	private Button dialog_input_cannle;
 
+	private static final int BudgetBalance = 0;
+	private static final int TotalIntoData = 1;
+	private static final int TotalOutData = 2;
+	private static final int MonthIntoData = 3;
+	private static final int MonthOutData = 4;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -76,11 +82,10 @@ public class MainActivity extends BaseActivity {
 		});
 
 		setTitle("记着");
+		setTime();
 		// 设置两个按钮可见及背景
-		setHideaddButton_left();
-		setBackgroudButton_left(R.drawable.shape_bg_add_button);
 		setHideaddButton_right();
-		setBackgroudButton_right(R.drawable.selector_bg_setting_button);
+		setBackgroudButton_right(R.drawable.shape_bg_add_button);
 
 		initView();
 		ViewOperation();
@@ -139,17 +144,25 @@ public class MainActivity extends BaseActivity {
 				@Override
 				public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 					switch (arg2) {
-					case 0:
+					case BudgetBalance:
 						// 设置预算余额
 						BudgetBalance();
 						break;
-					case 1:
+					case TotalIntoData:
 						// 收入总额
 						TotalIntoData();
 						break;
-					case 2:
+					case TotalOutData:
 						// 支出总额
 						TotalOutData();
+						break;
+					case MonthIntoData:
+						// 本月收入
+						MonthIntoData();
+						break;
+					case MonthOutData:
+						//本月支出
+						MonthOutData();
 						break;
 					}
 
@@ -181,6 +194,26 @@ public class MainActivity extends BaseActivity {
 		intent = new Intent(this, Activity_SpecificData.class);
 		intent.putExtra("name", name);
 		intent.putExtra("title", "支出总额");
+		intent.putExtra("typeflag", "0");
+		startActivity(intent);
+		finish();
+	}
+
+	// 跳转到本月收入
+	public void MonthIntoData() {
+		intent = new Intent(this, Activity_SpecificData.class);
+		intent.putExtra("name", name);
+		intent.putExtra("title", "本月收入");
+		intent.putExtra("typeflag", "1");
+		startActivity(intent);
+		finish();
+	}
+
+	// 跳转到本月支出
+	public void MonthOutData() {
+		intent = new Intent(this, Activity_SpecificData.class);
+		intent.putExtra("name", name);
+		intent.putExtra("title", "本月支出");
 		intent.putExtra("typeflag", "0");
 		startActivity(intent);
 		finish();
@@ -247,15 +280,6 @@ public class MainActivity extends BaseActivity {
 		intent = new Intent(this, Activity_SpecificData.class);
 		intent.putExtra("name", name);
 		intent.putExtra("title", "今日账单");
-		startActivity(intent);
-		finish();
-	}
-
-	// 跳转到本月账单
-	public void MonthData() {
-		intent = new Intent(this, Activity_SpecificData.class);
-		intent.putExtra("name", name);
-		intent.putExtra("title", "本月账单");
 		startActivity(intent);
 		finish();
 	}

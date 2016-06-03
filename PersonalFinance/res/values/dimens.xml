@@ -18,4 +18,6 @@
     
     <dimen name="historyscore_tb">10dp</dimen>
 
+    
+    <dimen name="text1">15sp</dimen>
 </resources>

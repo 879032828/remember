@@ -42,7 +42,8 @@ public class Activity_AddRecord extends BaseActivity {
 	private String name;
 	private String type;
 	private String typeflag;
-	TypeDBdao typeDBdao;
+	private TypeDBdao typeDBdao;
+	private AccountDBdao accountDBdao;
 
 	private Account account;
 	Dialog alertDialog;
@@ -167,7 +168,7 @@ public class Activity_AddRecord extends BaseActivity {
 			mDatas.add("其他");
 		}
 
-		typeDBdao = new TypeDBdao(this);
+		typeDBdao = new TypeDBdao(Activity_AddRecord.this);
 		// 查询对应账号的所有收支类型
 		List<Type> typecount = typeDBdao.findAllType(name, typeflag);
 		// 如果没有对应的类型存在，则设置默认值
@@ -238,6 +239,57 @@ public class Activity_AddRecord extends BaseActivity {
 
 			@Override
 			public void onRecItemLongClick(View view, int position) {
+				final int Itemposition = position;
+				type = mAdapter.getmDatas().get(position);
+				accountDBdao = new AccountDBdao(Activity_AddRecord.this);
+				View view2 = getLayoutInflater().inflate(R.layout.dialog_delete, null);
+				alertDialog = new Dialog(Activity_AddRecord.this, R.style.AlertDialogStyle);
+				alertDialog.setContentView(view2);
+				alertDialog.show();
+				// 确认按钮操作
+				Button dialog_delete_sure = (Button) view2.findViewById(R.id.dialog_delete_sure);
+				dialog_delete_sure.setOnClickListener(new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						// 若该类型下存在数据，则提示无法删除
+						if (accountDBdao.findDataByType(typeflag, name, type)) {
+							Toast.makeText(Activity_AddRecord.this, "该类型下存在数据，无法删除！", Toast.LENGTH_SHORT).show();
+						} else {
+							typeDBdao.deleteRecord(typeflag, type, name);
+							Toast.makeText(Activity_AddRecord.this, "删除成功！", Toast.LENGTH_SHORT).show();
+							mAdapter.removeData(Itemposition);
+
+							mRecyclerView.post(new Runnable() {
+
+								@Override
+								public void run() {
+									// TODO Auto-generated method stub
+									if (mRecyclerView.getChildCount() - 1 != 0) {
+										ViewGroup parent = (ViewGroup) mRecyclerView.getChildAt(0);
+										Button button = (Button) parent.findViewById(R.id.id_num);
+										button.setBackgroundResource(R.drawable.shape_item_bg_textview_focused);
+										button.setTextColor(getResources().getColor(R.color.black));
+										type = mAdapter.getmDatas().get(0);
+									}
+								}
+							});
+							alertDialog.dismiss();
+						}
+					}
+				});
+
+				Button dialog_delete_cannle = (Button) view2.findViewById(R.id.dialog_delete_cannle);
+				dialog_delete_cannle.setOnClickListener(new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						alertDialog.dismiss();
+					}
+				});
+
 				Toast.makeText(Activity_AddRecord.this, position + " long click", Toast.LENGTH_SHORT).show();
 			}
 		});
@@ -302,6 +354,11 @@ public class Activity_AddRecord extends BaseActivity {
 
 	}
 
+	/**
+	 * 保存数据
+	 * 
+	 * @return
+	 */
 	public boolean saveData() {
 		Float money;
 		String time = TimeSetting.getText().toString().trim();

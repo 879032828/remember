@@ -8,30 +8,22 @@ import com.seventh.adapter.SpecificAdapter;
 import com.seventh.base.BaseActivity;
 import com.seventh.db.Account;
 import com.seventh.db.AccountDBdao;
+import com.seventh.util.TimeUtil;
 import com.seventh.view.CornerListView;
-import com.seventh.util.*;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
+import android.widget.Toast;
 
 /**
  * @author Administrator
@@ -42,22 +34,19 @@ public class Activity_SpecificData extends BaseActivity {
 	private String name;// 账号
 	private String title;// 标题
 	private String typeflag;// 收支类型标志
-	AccountDBdao accountDBdao;// 数据库
-
-	private String time1;
-	private String time2;
-	private String time3;
-
+	private AccountDBdao accountDBdao;// 数据库
+	private Dialog dialog;
+	private Dialog dialog_delete;
 	private CornerListView cornerListView = null;// 数据报表
 	private List<Account> accounts;// 账单数据
-	private LayoutInflater inflater;
 
 	// 添加收入记录的请求码
 	private static final int requestCode_addrecord = 0;
 	// 修改记录的请求码
 	private static final int requestCode_change = 1;
 
-	Dialog dialog;
+	private static final String earnings_expend = "0";
+	private static final String earnings_income = "1";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -81,18 +70,32 @@ public class Activity_SpecificData extends BaseActivity {
 				// TODO Auto-generated method stub
 				switch (title) {
 				case "支出总额":
+					Intent intent1 = new Intent(Activity_SpecificData.this, Activity_AddRecord.class);
+					intent1.putExtra("name", name);
+					intent1.putExtra("title", "添加支出记录");
+					intent1.putExtra("typeflag", typeflag);
+					startActivityForResult(intent1, requestCode_addrecord);
+					break;
+				case "收入总额":
 					Intent intent2 = new Intent(Activity_SpecificData.this, Activity_AddRecord.class);
 					intent2.putExtra("name", name);
-					intent2.putExtra("title", "添加支出记录");
+					intent2.putExtra("title", "添加收入记录");
 					intent2.putExtra("typeflag", typeflag);
 					startActivityForResult(intent2, requestCode_addrecord);
 					break;
-				case "收入总额":
-					Intent intent1 = new Intent(Activity_SpecificData.this, Activity_AddRecord.class);
-					intent1.putExtra("name", name);
-					intent1.putExtra("title", "添加收入记录");
-					intent1.putExtra("typeflag", typeflag);
-					startActivityForResult(intent1, requestCode_addrecord);
+				case "本月收入":
+					Intent intent3 = new Intent(Activity_SpecificData.this, Activity_AddRecord.class);
+					intent3.putExtra("name", name);
+					intent3.putExtra("title", "添加收入记录");
+					intent3.putExtra("typeflag", typeflag);
+					startActivityForResult(intent3, requestCode_addrecord);
+					break;
+				case "本月支出":
+					Intent intent4 = new Intent(Activity_SpecificData.this, Activity_AddRecord.class);
+					intent4.putExtra("name", name);
+					intent4.putExtra("title", "添加支出记录");
+					intent4.putExtra("typeflag", typeflag);
+					startActivityForResult(intent4, requestCode_addrecord);
 					break;
 				default:
 					break;
@@ -113,31 +116,17 @@ public class Activity_SpecificData extends BaseActivity {
 		});
 
 		accountDBdao = new AccountDBdao(getApplicationContext());
-		// 时间
-		Calendar c = Calendar.getInstance(TimeZone.getTimeZone("GMT+08:00")); // 获取东八区时间
-		int year = c.get(Calendar.YEAR); // 获取年
-		int month = c.get(Calendar.MONTH) + 1; // 获取月份，0表示1月份
-		int day = c.get(Calendar.DAY_OF_MONTH); // 获取当前天数
-		time1 = year + "/" + month + "/" + day;
-		time2 = year + "/" + month + "%";
-		time3 = year + "%";
-
 		// 设置listview 值
-		inflater = LayoutInflater.from(this);
 		cornerListView = (CornerListView) findViewById(R.id.lv_specific_data_list);
 		GetDataBytitle();
-
 		// 填充listview的数据
 		cornerListView.setAdapter(new SpecificAdapter(accounts, this));
 		// listview选项的点击事件
 		cornerListView.setOnItemClickListener(new OnItemClickListener() {
-
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				Account account = accounts.get(arg2);
 				showMyDialog(account);
-				// GoMoreAction(account.getId(), name);
-
 			}
 		});
 	}
@@ -151,14 +140,10 @@ public class Activity_SpecificData extends BaseActivity {
 				accounts = accountDBdao.findTotalIntoByName(name);
 			} else if (title.equals("支出总额")) {
 				accounts = accountDBdao.findTotalOutByName(name);
-			} else if (title.equals("详细账单")) {
-				accounts = accountDBdao.findAllByName(name);
-			} else if (title.equals("今日账单")) {
-				accounts = accountDBdao.findSomeTimeByName(name, time1);
-			} else if (title.equals("本月账单")) {
-				accounts = accountDBdao.findSomeTimeByName(name, time2);
-			} else if (title.equals("本年账单")) {
-				accounts = accountDBdao.findSomeTimeByName(name, time3);
+			} else if (title.equals("本月收入")) {
+				accounts = accountDBdao.findSomeTimeByName(earnings_income, name, TimeUtil.Get_Year_Month());
+			} else if (title.equals("本月支出")) {
+				accounts = accountDBdao.findSomeTimeByName(earnings_expend, name, TimeUtil.Get_Year_Month());
 			}
 		} catch (Exception e) {
 			Toast.makeText(this, "获取数据失败", 0).show();
@@ -189,7 +174,12 @@ public class Activity_SpecificData extends BaseActivity {
 				bundle.putSerializable("changeAccount", account);
 				intent.putExtras(bundle);
 				intent.putExtra("name", name);
-				intent.putExtra("title", "修改收入记录");
+				if (typeflag.equals(earnings_expend)) {
+					intent.putExtra("title", "修改支出记录");
+				} else {
+					intent.putExtra("title", "修改收入记录");
+				}
+				intent.putExtra("typeflag", typeflag);
 				dialog.dismiss();
 				startActivityForResult(intent, requestCode_change);
 			}
@@ -211,9 +201,10 @@ public class Activity_SpecificData extends BaseActivity {
 	 */
 	public void showDeleteDialog(final Account account) {
 		View view = getLayoutInflater().inflate(R.layout.dialog_delete, null);
-		AlertDialog.Builder builder = new AlertDialog.Builder(Activity_SpecificData.this, AlertDialog.THEME_HOLO_LIGHT);
-		builder.setView(view);
-		final AlertDialog alertDialog = builder.show();
+		
+		dialog_delete = new Dialog(Activity_SpecificData.this, R.style.AlertDialogStyle);
+		dialog_delete.setContentView(view);
+		dialog_delete.show();
 
 		Button dialog_delete_cannle = (Button) view.findViewById(R.id.dialog_delete_cannle);
 		Button dialog_delete_sure = (Button) view.findViewById(R.id.dialog_delete_sure);
@@ -227,7 +218,7 @@ public class Activity_SpecificData extends BaseActivity {
 				AccountDBdao accountDBdao = new AccountDBdao(Activity_SpecificData.this);
 				accountDBdao.delete(account.getId(), name);
 				onResume();
-				alertDialog.dismiss();
+				dialog_delete.dismiss();
 			}
 		});
 		// 取消
@@ -236,7 +227,7 @@ public class Activity_SpecificData extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				alertDialog.dismiss();
+				dialog_delete.dismiss();
 			}
 		});
 	}
@@ -249,7 +240,7 @@ public class Activity_SpecificData extends BaseActivity {
 		GetDataBytitle();
 
 		// 填充listview的数据
-		cornerListView.setAdapter(new SpecificAdapter(accounts,this));
+		cornerListView.setAdapter(new SpecificAdapter(accounts, this));
 	}
 
 	@Override

@@ -106,6 +106,20 @@ public class TypeDBdao {
 	}
 
 	/**
+	 * @param type
+	 * @param typename
+	 * @param name
+	 *            É¾³ýÒ»Ìõ¼ÇÂ¼
+	 */
+	public void deleteRecord(String type, String typename, String name) {
+		SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
+		if (db.isOpen()) {
+			db.execSQL("delete from type where type = ? and typename = ? and name = ?", new Object[] { type, typename, name });
+			db.close();
+		}
+	}
+	
+	/**
 	 * 
 	 * 
 	 * 

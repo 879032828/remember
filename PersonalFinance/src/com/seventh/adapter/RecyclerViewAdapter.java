@@ -22,6 +22,7 @@ import com.seventh.personalfinance.R;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
 
 	private List<String> mDatas;
+
 	public List<String> getmDatas() {
 		return mDatas;
 	}
@@ -34,22 +35,22 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 	private Context context;
 
 	public interface OnRecItemClickLitener {
-		
-		//单击回调事件
+
+		// 单击回调事件
 		void onRecItemClick(View view, int position);
 
-		//长按回调事件
+		// 长按回调事件
 		void onRecItemLongClick(View view, int position);
 	}
 
-	//设置RecyclerView每个Item的点击监听
+	// 设置RecyclerView每个Item的点击监听
 	private OnRecItemClickLitener mOnItemClickLitener;
 
 	public void setRecOnItemClickLitener(OnRecItemClickLitener onRecItemClickLitener) {
 		// TODO Auto-generated method stub
 		this.mOnItemClickLitener = onRecItemClickLitener;
 	}
-	
+
 	public RecyclerViewAdapter(Context context, List<String> datas) {
 		this.context = context;
 		mInflater = LayoutInflater.from(context);
@@ -66,9 +67,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 	public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
 		if (position == getItemCount() - 1) {
+			// 当Item为最后一个时，TextView不可见，ImageView设置为可见
 			holder.tv.setVisibility(View.INVISIBLE);
 			holder.id_image.setVisibility(View.VISIBLE);
-
 		} else {
 			holder.tv.setText(mDatas.get(position));
 
@@ -99,7 +100,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 							Toast.makeText(context, "这是最后一个长按事件", Toast.LENGTH_SHORT).show();
 						} else {
 							mOnItemClickLitener.onRecItemLongClick(holder.itemView, pos);
-							removeData(pos);
+							// removeData(pos);
 						}
 
 						return false;
@@ -146,7 +147,5 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 			id_image = (ImageButton) view.findViewById(R.id.id_image);
 		}
 	}
-
-	
 
 }

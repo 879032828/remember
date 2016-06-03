@@ -70,15 +70,15 @@ public class TestAccount extends AndroidTestCase {
 
 	public void testfindsometimebyname() throws Exception {
 		AccountDBdao dao = new AccountDBdao(getContext());
-		List<Account> accounts = dao.findSomeTimeByName("admin1", "2014/5%");
-		for (Account account : accounts) {
-			System.out.print(account.getId() + "  ");
-			System.out.print(account.getName() + "  ");
-			System.out.print(account.getTime() + "  ");
-			System.out.print(account.getType() + "  ");
-			System.out.print(account.isEarnings() + "  ");
-			System.out.println(account.getMoney());
-		}
+//		List<Account> accounts = dao.findSomeTimeByName("admin1", "2014/5%");
+		// for (Account account : accounts) {
+		// System.out.print(account.getId() + " ");
+		// System.out.print(account.getName() + " ");
+		// System.out.print(account.getTime() + " ");
+		// System.out.print(account.getType() + " ");
+		// System.out.print(account.isEarnings() + " ");
+		// System.out.println(account.getMoney());
+		// }
 	}
 
 	public void testfillTotalInto() throws Exception {

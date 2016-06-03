@@ -1,37 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="300dp"
     android:layout_height="wrap_content"
     android:background="@drawable/shape_circular_dialog"
-    tools:context=".Activity_SpecificData" >
+    tools:context=".Activity_SpecificData" 
+    android:orientation="vertical"
+    android:padding="15dp">
 
-    <LinearLayout
+    <Button
+        android:id="@+id/data_change"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" 
-        android:padding="10dp">
+        android:layout_height="30dp"
+        android:background="@color/white"
+        android:text="修改记录"
+        android:layout_marginBottom="5dp"
+        android:textSize="@dimen/text1"
+        android:textColor="@color/black" />
 
-        <Button
-            android:id="@+id/data_change"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@color/white"
-            android:text="修改记录"
-            android:textColor="@color/black" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/gray" />
+    <Button
+        android:id="@+id/data_delete"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@color/white"
+        android:textSize="@dimen/text1"
+        android:layout_marginTop="5dp"
+        android:text="删除记录"
+        android:textColor="@color/black" />
 
-        <Button
-            android:id="@+id/data_delete"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@color/white"
-            android:text="删除记录"
-            android:textColor="@color/black" />
-    </LinearLayout>
-
-</FrameLayout>
+</LinearLayout>

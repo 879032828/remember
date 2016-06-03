@@ -7,6 +7,7 @@ import com.seventh.personalfinance.R;
 import com.seventh.personalfinance.R.id;
 import com.seventh.personalfinance.R.layout;
 import com.seventh.personalfinance.R.menu;
+import com.seventh.util.TimeUtil;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -32,6 +33,7 @@ import android.widget.TextView;
 public class BaseActivity extends Activity {
 
 	private TextView title;
+	private TextView time;
 	private Button leftButton;
 	private ImageButton addButton_left;
 	private ImageButton addButton_right;
@@ -63,6 +65,7 @@ public class BaseActivity extends Activity {
 
 	public void initview() {
 		title = (TextView) findViewById(R.id.title);
+		time = (TextView) findViewById(R.id.time);
 		leftButton = (Button) findViewById(R.id.leftButton);
 		addButton_left = (ImageButton) findViewById(R.id.addButton_left);
 		addButton_right = (ImageButton) findViewById(R.id.addButton_right);
@@ -70,6 +73,7 @@ public class BaseActivity extends Activity {
 
 		// 一开始设置所有控件不可见，在具体界面中需要时才进行显示
 		title.setVisibility(View.INVISIBLE);
+		time.setVisibility(View.INVISIBLE);
 		leftButton.setVisibility(View.INVISIBLE);
 		addButton_left.setVisibility(View.INVISIBLE);
 		addButton_right.setVisibility(View.INVISIBLE);
@@ -83,8 +87,17 @@ public class BaseActivity extends Activity {
 	public void setTitle(String titleString) {
 		title.setText(titleString);
 		title.setVisibility(View.VISIBLE);
+		
 	}
 
+	/**
+	 * 设置标题时间
+	 */
+	public void setTime(){
+		time.setText(TimeUtil.GetTime());
+		time.setVisibility(View.VISIBLE);
+	}
+	
 	/**
 	 * 设置Button可见及按钮文本
 	 */

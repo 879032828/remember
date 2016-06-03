@@ -17,6 +17,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -39,8 +40,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 /**
- * @author Administrator
- *	该Activity用于对记录的修改
+ * @author Administrator 该Activity用于对记录的修改
  */
 public class Activity_ChangeRecord extends BaseActivity {
 
@@ -52,13 +52,19 @@ public class Activity_ChangeRecord extends BaseActivity {
 	private List<String> mDatas;
 	private RecyclerViewAdapter mAdapter;
 	private Button dialog_cannle, dialog_sure;
-
+	private Dialog dialog;
 	private String title;
 	private String name;
 	private String type;
+	private String typeflag;
 	TypeDBdao typeDBdao;
 
 	private Account account;
+
+	private static final String type_expend = "0";// 支出类型标志
+	private static final String type_income = "1";// 收入类型标志
+	private static final int earning_expend = 0;// 支出类型标志
+	private static final int earning_income = 1;// 收入类型标志
 
 	// 时间选择请求码
 	private static final int Time_requestCode = 0;
@@ -71,8 +77,9 @@ public class Activity_ChangeRecord extends BaseActivity {
 		Intent intent = getIntent();
 		name = intent.getStringExtra("name");
 		title = intent.getStringExtra("title");
+		typeflag = intent.getStringExtra("typeflag");
 		Bundle bundle = intent.getExtras();
-		//从显示记录的Activity获取个人的Account
+		// 从显示记录的Activity获取个人的Account
 		account = (Account) bundle.getSerializable("changeAccount");
 
 		setHideleftButton(title);
@@ -149,19 +156,27 @@ public class Activity_ChangeRecord extends BaseActivity {
 	protected void initData() {
 		mDatas = new ArrayList<String>() {
 		};
-		mDatas.add("工资");
-		mDatas.add("奖金");
-		mDatas.add("兼职");
-		mDatas.add("理财");
-		mDatas.add("投资");
-		mDatas.add("其他");
+		if (typeflag.equals(type_expend)) {
+			mDatas.add("三餐");
+			mDatas.add("住房");
+			mDatas.add("服装");
+			mDatas.add("交通");
+			mDatas.add("其他");
+		} else {
+			mDatas.add("工资");
+			mDatas.add("奖金");
+			mDatas.add("兼职");
+			mDatas.add("理财");
+			mDatas.add("投资");
+			mDatas.add("其他");
+		}
 
 		typeDBdao = new TypeDBdao(this);
-		// 查询对应账号的所有收入类型
-		List<Type> typecount = typeDBdao.findAllType(name, "0");
+		// 查询对应账号的所有收支类型
+		List<Type> typecount = typeDBdao.findAllType(name, typeflag);
 		// 如果没有对应的类型存在，则设置默认值
 		if (typecount.size() == 0) {
-//			typeDBdao.setDefault(mDatas, name);
+			typeDBdao.setDefault(mDatas, typeflag, name);
 			mDatas.add("++");// 设置增加按钮的内容，保证增加按钮一直处于列表最后面
 		} else {
 			// 若数据库中存在类型，则清空mDatas，并重新获取数据库中的类型，填充mDatas
@@ -176,16 +191,17 @@ public class Activity_ChangeRecord extends BaseActivity {
 	 */
 	private void initEvent() {
 
-		//网上关于ListView默认选中的解决方法：
+		// 网上关于ListView默认选中的解决方法：
 		// setAdapter() 其实是异步的 ，调用了这个方法， ListView 的 item 并没有立马创建，而是在下一轮消息处理时才创建。
-		//弄明白了这个，就有了前面代码中的解决办法：使用 post() 提交一个 Runnable() 对象，在 Runnable() 内部来做默认选中这种初始化动作。
+		// 弄明白了这个，就有了前面代码中的解决办法：使用 post() 提交一个 Runnable() 对象，在 Runnable()
+		// 内部来做默认选中这种初始化动作。
 		mRecyclerView.post(new Runnable() {
 
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				//通过account获取金额类型Type在mDatas中的索引，从而锁定该类型在RecyclerView中的位置
-				//将该类型所在的Item设置选中，并获取其值
+				// 通过account获取金额类型Type在mDatas中的索引，从而锁定该类型在RecyclerView中的位置
+				// 将该类型所在的Item设置选中，并获取其值
 				if (mRecyclerView.getChildCount() - 1 != 0) {
 					ViewGroup parent = (ViewGroup) mRecyclerView.getChildAt(mDatas.indexOf(account.getType()));
 					Button button = (Button) parent.findViewById(R.id.id_num);
@@ -240,21 +256,21 @@ public class Activity_ChangeRecord extends BaseActivity {
 
 		// 显示对话框
 		View inputForm = getLayoutInflater().inflate(R.layout.dialog_input, null);
-		AlertDialog.Builder builder = new AlertDialog.Builder(this, AlertDialog.THEME_HOLO_LIGHT);
-		builder.setView(inputForm).create();
-		final AlertDialog alertDialog = builder.show();
-
+		dialog = new Dialog(Activity_ChangeRecord.this, R.style.AlertDialogStyle);
+		dialog.setContentView(inputForm);
+		dialog.show();
+		
 		dialog_input_edittext = (EditText) inputForm.findViewById(R.id.dialog_input_edittext);
 		dialog_input_edittext.setFocusable(true);
 		dialog_cannle = (Button) inputForm.findViewById(R.id.dialog_input_cannle);
-		dialog_sure = (Button) inputForm.findViewById(R.id.dialog_delete_sure);
+		dialog_sure = (Button) inputForm.findViewById(R.id.dialog_input_sure);
 		// 对话框退出
 		dialog_cannle.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				alertDialog.dismiss();
+				dialog.dismiss();
 			}
 		});
 		// 对话框确认
@@ -273,10 +289,10 @@ public class Activity_ChangeRecord extends BaseActivity {
 						;
 					} else {
 						// 若输入类型不存在数据库中，则将该类型添加到表中
-						typeDBdao.addRecord("0", incomeType, name);
+						typeDBdao.addRecord(typeflag, incomeType, name);
 						// 增加RecyclerView的Item
 						mAdapter.addData(mAdapter.getItemCount() - 1, incomeType);
-						alertDialog.dismiss();
+						dialog.dismiss();
 					}
 				}
 			}
@@ -296,17 +312,26 @@ public class Activity_ChangeRecord extends BaseActivity {
 			money = Float.parseFloat(MoneySetting.getText().toString());
 		}
 		if (type == null || type.isEmpty()) {
-			Toast.makeText(Activity_ChangeRecord.this, "请选择收入类型", Toast.LENGTH_SHORT).show();
+			if (typeflag.equals(type_expend)) {
+				Toast.makeText(Activity_ChangeRecord.this, "请选择支出类型", Toast.LENGTH_SHORT).show();
+			} else {
+				Toast.makeText(Activity_ChangeRecord.this, "请选择收入类型", Toast.LENGTH_SHORT).show();
+			}
 			return false;
 		}
 
 		AccountDBdao accountDBdao = new AccountDBdao(this);
-		accountDBdao.update(account.getId(),time, money, type, 1, remark, name);
+		if (typeflag.equals(type_expend)) {
+			accountDBdao.update(account.getId(), time, money, type, earning_expend, remark, name);
+		}else {
+			accountDBdao.update(account.getId(), time, money, type, earning_income, remark, name);
+		}
+		
 		Toast.makeText(Activity_ChangeRecord.this, "修改纪录成功！", Toast.LENGTH_SHORT).show();
 
 		Intent intent = new Intent(Activity_ChangeRecord.this, Activity_SpecificData.class);
 		intent.putExtra("name", name);
-		intent.putExtra("title", "收入总额");
+		intent.putExtra("title", title);
 		Activity_ChangeRecord.this.setResult(RESULT_OK, intent);
 		finish();
 
@@ -324,7 +349,7 @@ public class Activity_ChangeRecord extends BaseActivity {
 		mAdapter = new RecyclerViewAdapter(this, mDatas);
 		mRecyclerView.setLayoutManager(new GridLayoutManager(this, 4));
 		mRecyclerView.setAdapter(mAdapter);
-		
+
 		MoneySetting.setText(account.getMoney() + "");
 		TimeSetting.setText(account.getTime());
 		RemarkSetting.setText(account.getRemark());
@@ -334,44 +359,42 @@ public class Activity_ChangeRecord extends BaseActivity {
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
-		Log.i("change", "onDestroy");  
+		Log.i("change", "onDestroy");
 	}
 
 	@Override
 	protected void onPause() {
 		// TODO Auto-generated method stub
 		super.onPause();
-		Log.i("change", "onPause");  
+		Log.i("change", "onPause");
 	}
 
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		Log.i("change", "onResume");  
+		Log.i("change", "onResume");
 	}
 
 	@Override
 	protected void onStart() {
 		// TODO Auto-generated method stub
 		super.onStart();
-		Log.i("change", "onStart");  
+		Log.i("change", "onStart");
 	}
 
 	@Override
 	protected void onStop() {
 		// TODO Auto-generated method stub
 		super.onStop();
-		Log.i("change", "onStop");  
+		Log.i("change", "onStop");
 	}
 
 	@Override
 	protected void onRestart() {
 		// TODO Auto-generated method stub
 		super.onRestart();
-		Log.i("change", "onRestart");  
+		Log.i("change", "onRestart");
 	}
-	
-	
-	
+
 }

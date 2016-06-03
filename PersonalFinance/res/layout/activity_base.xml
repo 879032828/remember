@@ -77,6 +77,16 @@
                 android:textColor="@color/white"
                 android:textSize="15dp" />
 
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/title"
+                android:layout_centerHorizontal="true"
+                android:text="0000-00-00"
+                android:textColor="@color/white"
+                android:textSize="10sp" />
+
         </RelativeLayout>
 
         <LinearLayout
