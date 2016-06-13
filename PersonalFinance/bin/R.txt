@@ -117,6 +117,7 @@ int drawable shape_shadow 0x7f020037
 int drawable shape_spacer_medium 0x7f020038
 int drawable shape_top_corner_no_bottom_line 0x7f020039
 int drawable welcome 0x7f02003a
+int drawable widget_bar_news_over 0x7f02003b
 int id MoneySetting 0x7f050006
 int id RemarkSetting 0x7f050008
 int id TimeSetting 0x7f050007

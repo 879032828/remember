@@ -281,6 +281,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int shape_spacer_medium=0x7f020038;
         public static final int shape_top_corner_no_bottom_line=0x7f020039;
         public static final int welcome=0x7f02003a;
+        public static final int widget_bar_news_over=0x7f02003b;
     }
     public static final class id {
         public static final int MoneySetting=0x7f050006;

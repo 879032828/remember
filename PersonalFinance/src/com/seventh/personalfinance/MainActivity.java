@@ -98,8 +98,16 @@ public class MainActivity extends SlidingMenuBaseActivity {
 		setTitle("记着");
 		setTime();
 		// 设置两个按钮可见及背景
-		// setHideaddButton_right();
-		// setBackgroudButton_right(R.drawable.shape_bg_add_button);
+		setHideaddButton_right();
+		setBackgroudButton_right(R.drawable.widget_bar_news_over);
+		setButtonOnClickListener("右按钮", new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				slidingMenu.showMenu();
+			}
+		});
 
 	}
 
@@ -380,17 +388,17 @@ public class MainActivity extends SlidingMenuBaseActivity {
 		leftMenuFragment.setArguments(bundle);
 		getSupportFragmentManager().beginTransaction().replace(R.id.id_left_menu_frame, leftMenuFragment).commit();
 
-		SlidingMenu menu = getSlidingMenu();
-		menu.setMode(SlidingMenu.LEFT);
+		slidingMenu = getSlidingMenu();
+		slidingMenu.setMode(SlidingMenu.LEFT);
 		// 设置触摸屏幕的模式
-		menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
-		menu.setShadowWidthRes(R.dimen.shadow_width);
-		menu.setShadowDrawable(R.drawable.shape_shadow);
+		slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
+		slidingMenu.setShadowWidthRes(R.dimen.shadow_width);
+		slidingMenu.setShadowDrawable(R.drawable.shape_shadow);
 		// 设置滑动菜单视图的宽度
-		menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+		slidingMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
 		// menu.setBehindWidth()
 		// 设置渐入渐出效果的值
-		menu.setFadeDegree(0.35f);
+		slidingMenu.setFadeDegree(0.35f);
 	}
 
 	public void updateView() {
