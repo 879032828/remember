@@ -1,10 +1,10 @@
 package com.seventh.adapter;
 
-import java.net.ContentHandler;
 import java.util.List;
 
+import com.seventh.personalfinance.R;
+
 import android.content.Context;
-import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
@@ -14,10 +14,7 @@ import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.seventh.personalfinance.R;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
 
@@ -85,7 +82,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 				holder.tv.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						int pos = holder.getLayoutPosition();
+						int pos = holder.getPosition();
 						// 当点击的Item为最后一个时，可以在此处设置其单击事件
 						mOnItemClickLitener.onRecItemClick(holder.itemView, pos);
 					}
@@ -94,7 +91,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 				holder.tv.setOnLongClickListener(new OnLongClickListener() {
 					@Override
 					public boolean onLongClick(View v) {
-						int pos = holder.getLayoutPosition();
+						// int pos = holder.getLayoutPosition();
+						int pos = holder.getPosition();
 						// 当点击的Item为最后一个时，可以在此处设置其长按事件
 						if (pos == getItemCount() - 1) {
 							Toast.makeText(context, "这是最后一个长按事件", Toast.LENGTH_SHORT).show();
@@ -111,7 +109,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
 					@Override
 					public void onClick(View v) {
-						int pos = holder.getLayoutPosition();
+						int pos = holder.getPosition();
 						// 当点击的Item为最后一个时，可以在此处设置其单击事件
 						mOnItemClickLitener.onRecItemClick(holder.itemView, pos);
 					}

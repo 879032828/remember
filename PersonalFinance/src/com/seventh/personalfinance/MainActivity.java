@@ -3,19 +3,27 @@ package com.seventh.personalfinance;
 import java.util.List;
 import java.util.Map;
 
-import com.seventh.base.BaseActivity;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+import com.seventh.base.SlidingMenuBaseActivity;
 import com.seventh.db.AccountDBdao;
 import com.seventh.db.BudgetDBdao;
 import com.seventh.db.PersonDBdao;
 import com.seventh.view.CornerListView;
 import com.seventh.view.DataRange;
 import com.seventh.view.MainActivityService;
+import com.seventh.view.TasksCompletedView;
 
 import android.R.integer;
+import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,13 +44,13 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends SlidingMenuBaseActivity {
 	private Intent intent = null;// 定义一个意图
 	private String name;// 账号
 	private String pwd1;
 	private String pwd2;
-	AccountDBdao accountDBdao;// 数据库
-	PersonDBdao persondbdao;
+	private AccountDBdao accountDBdao;// 数据库
+	private PersonDBdao persondbdao;
 
 	private float totalOut;// 总支出
 	private float totalInto;// 总收入
@@ -50,6 +58,7 @@ public class MainActivity extends BaseActivity {
 	private ListView listView1;
 	private List<Map<String, String>> map_list1 = null;
 
+	private TasksCompletedView mTasksCompletedView;
 	private CornerListView cornerListView2 = null;// 自定义listview2
 	private List<DataRange> dataRanges;
 	private LayoutInflater inflater;
@@ -58,6 +67,7 @@ public class MainActivity extends BaseActivity {
 	private TextView dialog_input_text;
 	private Button dialog_input_sure;
 	private Button dialog_input_cannle;
+	private SlidingMenu slidingMenu;
 
 	private static final int BudgetBalance = 0;
 	private static final int TotalIntoData = 1;
@@ -66,39 +76,40 @@ public class MainActivity extends BaseActivity {
 	private static final int MonthOutData = 4;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		baseSetContentView(R.layout.activity_mainactivity);
 
-		ImageView_main = (ImageView) findViewById(R.id.ImageView_main);
-		// 在控件完成后，执行SettingView操作更新控件的高度
-		ImageView_main.post(new Runnable() {
+		initView();
+		ViewOperation();
 
+		// SlidingMenu初始化
+		initRightMenu();
+
+		// 在控件完成后，执行SettingView操作更新控件的高度
+		mTasksCompletedView.post(new Runnable() {
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				SettingView();
+				SettingView(mTasksCompletedView);
 			}
 		});
 
 		setTitle("记着");
 		setTime();
 		// 设置两个按钮可见及背景
-		setHideaddButton_right();
-		setBackgroudButton_right(R.drawable.shape_bg_add_button);
-
-		initView();
-		ViewOperation();
+		// setHideaddButton_right();
+		// setBackgroudButton_right(R.drawable.shape_bg_add_button);
 
 	}
 
 	/**
 	 * 获取状态栏和标题栏的高度，并设置ImageView的高度
 	 */
-	public void SettingView() {
+	public void SettingView(View view) {
 		Rect rect = new Rect();
 		Window window = getWindow();
-		ImageView_main.getWindowVisibleDisplayFrame(rect);
+		view.getWindowVisibleDisplayFrame(rect);
 		// 状态栏的高度
 		int statusBarHeight = rect.top;
 		// 标题栏的高度
@@ -108,14 +119,14 @@ public class MainActivity extends BaseActivity {
 		// 设置控件的高度
 		WindowManager windowManager = this.getWindowManager();
 		int height = windowManager.getDefaultDisplay().getHeight();
-		LayoutParams para = ImageView_main.getLayoutParams();
+		LayoutParams para = view.getLayoutParams();
 		para.height = height / 2 - statusBarHeight - contentViewTop;
-		para.width = ImageView_main.getLayoutParams().width;
-		ImageView_main.setLayoutParams(para);
+		para.width = view.getLayoutParams().width;
+		view.setLayoutParams(para);
 	}
 
 	/**
-	 * 
+	 * RecyclerView列表初始化
 	 */
 	public void ViewOperation() {
 		intent = this.getIntent();
@@ -161,13 +172,38 @@ public class MainActivity extends BaseActivity {
 						MonthIntoData();
 						break;
 					case MonthOutData:
-						//本月支出
+						// 本月支出
 						MonthOutData();
 						break;
 					}
 
 				}
 			});
+
+			Float budget = (float) 0;// 预算余额
+			Float ThisMonth_expend = (float) 0;// 本月支出
+			for (Map<String, String> map : map_list1) {
+				switch (map.get("txtCalculationName")) {
+				case "预算余额":
+					budget = Float.parseFloat(map.get("txtMoney"));
+					break;
+				case "本月支出":
+					ThisMonth_expend = Float.parseFloat(map.get("txtMoney"));
+				default:
+					break;
+				}
+			}
+
+			Float residue = budget - ThisMonth_expend;
+			if (residue >= 0) {
+				mTasksCompletedView.setProgress(new Float(ThisMonth_expend).intValue());
+				mTasksCompletedView.setTotalProgress(new Float(budget).intValue());
+				mTasksCompletedView.setText("预算剩余_" + new Float(residue).intValue() + "元");
+			} else {
+				mTasksCompletedView.setProgress(new Float(ThisMonth_expend).intValue());
+				mTasksCompletedView.setTotalProgress(new Float(budget).intValue());
+				mTasksCompletedView.setText("预算超支_" + new Float(residue).intValue() + "元");
+			}
 		}
 	}
 
@@ -176,6 +212,7 @@ public class MainActivity extends BaseActivity {
 	 */
 	public void initView() {
 		listView1 = (ListView) findViewById(R.id.lv_main_calculation);// 总额显示
+		mTasksCompletedView = (TasksCompletedView) findViewById(R.id.tasks_view);// 圆环进度条
 
 	}
 
@@ -234,9 +271,12 @@ public class MainActivity extends BaseActivity {
 
 		BudgetDBdao budgetDBdao = new BudgetDBdao(this);
 		if (budgetDBdao.isExistBudget(name)) {
-			dialog_input_edittext.setText(Float.toString(budgetDBdao.findBudget(name).getBudget()));
+			// 如果存在预算，则显示
+			String budget = Float.toString(budgetDBdao.findBudget(name).getBudget());
+			dialog_input_edittext.setText(budget);
 		} else {
 			dialog_input_edittext.setText(0 + "");
+			budgetDBdao.addBudget(0, name);
 		}
 
 		dialog_input_sure.setOnClickListener(new OnClickListener() {
@@ -249,9 +289,10 @@ public class MainActivity extends BaseActivity {
 					dialog.dismiss();
 				} else {
 					BudgetDBdao budgetDBdao = new BudgetDBdao(MainActivity.this);
-					budgetDBdao.addBudget(Integer.parseInt(dialog_input_edittext.getText().toString()), name);
+					Float budgetInt = Float.parseFloat(dialog_input_edittext.getText().toString());
+					budgetDBdao.updateBudget(budgetInt, name);
 					Toast.makeText(MainActivity.this, "设置成功", Toast.LENGTH_SHORT).show();
-					onResume();
+					updateView();
 					dialog.dismiss();
 				}
 			}
@@ -331,6 +372,66 @@ public class MainActivity extends BaseActivity {
 
 	}
 
+	private void initRightMenu() {
+		Fragment leftMenuFragment = new MenuLeftFragment();
+		setBehindContentView(R.layout.layout_left_menu);
+		Bundle bundle = new Bundle();
+		bundle.putString("name", name);
+		leftMenuFragment.setArguments(bundle);
+		getSupportFragmentManager().beginTransaction().replace(R.id.id_left_menu_frame, leftMenuFragment).commit();
+
+		SlidingMenu menu = getSlidingMenu();
+		menu.setMode(SlidingMenu.LEFT);
+		// 设置触摸屏幕的模式
+		menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
+		menu.setShadowWidthRes(R.dimen.shadow_width);
+		menu.setShadowDrawable(R.drawable.shape_shadow);
+		// 设置滑动菜单视图的宽度
+		menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+		// menu.setBehindWidth()
+		// 设置渐入渐出效果的值
+		menu.setFadeDegree(0.35f);
+	}
+
+	public void updateView() {
+		totalOut = accountDBdao.fillTotalOut(name);// 总支出
+		totalInto = accountDBdao.fillTotalInto(name);// 总收入
+
+		map_list1 = MainActivityService.getDataSource1(totalInto, totalOut, name, this);
+		// listview1适配器
+		SimpleAdapter adapter1 = new SimpleAdapter(getApplicationContext(), map_list1,
+				R.layout.main_listview_calculation, new String[] { "txtCalculationName", "txtMoney" },
+				new int[] { R.id.ls_tv_txtCalculationName, R.id.ls_tv_txtMoney });
+		// 填充listview1的数据
+		listView1.setAdapter(adapter1);
+
+		Float budget = (float) 0;// 预算余额
+		Float ThisMonth_expend = (float) 0;// 本月支出
+		for (Map<String, String> map : map_list1) {
+			switch (map.get("txtCalculationName")) {
+			case "预算余额":
+				budget = Float.parseFloat(map.get("txtMoney"));
+				break;
+			case "本月支出":
+				ThisMonth_expend = Float.parseFloat(map.get("txtMoney"));
+			default:
+				break;
+			}
+		}
+
+		Float residue = budget - ThisMonth_expend;
+		if (residue >= 0) {
+			mTasksCompletedView.setProgress(new Float(ThisMonth_expend).intValue());
+			mTasksCompletedView.setTotalProgress(new Float(budget).intValue());
+			mTasksCompletedView.setText("预算剩余_" + new Float(residue).intValue() + "元");
+		} else {
+			mTasksCompletedView.setProgress(new Float(ThisMonth_expend).intValue());
+			mTasksCompletedView.setTotalProgress(new Float(budget).intValue());
+			mTasksCompletedView.setText("预算超支_" + new Float(residue).intValue() + "元");
+		}
+
+	}
+
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
@@ -353,8 +454,6 @@ public class MainActivity extends BaseActivity {
 			Toast.makeText(this, "获取数据失败", 0).show();
 			e.printStackTrace();
 		}
-		// // 填充listview2的数据
-		// cornerListView2.setAdapter(new MyAdapter());
 	}
 
 	@Override
@@ -365,5 +464,7 @@ public class MainActivity extends BaseActivity {
 		}
 		return super.onKeyDown(keyCode, event);
 	}
+	
+	
 
 }

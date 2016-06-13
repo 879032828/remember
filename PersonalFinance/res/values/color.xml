@@ -10,11 +10,11 @@
     <color name="black">#000000</color>
     <color name="button_line">#6cb6ff</color>
     <color name="button_gray">#46a0f8</color>
-    
+    <color name="red">#fb0219</color>
 
     <!-- RecyclerView -->
     <color name="gray_frame">#c3c1c1</color>
     <color name="gray_text">#8c8a8a</color>
     <color name="gray_backgroud">#c6c6c6</color>
-
+	<color name="light_gray">#d5d5d5</color>
 </resources>

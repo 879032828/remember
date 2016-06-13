@@ -1,0 +1,102 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/blue"
+    android:fitsSystemWindows="true"
+    tools:context="com.seventh.base.BaseActivity" >
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <View 
+            android:id="@+id/statusView"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/blue"/>
+        
+        <RelativeLayout
+            android:id="@+id/main_relative"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/blue"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp" 
+            android:paddingRight="10dp">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="标题"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/leftButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:background="@color/blue"
+                android:drawableLeft="@drawable/selector_bg_return_button"
+                android:drawablePadding="10dp"
+                android:text="箭头所指"
+                android:textColor="@color/white"
+                android:textSize="17dp" />
+
+            <ImageButton
+                android:id="@+id/addButton_right"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:background="@android:color/transparent" />
+
+            <ImageButton
+                android:id="@+id/addButton_left"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/addButton_right"
+                android:background="@android:color/transparent" />
+
+            <Button
+                android:id="@+id/save"
+                android:layout_width="55dp"
+                android:layout_height="35dp"
+                android:layout_alignBaseline="@+id/leftButton"
+                android:layout_alignBottom="@+id/leftButton"
+                android:layout_alignLeft="@+id/addButton_right"
+                android:background="@drawable/selector_button_save"
+                android:text="保存"
+                android:textColor="@color/white"
+                android:textSize="15dp" />
+
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/title"
+                android:layout_centerHorizontal="true"
+                android:text="0000-00-00"
+                android:textColor="@color/white"
+                android:textSize="10sp" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical" >
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

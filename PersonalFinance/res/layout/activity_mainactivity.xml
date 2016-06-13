@@ -1,21 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tc="http://schemas.android.com/apk/res/com.seventh.personalfinance"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="vertical" >
+        android:orientation="vertical" 
+        android:background="@color/blue">
 
-        <ImageView 
-            android:id="@+id/ImageView_main"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/welcome"/>
-    </LinearLayout>
+        <com.seventh.view.TasksCompletedView
+            android:id="@+id/tasks_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            tc:circleColor="@color/blue"
+            tc:radius="60dip"
+            tc:ringColor="@color/white"
+            tc:strokeWidth="4dip" />
+        
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,16 +40,6 @@
             android:listSelector="@drawable/selector_list_item" >
         </ListView>
 
-        <!--
-        <com.seventh.view.CornerListView
-            android:id="@+id/lv_main_calculation"
-            android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="2"
-            android:cacheColorHint="#AAFF7B" 
-            android:layout_marginBottom="1dp">
-        </com.seventh.view.CornerListView>
-        -->
     </LinearLayout>
 
 </LinearLayout>

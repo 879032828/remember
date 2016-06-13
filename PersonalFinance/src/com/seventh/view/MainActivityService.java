@@ -13,7 +13,6 @@ import com.seventh.db.BudgetDBdao;
 import com.seventh.util.TimeUtil;
 
 import android.content.Context;
-import android.support.v4.media.MediaBrowserCompat.MediaItem.Flags;
 
 public class MainActivityService {
 
@@ -65,6 +64,8 @@ public class MainActivityService {
 		map.put("txtMoney", textThisMonth_expend);
 		map_list1.add(map);
 
+		
+		
 		return map_list1;
 	}
 

@@ -49,5 +49,6 @@
     <string name="title_activity_calendar">CalendarActivity</string>
     <string name="title_activity_activity__app_start">Activity_AppStart</string>
     <string name="AppStart_Bottom_title">coding by L</string>
+    <string name="title_activity_activity__user_info">Activity_UserInfo</string>
 
 </resources>

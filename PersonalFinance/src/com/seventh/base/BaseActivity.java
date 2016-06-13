@@ -43,15 +43,23 @@ public class BaseActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_base);
-
 		initview();
-
-		// 透明状态栏
-		getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-		// 透明导航栏
-		getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+		
+		setStatus();
+		
+		// // 透明状态栏
+		// getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+		// // 透明导航栏
+		// getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
 	}
 
+	public void setStatus() {
+		Window window = this.getWindow();
+		WindowManager.LayoutParams layoutParams = window.getAttributes();
+		layoutParams.flags |= WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
+		window.setAttributes(layoutParams);
+	}
+	
 	/**
 	 * @param layoutResId
 	 *            继承该BaseActivity的Activity需使用该方法填充布局文件

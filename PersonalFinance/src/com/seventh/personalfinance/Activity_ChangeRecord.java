@@ -52,6 +52,7 @@ public class Activity_ChangeRecord extends BaseActivity {
 	private List<String> mDatas;
 	private RecyclerViewAdapter mAdapter;
 	private Button dialog_cannle, dialog_sure;
+	private TextView dialog_input_text;
 	private Dialog dialog;
 	private String title;
 	private String name;
@@ -259,11 +260,19 @@ public class Activity_ChangeRecord extends BaseActivity {
 		dialog = new Dialog(Activity_ChangeRecord.this, R.style.AlertDialogStyle);
 		dialog.setContentView(inputForm);
 		dialog.show();
-		
+
+		dialog_input_text = (TextView) inputForm.findViewById(R.id.dialog_input_text);
 		dialog_input_edittext = (EditText) inputForm.findViewById(R.id.dialog_input_edittext);
 		dialog_input_edittext.setFocusable(true);
 		dialog_cannle = (Button) inputForm.findViewById(R.id.dialog_input_cannle);
 		dialog_sure = (Button) inputForm.findViewById(R.id.dialog_input_sure);
+
+		if (typeflag.equals(type_expend)) {
+			dialog_input_text.setText("添加支出类型");
+		} else {
+			dialog_input_text.setText("添加收入类型");
+		}
+
 		// 对话框退出
 		dialog_cannle.setOnClickListener(new OnClickListener() {
 
@@ -284,7 +293,7 @@ public class Activity_ChangeRecord extends BaseActivity {
 					Toast.makeText(Activity_ChangeRecord.this, "请输入类型名称", Toast.LENGTH_SHORT).show();
 				} else {
 					// 判断输入类型是否已存在于数据库中
-					if (typeDBdao.isExist("0", name, incomeType)) {
+					if (typeDBdao.isExist(typeflag, name, incomeType)) {
 						Toast.makeText(Activity_ChangeRecord.this, "该类型已存在", Toast.LENGTH_SHORT).show();
 						;
 					} else {
@@ -323,10 +332,10 @@ public class Activity_ChangeRecord extends BaseActivity {
 		AccountDBdao accountDBdao = new AccountDBdao(this);
 		if (typeflag.equals(type_expend)) {
 			accountDBdao.update(account.getId(), time, money, type, earning_expend, remark, name);
-		}else {
+		} else {
 			accountDBdao.update(account.getId(), time, money, type, earning_income, remark, name);
 		}
-		
+
 		Toast.makeText(Activity_ChangeRecord.this, "修改纪录成功！", Toast.LENGTH_SHORT).show();
 
 		Intent intent = new Intent(Activity_ChangeRecord.this, Activity_SpecificData.class);

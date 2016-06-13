@@ -11,13 +11,14 @@ import com.seventh.db.Type;
 import com.seventh.db.TypeDBdao;
 import com.seventh.util.TimeUtil;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputFilter;
 import android.text.InputType;
+import android.text.Spanned;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -308,6 +309,8 @@ public class Activity_AddRecord extends BaseActivity {
 		alertDialog.show();
 		dialog_input_text = (TextView) inputForm.findViewById(R.id.dialog_input_text);
 		dialog_input_edittext = (EditText) inputForm.findViewById(R.id.dialog_input_edittext);
+		//设置编辑框可输入的最长个数
+		dialog_input_edittext.setFilters(new InputFilter[]{new InputFilter.LengthFilter(4)});
 		dialog_input_edittext.setFocusable(true);
 		dialog_cannle = (Button) inputForm.findViewById(R.id.dialog_input_cannle);
 		dialog_sure = (Button) inputForm.findViewById(R.id.dialog_input_sure);
@@ -401,8 +404,8 @@ public class Activity_AddRecord extends BaseActivity {
 		TimeSetting = (EditText) findViewById(R.id.TimeSetting);
 		RemarkSetting = (EditText) findViewById(R.id.RemarkSetting);
 		mRecyclerView = (RecyclerView) findViewById(R.id.id_recyclerview);
-		mAdapter = new RecyclerViewAdapter(this, mDatas);
 		mRecyclerView.setLayoutManager(new GridLayoutManager(this, 4));
+		mAdapter = new RecyclerViewAdapter(this, mDatas);
 		mRecyclerView.setAdapter(mAdapter);
 	}
 }

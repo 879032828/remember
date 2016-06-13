@@ -17,7 +17,12 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     
     <dimen name="historyscore_tb">10dp</dimen>
-
-    
     <dimen name="text1">15sp</dimen>
+    <dimen name="text2">16sp</dimen>
+    <dimen name="text3">18sp</dimen>
+    <dimen name="text4">20sp</dimen>
+    
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="slidingmenu_offset">120dp</dimen>
+    <dimen name="shadow_width">5dp</dimen>
 </resources>

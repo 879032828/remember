@@ -58,7 +58,7 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_my"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:theme="@android:style/Theme.Black.NoTitleBar" >
         </activity>
         <activity
             android:name="com.seventh.base.BaseActivity"
@@ -83,6 +83,11 @@
             android:name=".Activity_Calendar"
             android:label="@string/title_activity_calendar"
             android:theme="@android:style/Theme.Dialog" >
+        </activity>
+        <activity
+            android:name=".Activity_UserInfo"
+            android:label="@string/title_activity_activity__user_info"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
     </application>
 

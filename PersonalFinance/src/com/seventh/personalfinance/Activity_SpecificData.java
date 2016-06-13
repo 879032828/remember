@@ -201,7 +201,7 @@ public class Activity_SpecificData extends BaseActivity {
 	 */
 	public void showDeleteDialog(final Account account) {
 		View view = getLayoutInflater().inflate(R.layout.dialog_delete, null);
-		
+
 		dialog_delete = new Dialog(Activity_SpecificData.this, R.style.AlertDialogStyle);
 		dialog_delete.setContentView(view);
 		dialog_delete.show();

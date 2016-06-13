@@ -68,4 +68,11 @@ public class BudgetDBdao {
 		}
 	}
 
+	public void updateBudget(float budget, String name) {
+		SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
+		if (db.isOpen()) {
+			db.execSQL("update budget set budget = ? where name = ?", new String[] { Float.toString(budget), name });
+		}
+	}
+
 }
